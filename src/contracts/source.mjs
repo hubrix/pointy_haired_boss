@@ -11,6 +11,13 @@ export function createSource(input) {
    if (!text.isWellFormed()) throw new ContractError('Input contains an unpaired UTF-16 surrogate');
 
    const starts = [0];
+   const scalarCounts = new Uint32Array(text.length + 1);
+   let offset = 0;
+   let count = 0;
+   for (const char of text) {
+      count++;
+      for (let unit = 0; unit < char.length; unit++) scalarCounts[++offset] = count;
+   }
    for (let index = 0; index < text.length; index++) {
       if (text[index] === '\r') {
          if (text[index + 1] === '\n') index++;
@@ -34,7 +41,7 @@ export function createSource(input) {
          if (starts[middle] <= offset) low = middle;
          else high = middle;
       }
-      return { line: low + 1, column: [...text.slice(starts[low], offset)].length + 1 };
+      return { line: low + 1, column: scalarCounts[offset] - scalarCounts[starts[low]] + 1 };
    }
    function span(start, end) {
       assertOffset(start);

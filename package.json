@@ -11,7 +11,7 @@
       "node": ">=22.18.0"
    },
    "scripts": {
-      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs test/check/*.test.mjs spikes/parser/*.test.mjs",
+      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs test/check/*.test.mjs test/unicode/*.test.mjs spikes/parser/*.test.mjs",
       "phb": "node bin/phb.mjs",
       "schemas": "node scripts/export-schemas.mjs",
       "spike:parser": "node spikes/parser/compare.mjs",

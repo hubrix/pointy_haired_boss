@@ -80,7 +80,9 @@
          "whitespace": "horizontal"
       },
       "unicode": {
-         "policy": "conservative"
+         "policy": "conservative",
+         "bom": "remove",
+         "remove": []
       },
       "exclude": [
          "vendor/**",

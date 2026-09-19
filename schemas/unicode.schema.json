@@ -1,0 +1,167 @@
+{
+   "type": "object",
+   "properties": {
+      "version": {
+         "const": 1
+      },
+      "unicodeVersion": {
+         "const": "17.0.0"
+      },
+      "inputHash": {
+         "type": "string",
+         "pattern": "^[a-f0-9]{64}$"
+      },
+      "items": {
+         "type": "array",
+         "items": {
+            "type": "object",
+            "properties": {
+               "ruleId": {
+                  "enum": [
+                     "UNI-01",
+                     "UNI-02",
+                     "UNI-03",
+                     "UNI-04",
+                     "UNI-05",
+                     "UNI-06"
+                  ]
+               },
+               "codePoint": {
+                  "type": "string",
+                  "pattern": "^U\\+[0-9A-F]{4,6}$"
+               },
+               "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "span": {
+                  "type": "object",
+                  "properties": {
+                     "start": {
+                        "type": "integer",
+                        "minimum": 0
+                     },
+                     "end": {
+                        "type": "integer",
+                        "minimum": 0
+                     },
+                     "text": {
+                        "type": "string"
+                     },
+                     "startLocation": {
+                        "type": "object",
+                        "properties": {
+                           "line": {
+                              "type": "integer",
+                              "minimum": 1
+                           },
+                           "column": {
+                              "type": "integer",
+                              "minimum": 1
+                           }
+                        },
+                        "required": [
+                           "line",
+                           "column"
+                        ],
+                        "additionalProperties": false
+                     },
+                     "endLocation": {
+                        "type": "object",
+                        "properties": {
+                           "line": {
+                              "type": "integer",
+                              "minimum": 1
+                           },
+                           "column": {
+                              "type": "integer",
+                              "minimum": 1
+                           }
+                        },
+                        "required": [
+                           "line",
+                           "column"
+                        ],
+                        "additionalProperties": false
+                     }
+                  },
+                  "required": [
+                     "start",
+                     "end",
+                     "text",
+                     "startLocation",
+                     "endLocation"
+                  ],
+                  "additionalProperties": false
+               },
+               "context": {
+                  "type": "object",
+                  "properties": {
+                     "before": {
+                        "type": "string"
+                     },
+                     "after": {
+                        "type": "string"
+                     }
+                  },
+                  "required": [
+                     "before",
+                     "after"
+                  ],
+                  "additionalProperties": false
+               },
+               "scope": {
+                  "enum": [
+                     "prose",
+                     "protected",
+                     "outside-prose",
+                     "signature"
+                  ]
+               },
+               "action": {
+                  "enum": [
+                     "preserve",
+                     "review",
+                     "remove"
+                  ]
+               },
+               "certainty": {
+                  "enum": [
+                     "recognized",
+                     "policy",
+                     "unknown"
+                  ]
+               },
+               "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               }
+            },
+            "required": [
+               "ruleId",
+               "codePoint",
+               "name",
+               "span",
+               "context",
+               "scope",
+               "action",
+               "certainty",
+               "reason"
+            ],
+            "additionalProperties": false
+         }
+      }
+   },
+   "required": [
+      "version",
+      "unicodeVersion",
+      "inputHash",
+      "items"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:unicode:v1",
+   "title": "PHB unicode v1"
+}

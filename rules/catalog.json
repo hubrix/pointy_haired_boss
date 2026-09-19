@@ -1275,7 +1275,7 @@
       },
       {
          "id": "UNI-01",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "unicode",
          "title": "Invisible separators and soft hyphens",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -1283,6 +1283,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -1298,7 +1302,7 @@
             "Preserve protected content and report conflicts.",
             "Honor a valid explicit suppression without concealing it."
          ],
-         "fixPolicy": "report-only",
+         "fixPolicy": "safe-local",
          "examples": [
             {
                "text": "re​port",
@@ -1314,7 +1318,7 @@
       },
       {
          "id": "UNI-02",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "unicode",
          "title": "Joiners and variation selectors",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -1322,6 +1326,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -1353,7 +1361,7 @@
       },
       {
          "id": "UNI-03",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "unicode",
          "title": "Bidirectional controls",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -1361,6 +1369,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -1392,7 +1404,7 @@
       },
       {
          "id": "UNI-04",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "unicode",
          "title": "Special spaces",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -1400,6 +1412,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "suggestion",
@@ -1431,7 +1447,7 @@
       },
       {
          "id": "UNI-05",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "unicode",
          "title": "Tag characters",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -1439,6 +1455,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -1470,7 +1490,7 @@
       },
       {
          "id": "UNI-06",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "unicode",
          "title": "Combining and compatibility characters",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -1478,6 +1498,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "suggestion",

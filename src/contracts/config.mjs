@@ -16,7 +16,7 @@ export const houseProfile = deepFreeze({
          'unlock the full potential', 'a testament to', 'in the realm of'],
       allowedTerms: ['robust regression', 'test harness'], requiredTerminology: [],
       matching: { caseSensitive: false, whitespace: 'horizontal' },
-      unicode: { policy: 'conservative' },
+      unicode: { policy: 'conservative', bom: 'remove', remove: [] },
       exclude: ['vendor/**', 'generated/**', 'node_modules/**', '.git/**'], suppressions: [],
    },
 });

@@ -1,6 +1,6 @@
 # Local checker
 
-`phb check` reads English UTF-8 text and Markdown, reports exact phrase/terminology violations, and produces candidates for all four house bans. It never edits files, calls a model, or makes network requests. Contextual review, Unicode inspection/cleanup, readability measurement, checked Chicago rules, and host adapters remain pending in [project.org](../project.org).
+`phb check` reads English UTF-8 text and Markdown, reports phrase/terminology violations, inventories Unicode characters, and produces candidates for all four house bans. It never edits files, calls a model, or makes network requests. [Unicode cleanup](UNICODE.md) has its own `clean` command. Contextual review, readability measurement, checked Chicago rules, and host adapters remain pending in [project.org](../project.org).
 
 ## Run it
 
@@ -39,7 +39,7 @@ The remark parser protects code, block quotations, front matter, math, raw HTML,
 
 Within prose, the parser protects paired straight/curly quotations, nested quotes, author-date/year-bearing parentheticals, Pandoc citation brackets, numeric citation brackets/references, URLs, and email addresses. Word-internal apostrophes stay in prose. Year-bearing parentheticals are protected even when they are not citations. Unclosed opening quotes protect the remaining block and make boundary coverage partial. Unusual quotation/citation conventions may need a trusted lock; these patterns do not claim universal citation recognition.
 
-The parser joins supported inline formatting within a block. Decoded characters map back to exact original intervals, including escapes, multi-character entities, emoji, CRLF, and list-continuation indentation. A finding across formatting may include Markdown delimiters in its source excerpt. It never carries an automatic patch. Protected content and block boundaries interrupt phrase matching. Horizontal whitespace matching does not cross line breaks.
+The parser joins supported inline formatting within a block. Decoded characters map back to exact original intervals, including escapes, multi-character entities, emoji, CRLF, and list-continuation indentation. A finding across formatting may include Markdown delimiters in its source excerpt. Style findings carry no automatic patch. Unicode deletion plans use separate source-based checks. Protected content and block boundaries interrupt phrase matching. Horizontal whitespace matching does not cross line breaks.
 
 Unknown AST nodes and unmappable text are protected and make boundary coverage partial, yielding exit `2`. Supported protection counts as completed boundary handling, not a style review of the protected content.
 
@@ -75,7 +75,7 @@ Text output includes positions, rule IDs, status, reasons, excerpts, required/om
 | `1` | A confirmed/conflict finding meets the threshold |
 | `2` | Invalid input/configuration, operational failure, no eligible inputs, or incomplete required coverage |
 
-This development command requires **boundaries and LEX-01** by default. Every omitted rule remains visible; exit `0` never certifies editorial compliance. Unicode checks join the default scope when PHB-022 implements them. `--require LEX-01,GRAM-01` selects required rule IDs, with boundaries always required. Requiring a contextual/unimplemented check returns `2`; a disabled/unknown rule is an error. `--threshold error|warning|suggestion` applies to confirmed findings and conflicts, not candidates. Incomplete required coverage takes precedence over violation exit `1`.
+This command requires **boundaries, LEX-01, and enabled UNI-01–06 rules** by default. Every omitted rule remains visible; exit `0` never certifies editorial compliance. The Unicode inventory distinguishes preserved characters, review items, and policy-approved deletions; see its [scope and limits](UNICODE.md). `--require LEX-01,GRAM-01` selects required rule IDs, with boundaries always required. Requiring a contextual/unimplemented check returns `2`; a disabled/unknown rule is an error. `--threshold error|warning|suggestion` applies to confirmed findings and conflicts, not candidates. Incomplete required coverage takes precedence over violation exit `1`.
 
 ## Verification limits
 

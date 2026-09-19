@@ -147,7 +147,18 @@ export function parseProse(source, { format = 'markdown', trustedDirectives = fa
          if (match[0]) projected.push(project(match[0], match.index, false));
       }
    } else {
-      const tree = parser.parse(source.text);
+      // Ignore signature bytes for syntax recognition, retaining every original
+      // offset. Multiple copied BOMs must not hide front matter or code blocks.
+      const signatureLength = source.text.match(/^\uFEFF+/)?.[0].length ?? 0;
+      const tree = parser.parse(source.text.slice(signatureLength));
+      function shift(node) {
+         if (node.position) {
+            node.position.start.offset += signatureLength;
+            node.position.end.offset += signatureLength;
+         }
+         for (const child of node.children ?? []) shift(child);
+      }
+      if (signatureLength) shift(tree);
       const parsedDirectives = directives(tree, source, trustedDirectives);
       protectedSpans.push(...parsedDirectives.locked);
       inlineSuppressions = parsedDirectives.suppressions;

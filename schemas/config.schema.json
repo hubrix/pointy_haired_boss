@@ -189,11 +189,27 @@
          "properties": {
             "policy": {
                "const": "conservative"
+            },
+            "bom": {
+               "enum": [
+                  "remove",
+                  "preserve"
+               ]
+            },
+            "remove": {
+               "type": "array",
+               "uniqueItems": true,
+               "items": {
+                  "enum": [
+                     "U+200B",
+                     "U+00AD",
+                     "U+2060",
+                     "U+FEFF"
+                  ]
+               }
             }
          },
-         "required": [
-            "policy"
-         ],
+         "required": [],
          "additionalProperties": false
       },
       "exclude": {
@@ -489,11 +505,27 @@
                         "properties": {
                            "policy": {
                               "const": "conservative"
+                           },
+                           "bom": {
+                              "enum": [
+                                 "remove",
+                                 "preserve"
+                              ]
+                           },
+                           "remove": {
+                              "type": "array",
+                              "uniqueItems": true,
+                              "items": {
+                                 "enum": [
+                                    "U+200B",
+                                    "U+00AD",
+                                    "U+2060",
+                                    "U+FEFF"
+                                 ]
+                              }
                            }
                         },
-                        "required": [
-                           "policy"
-                        ],
+                        "required": [],
                         "additionalProperties": false
                      },
                      "exclude": {

@@ -97,7 +97,8 @@ test('all four house bans remain heuristic warnings until contextual review', ()
 
 test('required incomplete checks, malformed boundaries, and disabled rules have honest exits', () => {
    assert.equal(check('Maya finished.', {}, { requestedChecks: ['GRAM-01'] }).exitCode, 2);
-   assert.equal(check('Maya finished.', {}, { requestedChecks: ['UNI-01'] }).exitCode, 2);
+   assert.equal(check('Maya finished.', {}, { requestedChecks: ['UNI-01'] }).exitCode, 0);
+   assert.equal(check('Maya finished.', {}, { requestedChecks: ['READ-01'] }).exitCode, 2);
    assert.equal(check('Maya said “an unclosed quotation.').exitCode, 2);
    assert.equal(check('We delve into it.', { rules: { 'LEX-01': 'off' } }).exitCode, 0);
    assert.throws(() => check('text', { rules: { 'LEX-01': 'off' } }, { requestedChecks: ['LEX-01'] }), /disabled/);

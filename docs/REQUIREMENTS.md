@@ -32,7 +32,7 @@ The prose decision ladder:
 
 ## Operations
 
-The table defines the release interface. A [local `phb check` increment](CHECKER.md) now exists; its Unicode checks and the other operations remain pending. Hosts may namespace skills differently; their documentation must show actual installed invocations.
+The table defines the release interface. [Local `check`](CHECKER.md) and [Unicode `clean`](UNICODE.md) now exist; the other operations remain pending. Hosts may namespace skills differently; their documentation must show actual installed invocations.
 
 | Operation | Behavior | File-write behavior |
 | --- | --- | --- |

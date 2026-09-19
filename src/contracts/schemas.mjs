@@ -21,7 +21,8 @@ const settings = {
    forbiddenPhrases: strings, allowedTerms: strings,
    requiredTerminology: { type: 'array', items: object({ preferred: text, avoid: { ...strings, minItems: 1 } }), uniqueItems: true },
    matching: object({ caseSensitive: { type: 'boolean' }, whitespace: choices('horizontal', 'literal') }, []),
-   unicode: object({ policy: { const: 'conservative' } }),
+   unicode: object({ policy: { const: 'conservative' }, bom: choices('remove', 'preserve'),
+      remove: { type: 'array', uniqueItems: true, items: choices('U+200B', 'U+00AD', 'U+2060', 'U+FEFF') } }, []),
    exclude: strings,
    suppressions: { type: 'array', items: object({ ruleIds: idList, reason: text, paths: { ...strings, minItems: 1 } }, ['ruleIds', 'reason']) },
 };
@@ -43,6 +44,17 @@ export const schemas = {
       examples: { type: 'array', minItems: 2, items: object({ text, outcome: choices('review', 'preserve'), reason: text }) },
    }),
    suppression: object({ version: { const: 1 }, ruleIds: idList, range, reason: text }),
+   unicode: object({
+      version: { const: 1 }, unicodeVersion: { const: '17.0.0' }, inputHash: hash,
+      items: { type: 'array', items: object({
+         ruleId: { enum: ruleIds.filter((id) => id.startsWith('UNI-')) },
+         codePoint: { type: 'string', pattern: '^U\\+[0-9A-F]{4,6}$' }, name: text,
+         span: object({ ...range.properties, text: { type: 'string' }, startLocation: location, endLocation: location }),
+         context: object({ before: { type: 'string' }, after: { type: 'string' } }),
+         scope: choices('prose', 'protected', 'outside-prose', 'signature'),
+         action: choices('preserve', 'review', 'remove'), certainty: choices('recognized', 'policy', 'unknown'), reason: text,
+      }) },
+   }),
    finding: object({
       version: { const: 1 }, ruleId, ruleVersion: { type: 'string', pattern: '^\\d+\\.\\d+\\.\\d+$' },
       inputHash: hash, severity: choices('error', 'warning', 'suggestion'), ruleSeverity: choices('error', 'warning', 'suggestion'),
@@ -62,6 +74,14 @@ export const schemas = {
       }, ['id', 'required', 'status']) },
       findings: { type: 'array', items: { $ref: 'urn:phb:finding:v1' } },
       threshold: choices('error', 'warning', 'suggestion'), exitCode: choices(0, 1, 2),
+   }),
+   cleanup: object({
+      version: { const: 1 }, inputHash: hash, outputHash: hash, outputText: { type: 'string' },
+      applied: { type: 'boolean' }, exitCode: choices(0, 1, 2),
+      edits: { type: 'array', items: object({ ruleId: { const: 'UNI-01' }, inputHash: hash, range,
+         original: { type: 'string', minLength: 1 }, replacement: { const: '' }, policy: { const: 'safe-local' }, reason: text }) },
+      remaining: integer, outputSelection: { anyOf: [range, { type: 'null' }] },
+      afterReport: { $ref: 'urn:phb:report:v1' },
    }),
 };
 

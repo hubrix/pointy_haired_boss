@@ -1,0 +1,135 @@
+{
+   "type": "object",
+   "properties": {
+      "version": {
+         "const": 1
+      },
+      "inputHash": {
+         "type": "string",
+         "pattern": "^[a-f0-9]{64}$"
+      },
+      "outputHash": {
+         "type": "string",
+         "pattern": "^[a-f0-9]{64}$"
+      },
+      "outputText": {
+         "type": "string"
+      },
+      "applied": {
+         "type": "boolean"
+      },
+      "exitCode": {
+         "enum": [
+            0,
+            1,
+            2
+         ]
+      },
+      "edits": {
+         "type": "array",
+         "items": {
+            "type": "object",
+            "properties": {
+               "ruleId": {
+                  "const": "UNI-01"
+               },
+               "inputHash": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+               },
+               "range": {
+                  "type": "object",
+                  "properties": {
+                     "start": {
+                        "type": "integer",
+                        "minimum": 0
+                     },
+                     "end": {
+                        "type": "integer",
+                        "minimum": 0
+                     }
+                  },
+                  "required": [
+                     "start",
+                     "end"
+                  ],
+                  "additionalProperties": false
+               },
+               "original": {
+                  "type": "string",
+                  "minLength": 1
+               },
+               "replacement": {
+                  "const": ""
+               },
+               "policy": {
+                  "const": "safe-local"
+               },
+               "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               }
+            },
+            "required": [
+               "ruleId",
+               "inputHash",
+               "range",
+               "original",
+               "replacement",
+               "policy",
+               "reason"
+            ],
+            "additionalProperties": false
+         }
+      },
+      "remaining": {
+         "type": "integer",
+         "minimum": 0
+      },
+      "outputSelection": {
+         "anyOf": [
+            {
+               "type": "object",
+               "properties": {
+                  "start": {
+                     "type": "integer",
+                     "minimum": 0
+                  },
+                  "end": {
+                     "type": "integer",
+                     "minimum": 0
+                  }
+               },
+               "required": [
+                  "start",
+                  "end"
+               ],
+               "additionalProperties": false
+            },
+            {
+               "type": "null"
+            }
+         ]
+      },
+      "afterReport": {
+         "$ref": "urn:phb:report:v1"
+      }
+   },
+   "required": [
+      "version",
+      "inputHash",
+      "outputHash",
+      "outputText",
+      "applied",
+      "exitCode",
+      "edits",
+      "remaining",
+      "outputSelection",
+      "afterReport"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:cleanup:v1",
+   "title": "PHB cleanup v1"
+}

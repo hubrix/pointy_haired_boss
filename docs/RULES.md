@@ -1,6 +1,6 @@
 # Initial rule catalog
 
-Policy design with an implemented [versioned metadata catalog](../rules/catalog.json) and [shared contracts](CONTRACTS.md). The [local checker](CHECKER.md) implements LEX-01 and candidates for the four house bans; other detectors remain pending. Examples are original. The catalog draws on [RESEARCH.md](RESEARCH.md) and distinguishes explicit preferences from contextual editorial judgments.
+Policy design with an implemented [versioned metadata catalog](../rules/catalog.json) and [shared contracts](CONTRACTS.md). The [local checker](CHECKER.md) implements LEX-01, UNI-01–06 inventory, and candidates for the four house bans; other detectors remain pending. Examples are original. The catalog draws on [RESEARCH.md](RESEARCH.md) and distinguishes explicit preferences from contextual editorial judgments.
 
 Default levels: `error` blocks a checked artifact at the configured threshold; `warning` requests review; `suggestion` is optional. A match outside editable prose is suppressed or reported as a protected-content conflict. No rule establishes AI authorship.
 
@@ -82,6 +82,8 @@ Each implemented subrule needs an edition, checked source URL/section, original 
 Mechanical checks can catch some violations; semantic review must catch the rest. Report only the checks actually performed. Do not call an automated rewrite “fact checked” merely because names and numbers still match. Creative drafting from an explicit brief has different invention permissions from editing an existing nonfiction draft.
 
 ## Unicode and copied-text hygiene
+
+The [implemented Unicode policy](UNICODE.md) defines the supported inventory and cleanup subset. Unicode rule records are version 1.1.0. Only UNI-01 permits local fixes: initial BOM removal by policy and explicitly enabled artifact removal inside ASCII words. The other families report and preserve characters. Future policy expansion needs separate evidence; no tag-payload stripping or confusables audit exists yet.
 
 | ID | Detection | Default treatment | Required preservation cases |
 | --- | --- | --- | --- |

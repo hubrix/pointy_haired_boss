@@ -1,0 +1,27 @@
+{
+   "version": "17.0.0",
+   "sources": {
+      "characters": {
+         "url": "https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt",
+         "sha256": "2e1efc1dcb59c575eedf5ccae60f95229f706ee6d031835247d843c11d96470c"
+      },
+      "aliases": {
+         "url": "https://www.unicode.org/Public/17.0.0/ucd/NameAliases.txt",
+         "sha256": "793f6f1e4d15fd90f05ae66460191dc4d75d1fea90136a25f30dd6a4cb950eac"
+      },
+      "emoji": {
+         "url": "https://www.unicode.org/Public/17.0.0/emoji/emoji-test.txt",
+         "sha256": "1d8a944f88d7952f7ef7c5167fef3c67995bcae24543949710231b03a201acda"
+      },
+      "license": {
+         "url": "https://www.unicode.org/license.txt",
+         "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96"
+      }
+   },
+   "generated": {
+      "file": "unicode-17.0.0.json",
+      "sha256": "14147608f539f6693db995d1700c61d65c14eb03ac9e271cca49b1145b9b68f0",
+      "characters": 6611,
+      "emoji": 2923
+   }
+}

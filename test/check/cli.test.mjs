@@ -34,7 +34,8 @@ test('stdin exposes deterministic exit status, missing checks, and original-sour
    assert.equal(clean.documents[0].report.coverage, 'partial');
    assert.equal(clean.documents[0].report.checks.length, 41);
    assert.equal((await invoke(root, ['-'], 'We delve into it.')).exitCode, 1);
-   assert.equal((await invoke(root, ['--require', 'UNI-01', '-'], 'Maya approved it.')).exitCode, 2);
+   assert.equal((await invoke(root, ['--require', 'UNI-01', '-'], 'Maya approved it.')).exitCode, 0);
+   assert.equal((await invoke(root, ['--require', 'READ-01', '-'], 'Maya approved it.')).exitCode, 2);
    assert.equal((await invoke(root, ['--require', 'GRAM-01', '-'], 'Maya approved it.')).exitCode, 2);
 });
 

@@ -4,6 +4,7 @@ import { findPhraseMatches } from '../contracts/matching.mjs';
 import { houseBanIds } from '../contracts/catalog.mjs';
 import { parseProse, sourceRange } from './parser.mjs';
 import { grammarCandidates } from './candidates.mjs';
+import { inventoryUnicode } from '../unicode/inventory.mjs';
 
 export function checkProse(input, config, { path, requestedChecks, threshold = 'error', ...parserOptions } = {}) {
    const source = createSource(input);
@@ -11,8 +12,9 @@ export function checkProse(input, config, { path, requestedChecks, threshold = '
    const allowlistMatches = parsed.segments.flatMap((segment) => config.allowedTerms.flatMap((term) =>
       findPhraseMatches(segment, term, config.matching).map((range) => ({ term, ...sourceRange(segment, range) }))));
    const context = { source, config, path, protectedSpans: parsed.protectedSpans, inlineSuppressions: parsed.inlineSuppressions, allowlistMatches };
-   const checks = [parsed.check];
-   const findings = [];
+   const unicode = inventoryUnicode(source, config, parsed, { path, selection: parserOptions.selection });
+   const checks = [parsed.check, ...unicode.checks];
+   const findings = [...unicode.findings];
    const selected = (range) => !parserOptions.selection ||
       range.start >= parserOptions.selection.start && range.end <= parserOptions.selection.end;
    const activeBans = houseBanIds.filter((id) => config.rules[id] !== 'off');
@@ -43,8 +45,8 @@ export function checkProse(input, config, { path, requestedChecks, threshold = '
    findings.sort((a, b) => a.span.start - b.span.start || a.ruleId.localeCompare(b.ruleId));
    const unique = findings.filter((item, index) => !findings.slice(0, index).some((other) =>
       other.ruleId === item.ruleId && other.span.start === item.span.start && other.span.end === item.span.end && other.reason === item.reason));
-   return { report: buildReport({ ...context, findings: unique, checks, threshold,
-      requestedChecks: requestedChecks ?? (config.rules['LEX-01'] === 'off' ? [] : ['LEX-01']) }),
+   return { report: buildReport({ ...context, findings: unique, checks, threshold, requestedChecks }),
+   unicode: unicode.inventory,
    boundaries: { protectedSpans: parsed.protectedSpans, issues: parsed.issues },
    selection: parserOptions.selection ?? null };
 }
