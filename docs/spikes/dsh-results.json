@@ -1,0 +1,55 @@
+{
+   "recordedAt": "2026-09-19T19:15:40.294Z",
+   "node": "v26.8.2",
+   "versions": {
+      "@deepseek-ai/cordis": "4.0.2",
+      "@deepseek-ai/dsh-skill": "0.1.6-alpha.1",
+      "@deepseek-ai/dsh-skill-filesystem": "0.1.6-alpha.1",
+      "@deepseek-ai/dsh-scope": "0.1.6-alpha.1",
+      "@deepseek-ai/dsh-llm": "0.1.6-alpha.1"
+   },
+   "checks": [
+      {
+         "name": "scoped registration and loading with both invocation controls",
+         "passed": true
+      },
+      {
+         "name": "skill isolation from sibling and global catalogs",
+         "passed": true
+      },
+      {
+         "name": "manual-only invocation metadata and explicit disposal",
+         "passed": true
+      },
+      {
+         "name": "default filesystem roots do not imply wrapper .gsd seed discovery",
+         "passed": true
+      },
+      {
+         "name": "explicit custom skill root discovers and loads the bundle",
+         "passed": true
+      },
+      {
+         "name": "scoped pre-step waterfall inserts one typed instruction per admitted batch",
+         "passed": true
+      },
+      {
+         "name": "disabling the probe stops new event-boundary injections",
+         "passed": true
+      },
+      {
+         "name": "scope disposal removes skills and listeners",
+         "passed": true
+      }
+   ],
+   "scope": "Real installed Cordis and DSH service APIs; synthetic pre-step events. No model calls, live sessions, host configuration writes, or shell command invocation.",
+   "unverified": [
+      "manual invocation through the host UI",
+      "complete wrapper skill-root configuration",
+      "resume and compaction",
+      "durable on/off/profile state",
+      "cross-turn deduplication and cancellation",
+      "retraction of earlier prompt guidance",
+      "enforcement before model output delivery"
+   ]
+}

@@ -1,0 +1,1117 @@
+{
+   "recordedAt": "2026-09-19T19:14:09.217Z",
+   "environment": {
+      "node": "v26.8.2",
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpu": "Apple M4 Max"
+   },
+   "scope": "Parser plus common source-span extraction and sentinel scan. No grammar, contextual review, file IO, or full checker latency in these timings.",
+   "corpus": {
+      "words": 10017,
+      "utf16Units": 56761
+   },
+   "engines": {
+      "remark": {
+         "cases": [
+            {
+               "id": "plain",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ]
+            },
+            {
+               "id": "emphasis",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 7,
+                     "end": 14
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 7,
+                     "end": 14
+                  }
+               ]
+            },
+            {
+               "id": "code",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 46,
+                     "end": 53
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 46,
+                     "end": 53
+                  }
+               ]
+            },
+            {
+               "id": "blockquote",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 47,
+                     "end": 54
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 47,
+                     "end": 54
+                  }
+               ]
+            },
+            {
+               "id": "link-and-image",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ]
+            },
+            {
+               "id": "autolinks",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 64,
+                     "end": 71
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 64,
+                     "end": 71
+                  }
+               ]
+            },
+            {
+               "id": "yaml",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 29,
+                     "end": 36
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 29,
+                     "end": 36
+                  }
+               ]
+            },
+            {
+               "id": "toml",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 32,
+                     "end": 39
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 32,
+                     "end": 39
+                  }
+               ]
+            },
+            {
+               "id": "math",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ]
+            },
+            {
+               "id": "html-block",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 25,
+                     "end": 32
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 25,
+                     "end": 32
+                  }
+               ]
+            },
+            {
+               "id": "html-inline",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 39,
+                     "end": 46
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 39,
+                     "end": 46
+                  }
+               ]
+            },
+            {
+               "id": "footnotes",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ]
+            },
+            {
+               "id": "references",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ]
+            },
+            {
+               "id": "table-and-task",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 21,
+                     "end": 28
+                  },
+                  {
+                     "start": 42,
+                     "end": 49
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 21,
+                     "end": 28
+                  },
+                  {
+                     "start": 42,
+                     "end": 49
+                  }
+               ]
+            },
+            {
+               "id": "unicode-crlf",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 24,
+                     "end": 31
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 24,
+                     "end": 31
+                  }
+               ]
+            },
+            {
+               "id": "escape-and-entity",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 2,
+                     "end": 9
+                  },
+                  {
+                     "start": 16,
+                     "end": 23
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 2,
+                     "end": 9
+                  },
+                  {
+                     "start": 16,
+                     "end": 23
+                  }
+               ]
+            },
+            {
+               "id": "inline-quotation",
+               "scope": "known-policy-gap",
+               "passed": false,
+               "expected": [
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 16,
+                     "end": 23
+                  },
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ]
+            },
+            {
+               "id": "author-date-citation",
+               "scope": "known-policy-gap",
+               "passed": false,
+               "expected": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  },
+                  {
+                     "start": 21,
+                     "end": 28
+                  }
+               ]
+            },
+            {
+               "id": "user-lock",
+               "scope": "known-policy-gap",
+               "passed": false,
+               "expected": [
+                  {
+                     "start": 68,
+                     "end": 75
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 32,
+                     "end": 39
+                  },
+                  {
+                     "start": 68,
+                     "end": 75
+                  }
+               ]
+            }
+         ],
+         "coldProcessAndScan": {
+            "runs": 7,
+            "medianMs": 103.06,
+            "p95Ms": 119.57,
+            "samplesMs": [
+               119.57,
+               104.68,
+               99.69,
+               103.06,
+               106.62,
+               100.7,
+               99.62
+            ]
+         },
+         "warmParseAndScan": {
+            "runs": 20,
+            "medianMs": 14.34,
+            "p95Ms": 18.23,
+            "samplesMs": [
+               15.15,
+               18.25,
+               18.23,
+               15.68,
+               14.33,
+               14.62,
+               14.35,
+               13.82,
+               14.29,
+               14.05,
+               14.11,
+               15.01,
+               14.31,
+               14.26,
+               14.86,
+               14.7,
+               14.58,
+               14.02,
+               14.27,
+               13.89
+            ]
+         }
+      },
+      "textlint": {
+         "cases": [
+            {
+               "id": "plain",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ]
+            },
+            {
+               "id": "emphasis",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 7,
+                     "end": 14
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 7,
+                     "end": 14
+                  }
+               ]
+            },
+            {
+               "id": "code",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 46,
+                     "end": 53
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 46,
+                     "end": 53
+                  }
+               ]
+            },
+            {
+               "id": "blockquote",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 47,
+                     "end": 54
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 47,
+                     "end": 54
+                  }
+               ]
+            },
+            {
+               "id": "link-and-image",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ]
+            },
+            {
+               "id": "autolinks",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 64,
+                     "end": 71
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 64,
+                     "end": 71
+                  }
+               ]
+            },
+            {
+               "id": "yaml",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 29,
+                     "end": 36
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 29,
+                     "end": 36
+                  }
+               ]
+            },
+            {
+               "id": "toml",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 32,
+                     "end": 39
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 32,
+                     "end": 39
+                  }
+               ]
+            },
+            {
+               "id": "math",
+               "scope": "parser-boundary",
+               "passed": false,
+               "expected": [
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  },
+                  {
+                     "start": 14,
+                     "end": 21
+                  },
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ]
+            },
+            {
+               "id": "html-block",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 25,
+                     "end": 32
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 25,
+                     "end": 32
+                  }
+               ]
+            },
+            {
+               "id": "html-inline",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 39,
+                     "end": 46
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 39,
+                     "end": 46
+                  }
+               ]
+            },
+            {
+               "id": "footnotes",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ]
+            },
+            {
+               "id": "references",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 1,
+                     "end": 8
+                  }
+               ]
+            },
+            {
+               "id": "table-and-task",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 21,
+                     "end": 28
+                  },
+                  {
+                     "start": 42,
+                     "end": 49
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 21,
+                     "end": 28
+                  },
+                  {
+                     "start": 42,
+                     "end": 49
+                  }
+               ]
+            },
+            {
+               "id": "unicode-crlf",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 24,
+                     "end": 31
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 24,
+                     "end": 31
+                  }
+               ]
+            },
+            {
+               "id": "escape-and-entity",
+               "scope": "parser-boundary",
+               "passed": true,
+               "expected": [
+                  {
+                     "start": 2,
+                     "end": 9
+                  },
+                  {
+                     "start": 16,
+                     "end": 23
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 2,
+                     "end": 9
+                  },
+                  {
+                     "start": 16,
+                     "end": 23
+                  }
+               ]
+            },
+            {
+               "id": "inline-quotation",
+               "scope": "known-policy-gap",
+               "passed": false,
+               "expected": [
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 16,
+                     "end": 23
+                  },
+                  {
+                     "start": 31,
+                     "end": 38
+                  }
+               ]
+            },
+            {
+               "id": "author-date-citation",
+               "scope": "known-policy-gap",
+               "passed": false,
+               "expected": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 5,
+                     "end": 12
+                  },
+                  {
+                     "start": 21,
+                     "end": 28
+                  }
+               ]
+            },
+            {
+               "id": "user-lock",
+               "scope": "known-policy-gap",
+               "passed": false,
+               "expected": [
+                  {
+                     "start": 68,
+                     "end": 75
+                  }
+               ],
+               "actual": [
+                  {
+                     "start": 32,
+                     "end": 39
+                  },
+                  {
+                     "start": 68,
+                     "end": 75
+                  }
+               ]
+            }
+         ],
+         "coldProcessAndScan": {
+            "runs": 7,
+            "medianMs": 79.22,
+            "p95Ms": 89.92,
+            "samplesMs": [
+               89.92,
+               80.16,
+               76.21,
+               77.48,
+               79.22,
+               76.83,
+               80.37
+            ]
+         },
+         "warmParseAndScan": {
+            "runs": 20,
+            "medianMs": 17.87,
+            "p95Ms": 21.43,
+            "samplesMs": [
+               17.82,
+               26.21,
+               21.43,
+               18.69,
+               17.48,
+               18.05,
+               18.08,
+               17.58,
+               17.17,
+               17.77,
+               16.74,
+               17.87,
+               17.86,
+               17.17,
+               17.9,
+               17.27,
+               17.97,
+               17.98,
+               18.01,
+               17.52
+            ]
+         }
+      }
+   },
+   "dependencies": {
+      "remark": {
+         "roots": [
+            "unified",
+            "remark-parse",
+            "remark-gfm",
+            "remark-frontmatter",
+            "remark-math"
+         ],
+         "packageCount": 130,
+         "installedFileBytes": 8347332
+      },
+      "textlintParser": {
+         "roots": [
+            "@textlint/textlint-plugin-markdown"
+         ],
+         "packageCount": 62,
+         "installedFileBytes": 1789692
+      },
+      "textlintWithKernel": {
+         "roots": [
+            "@textlint/kernel",
+            "@textlint/textlint-plugin-markdown"
+         ],
+         "packageCount": 69,
+         "installedFileBytes": 2552075
+      },
+      "grammar": {
+         "roots": [
+            "compromise"
+         ],
+         "packageCount": 4,
+         "installedFileBytes": 2877368
+      }
+   },
+   "grammar": [
+      {
+         "text": "Maya quickly approved the report.",
+         "expected": {
+            "adverbs": [
+               "quickly"
+            ],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [
+               "quickly"
+            ],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "Maya often approves reports.",
+         "expected": {
+            "adverbs": [
+               "often"
+            ],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [
+               "often"
+            ],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "A friendly reviewer approved the report.",
+         "expected": {
+            "adverbs": [],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "A lovely report arrived.",
+         "expected": {
+            "adverbs": [],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "The daily report arrived.",
+         "expected": {
+            "adverbs": [],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "Maya works hard.",
+         "expected": {
+            "adverbs": [
+               "hard"
+            ],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [
+               "hard"
+            ],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "Maya arrived late.",
+         "expected": {
+            "adverbs": [
+               "late"
+            ],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [
+               "late"
+            ],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "She did not approve it.",
+         "expected": {
+            "adverbs": [
+               "not"
+            ],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": false
+      },
+      {
+         "text": "This is only a draft.",
+         "expected": {
+            "adverbs": [
+               "only"
+            ],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [
+               "only"
+            ],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "Maya never approved the report.",
+         "expected": {
+            "adverbs": [
+               "never"
+            ],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": false
+      },
+      {
+         "text": "The report was approved by Maya.",
+         "expected": {
+            "adverbs": [],
+            "passive": true
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": true
+         },
+         "passed": true
+      },
+      {
+         "text": "The report has been approved.",
+         "expected": {
+            "adverbs": [],
+            "passive": true
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": true
+         },
+         "passed": true
+      },
+      {
+         "text": "The server got restarted.",
+         "expected": {
+            "adverbs": [],
+            "passive": true
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": true
+         },
+         "passed": true
+      },
+      {
+         "text": "The server is ready.",
+         "expected": {
+            "adverbs": [],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "Maya has approved the report.",
+         "expected": {
+            "adverbs": [],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "The report needs to be reviewed.",
+         "expected": {
+            "adverbs": [],
+            "passive": true
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": false
+      },
+      {
+         "text": "The report, approved by Maya, reached the board.",
+         "expected": {
+            "adverbs": [],
+            "passive": true
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": false
+      },
+      {
+         "text": "The door remained closed.",
+         "expected": {
+            "adverbs": [],
+            "passive": false
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": false
+         },
+         "passed": true
+      },
+      {
+         "text": "The report will be reviewed.",
+         "expected": {
+            "adverbs": [],
+            "passive": true
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": true
+         },
+         "passed": true
+      },
+      {
+         "text": "The report is being reviewed.",
+         "expected": {
+            "adverbs": [],
+            "passive": true
+         },
+         "actual": {
+            "adverbs": [],
+            "passive": true
+         },
+         "passed": true
+      }
+   ]
+}

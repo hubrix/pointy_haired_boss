@@ -24,6 +24,9 @@ Supporting documents:
 - [[file:docs/REQUIREMENTS.md][Product requirements]]
 - [[file:docs/RULES.md][Rule catalog and examples]]
 - [[file:docs/EVALUATION.md][Evaluation and release criteria]]
+- [[file:docs/BASELINE.md][First-release implementation baseline]]
+- [[file:docs/PARSER-SPIKE.md][Parser decision and measured evidence]]
+- [[file:docs/HOST-SPIKE.md][Host contracts and partial smoke-test evidence]]
 
 Status vocabulary: TODO = queued; NEXT = ready; DOING = in progress;
 WAITING = blocked with a recorded cause; DONE = complete with evidence;
@@ -38,14 +41,15 @@ conditions describe required outcomes, not outcomes already achieved.
 :CUSTOM_ID: focus
 :END:
 
-Stage: initial research and requirements drafted; implementation has not begun.
-Current work: PHB-005, commit and push the planning baseline; then PHB-010.
-Blockers: none for the planning work. No implementation benchmarks have run.
+Stage: baseline pushed; parser decision verified; host investigation partial.
+Current checkpoint: PHB-011 complete, with 25 tests and measured parser results.
+The DSH probe passes eight service/event checks. Full host sessions remain untested.
+Blockers: none. The installable plugin and product checker remain unimplemented.
 
 Next actions, in order:
-1. [[#PHB-010][Resolve the remaining first-release choices and record the baseline]].
-2. [[#PHB-011][Compare parser/checker options with a small implementation spike]].
-3. [[#PHB-012][Verify integration surfaces on the actual host versions]].
+1. [[#PHB-020][Implement shared rule, profile, and diagnostic contracts]].
+2. [[#PHB-012][Complete live host invocation and lifecycle smoke tests]].
+3. [[#PHB-021][Build the parser boundary policy and first local checks]].
 
 Do not begin implementation merely because it appears here. Continue within
 the user's current request and preserve later work in this file.
@@ -70,12 +74,14 @@ the user's current request and preserve later work in this file.
   update instructions in =CLAUDE.md= and capture future plans here.
 - [2026-09-19 Sat] Push the current state and continue the project work.
 
-** Proposed baseline and unresolved choices
+** Working implementation baseline
 
-These are recommendations, not recorded user approvals. Resolve their status
-under [[#PHB-010][PHB-010]] before treating them as a settled release commitment.
+[[file:docs/BASELINE.md][The first-release baseline]] adopts these reversible defaults under Mark's
+instruction to continue. They are agent implementation choices, except for the
+user-confirmed constraints above. [[file:docs/PARSER-SPIKE.md][The parser decision]] now has runnable evidence;
+[[file:docs/HOST-SPIKE.md][host integration evidence]] remains partial.
 
-| Topic | Current proposal | Follow-up |
+| Topic | Working choice | Follow-up |
 |-------+------------------+-----------|
 | Name and command | Pointy Haired Boss; pointy-haired-boss; phb | PHB-010 |
 | First release | English text/Markdown; general nonfiction, business prose, docs | PHB-010 |
@@ -83,7 +89,7 @@ under [[#PHB-010][PHB-010]] before treating them as a settled release commitment
 | Punctuation | Review overuse; no global em-dash ban unless requested | PHB-010 |
 | Style reference | Chicago 18th edition; publish supported subset | PHB-023 |
 | Readability metric | Flesch–Kincaid target at most 8.0; warn rather than lose meaning | PHB-023 |
-| Core | Shared skills/rules plus local checker; TypeScript/Node candidate | PHB-011 |
+| Core | Node, remark/unified with GFM/front matter/math, compromise candidates | PHB-011, PHB-020 |
 | Host scope | All three adapters in the first release | PHB-012 |
 | Voice samples | Preserve source voice; sample-derived profiles in a later increment | PHB-040 |
 | Watermark work | Unicode cleanup in MVP; statistical work in a separate experiment | PHB-050 |
@@ -136,19 +142,23 @@ Verification: Emacs Org lint passed; all 33 stable IDs are unique; links and
 dependencies across 27 tasks resolve without cycles. README and requirements
 point back to this tracker. No implementation task has started.
 
-** DOING Commit and push the planning baseline
+** DONE Commit and push the planning baseline
+CLOSED: [2026-09-19 Sat]
 :PROPERTIES:
 :CUSTOM_ID: PHB-005
 :END:
-The local repository has no commits and an empty origin URL. The authenticated
-GitHub account is hubrix; no matching pointy_haired_boss repository exists.
-Action: create a private hubrix/pointy_haired_boss repository, commit the current
-planning files, and push main. Private visibility is a conservative agent choice.
+Initial state: no local commits or usable origin URL; no matching repository
+under the authenticated hubrix account. Created private hubrix/pointy_haired_boss,
+committed the planning files, and pushed main. Private visibility was an agent choice.
 Completion: verify the remote main revision matches the local baseline commit.
+Evidence: [[https://github.com/hubrix/pointy_haired_boss][private GitHub repository]], baseline commit
+=208170cb34366f178986e080819643fa30314f38=. Local HEAD and remote main matched
+after the push; main tracks origin/main. Repository visibility verified PRIVATE.
 
 * Milestone 1: settle the baseline and prove the integration
 
-** NEXT [#A] Resolve the remaining first-release choices
+** DONE [#A] Resolve the remaining first-release choices
+CLOSED: [2026-09-19 Sat]
 :PROPERTIES:
 :CUSTOM_ID: PHB-010
 :DEPENDS_ON: PHB-002
@@ -158,42 +168,64 @@ voice samples, and watermark timing. Preserve Mark's confirmed defaults.
 Use existing authorization and judgment for routine reversible choices; ask
 only when a material product choice cannot be inferred.
 Completion: record decisions above and align [[file:docs/REQUIREMENTS.md][requirements]] with them.
+Evidence: [[file:docs/BASELINE.md][baseline decision table]] records scope, activation, naming,
+punctuation, voice, and watermark timing; requirements point to the same baseline.
+Verification: checked against the confirmed house rules and requested hosts.
 
-** TODO [#A] Compare parser and checker options
+** DONE [#A] Compare parser and checker options
+CLOSED: [2026-09-19 Sat]
 :PROPERTIES:
 :CUSTOM_ID: PHB-011
 :DEPENDS_ON: PHB-010
 :END:
 Compare textlint with a focused core built on a proven Markdown parser.
-- [ ] Check protected spans, Markdown structure, offsets, and patch generation.
-- [ ] Check grammar-analysis options for adverbs/passive voice and candidate reporting.
-- [ ] Measure dependency footprint, startup cost, and local execution behavior.
-- [ ] Record the chosen engine, tradeoffs, and supported input boundaries.
+- [X] Check protected spans, Markdown structure, offsets, and patch generation.
+- [X] Check grammar-analysis options for adverbs/passive voice and candidate reporting.
+- [X] Measure dependency footprint, startup cost, and local execution behavior.
+- [X] Record the chosen engine, tradeoffs, and supported input boundaries.
 Completion: a small runnable spike and a decision with evidence; no framework
 choice based on feature lists alone.
+Evidence: [[file:docs/PARSER-SPIKE.md][decision report]], [[file:spikes/parser/compare.mjs][runnable comparison]], and
+[[file:docs/spikes/parser-results.json][raw measurements]]. =npm test= passes 25 tests. Remark matches 16/16
+parser-boundary fixtures; textlint matches 15/16. Both expose three policy gaps.
+Compromise matches 16/20 grammar examples; it remains a candidate generator.
+Follow-ups: PHB-020, PHB-021, and PHB-025 cover source mapping, boundary policy,
+grammar gaps, and production patch behavior. This completes a spike, not the checker.
 
-** TODO [#A] Verify the three host integration surfaces
+** NEXT [#A] Verify the three host integration surfaces
 :PROPERTIES:
 :CUSTOM_ID: PHB-012
 :DEPENDS_ON: PHB-010
 :END:
-- [ ] Record actual Codex and Claude Code versions and their plugin/hook contracts.
-- [ ] Verify the DSH wrapper's runtime pins, skill discovery paths, and Cordis APIs.
+- [X] Record actual Codex and Claude Code versions and their plugin/hook contracts.
+- [X] Verify the DSH wrapper's installed runtime pins and Cordis service APIs.
+- [X] Compare default DSH discovery paths with the wrapper's seeded skill location.
+- [ ] Verify effective skill discovery in the complete wrapper composition.
 - [ ] Prove manual invocation and bounded policy activation on each host.
 - [ ] Document hook trust, compaction/resume, off-switch, and enforcement limits.
 Completion: recorded smoke-test evidence for all three hosts and an adapter
 contract that does not assume identical hook schemas.
 Requirements: HOST-01–03, ACT-01–03, DIST-01.
+Partial evidence: [[file:docs/HOST-SPIKE.md][host contract report]] and [[file:docs/spikes/dsh-results.json][eight passing DSH checks]].
+The native probe tests skill loading, scope isolation, disposal, custom roots,
+and synthetic pre-step events. It does not prove live model or durable session behavior.
+Next: create temporary adapter packages, verify Codex/Claude discovery and native
+validation, then exercise invocation, off/re-enable, resume, and compaction on
+all three hosts. Verify the wrapper's explicit route to any .gsd skill root;
+prefer direct bundled registration for PHB. Do not treat the path gap as a proven
+defect in the user's effective wrapper configuration.
 
 * Milestone 2: build the first usable release
 
-** TODO Define shared rule, profile, and diagnostic contracts
+** NEXT Define shared rule, profile, and diagnostic contracts
 :PROPERTIES:
 :CUSTOM_ID: PHB-020
 :DEPENDS_ON: PHB-011
 :END:
 Implement versioned rule records, severity, evidence types, allowlists,
 suppressions, configuration precedence, input hashes, offsets, and coverage status.
+Use the selected remark core. Specify decoded-to-source mapping, incomplete
+boundary/semantic coverage, scalar columns, CRLF, and invalid UTF-8 handling.
 Completion: validated schemas and focused fixtures for invalid configuration,
 Unicode positions, exact phrase boundaries, and protected-content conflicts.
 Requirements: RULE-01–03, VOICE-01, OUT-01, OUT-03.
@@ -206,6 +238,10 @@ Requirements: RULE-01–03, VOICE-01, OUT-01, OUT-03.
 Protect code, quotations, links, citations, math, front matter, HTML, and locked
 spans. Enforce phrase bans; detect adverbs, passive voice, contrastive framing,
 and agentless obligations. Separate candidates from contextual confirmations.
+Spike follow-ups: inline quotations, author-date citations, defined lock syntax,
+inline HTML, unknown AST nodes, sentences crossing formatting, negation adverbs,
+passive infinitives, and reduced passives. Keep meaning conflicts unresolved
+instead of deleting negation or inventing an actor.
 Completion: =check= works on supported inputs with correct exclusions, findings,
 coverage, and exit behavior; fixtures include grammar lookalikes and missing owners.
 Requirements: IN-01–02, RULE-04, OUT-03, SAFE-01.
@@ -253,6 +289,8 @@ Requirements: EDIT-01–04, VOICE-01, READ-01, SAFE-01, PRIV-01.
 :END:
 Provide text, JSON, and diff outputs; handle existing edit authorization;
 reject stale/overlapping fixes; apply per-file atomic writes; report batch failures.
+Extend the source-patch spike with reversible decoded-text mappings, insertion
+semantics, grapheme boundaries, and selected-range checks.
 Completion: review stays read-only, failed validation preserves original content,
 and file-edit fixtures pass. No extra approval round for an authorized edit.
 Requirements: OUT-01–03, IN-01–02.
@@ -317,6 +355,9 @@ open a tracker task for every unresolved release issue.
 :END:
 Run the end-to-end acceptance scenarios and local-network-disabled checks.
 Measure checker runtime and policy overhead on a documented reference machine.
+Test the declared Node 22.18 minimum and pinned host versions. Current spikes
+ran on Node 26.8.2 only. Measure rich Markdown and the complete rule pipeline;
+the repeated-paragraph parser timings do not establish the PERF-01 release gate.
 Completion: record measured results against [[file:docs/EVALUATION.md][release gates]], with no false claims
 about universal enforcement, watermark removal, or untested host versions.
 Requirements: ACT-01–03, OUT-01–03, PRIV-01, SAFE-01, PERF-01.
@@ -382,13 +423,18 @@ Code plugin support with every Claude product surface.
 Unicode cleanup does not prove statistical-watermark removal. Keep the requested
 statistical topic visible even if the first release does not include it.
 
-** TODO Decide whether statistical mitigation is a launch requirement
+** DONE Decide whether statistical mitigation is a launch requirement
+CLOSED: [2026-09-19 Sat]
 :PROPERTIES:
 :CUSTOM_ID: PHB-050
 :DEPENDS_ON: PHB-010
 :END:
 Current proposal: a separate experimental milestone. Completion: record its
 scope and timing decision; update the release plan if it becomes launch-critical.
+Decision: retain the separate experiment as the working baseline; no universal
+removal claim in the MVP. Evidence: [[file:docs/BASELINE.md][baseline]] and [[file:docs/REQUIREMENTS.md][WM-01–06]].
+This is a reversible implementation choice under the continuation request;
+PHB-051 tracks the actual experiment and remains open.
 
 ** TODO Build a controlled, named-scheme watermark experiment
 :PROPERTIES:
@@ -435,3 +481,32 @@ ready task; all implementation work remains queued.
 Mark requested a push and continued work. PHB-005 is active. The destination
 needs setup because origin has no URL; use a private repository under the
 authenticated account. Continue with baseline choices and parser/host spikes.
+
+Baseline push completed as commit =208170c= to private origin/main. PHB-010 is
+active; use the existing proposals as reversible implementation defaults, keeping
+the confirmed house rules and the watermark topic in scope.
+
+Completed PHB-010 and PHB-050 with the working baseline in docs/BASELINE.md.
+Started PHB-011 and PHB-012. Detected Node 26.8.2, Codex CLI 0.154.0, and Claude
+Code 2.1.278; the exact DSH runtime still needs its own probe. Parser code and
+measurements are development spikes, not a finished checker or plugin.
+
+** [2026-09-19 Sat] Parser decision and native DSH contract probe
+
+Completed PHB-011: 25 tests pass, source patches reject stale/overlapping/protected
+edits, and a recorded comparison selects remark/unified. Compromise is a candidate
+generator with four misses in 20 grammar examples. Protected quotation/citation/lock
+policies, decoded source mapping, and expanded grammar coverage remain required.
+
+PHB-012 has partial evidence: eight checks pass against the wrapper's installed
+DSH 0.1.6-alpha.1 and Cordis 4.0.2. The probe covers native service APIs and synthetic
+events. Full invocation, effective wrapper roots, durable mode state, resume,
+compaction, and pre-delivery enforcement remain open. No user host settings changed.
+
+PHB-020 is the next core task. PHB-012 returns to NEXT with concrete live-test steps.
+All follow-ups appear in their owning tasks. This checkpoint includes the working
+baseline, spike code, lockfile, measured reports, and updated requirements/README.
+Verification: clean =npm ci --include=dev --ignore-scripts= succeeded; all 25
+parser/patch tests passed. Emacs Org lint passed. The 34 IDs and 28 tasks have
+valid links and acyclic dependencies; local document links and JSON examples
+passed validation. The checkpoint is ready for commit and push to origin/main.

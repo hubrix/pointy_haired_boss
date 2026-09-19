@@ -1,6 +1,6 @@
-# Draft product requirements
+# Product requirements
 
-Status: proposed requirements for discussion, September 19, 2026. Research is complete for this initial draft; implementation and benchmarks have not begun. `pointy-haired-boss` and `phb` are working names.
+Status: working requirements, September 19, 2026. The [first-release baseline](BASELINE.md) records implementation defaults selected after Mark asked to continue. `pointy-haired-boss` and `phb` are working names. See the tracker for current implementation and verification status.
 
 [project.org](../project.org) owns the live plan, task status, decisions, and next actions. This document defines the product contract; the delivery sequence below is supporting context. Keep both aligned when scope changes.
 
@@ -14,7 +14,7 @@ Confirmed house style: ban adverbs, passive voice, “this, not that” framing,
 
 An agentless obligation states that someone must or should act without identifying the responsible actor. The actor can be a named person, team, role, system, or an unambiguous addressee. Never supply “we,” “you,” or a team name merely to fill a missing subject.
 
-## Proposed first-release scope
+## First-release scope
 
 English prose in UTF-8 plain text, Markdown, selected passages, and assistant responses. Initial use cases: email, memos, documentation, reports, and general nonfiction. Preserve mixed-language spans; do not claim multilingual editorial coverage. Markdown support includes ordinary GitHub-style tables and task lists. Embedded code and raw HTML are protected; full MDX/HTML editing is deferred.
 
@@ -156,11 +156,11 @@ File metadata and media watermark processing are a separate possible extension. 
 3. **Quality expansion:** user voice samples, additional domains/languages, optional Vale/textlint interoperability, richer metrics, and CI/SARIF output where justified.
 4. **Watermark experiment:** implement WM-01 through WM-06 with controlled scheme-specific evaluations before making any mitigation claim.
 
-## Decisions still open
+## First-release choices
 
-These are choices for the next discussion, not missing research that prevents this draft from being useful.
+The [baseline](BASELINE.md) adopts the following reversible defaults. The [parser decision](PARSER-SPIKE.md) selects remark/unified and compromise for grammar candidates. [Host verification](HOST-SPIKE.md) remains partial. Later changes belong in the tracker and this contract.
 
-| Decision | Proposed default |
+| Decision | Working default |
 | --- | --- |
 | Final product name | Pointy Haired Boss; package `pointy-haired-boss`, short command `phb` |
 | Everyday activation | Normal guidance automatically for prose, with manual-only mode and off switch |
