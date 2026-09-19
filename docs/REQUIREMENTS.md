@@ -90,7 +90,7 @@ The confirmed house bans block a clean result in the completed editorial workflo
 
 Proposed project file: `.phb.json`; user defaults in a documented user configuration location. Precedence for style choices: explicit invocation > project/path override > user profile > bundled house rules > Chicago defaults. Protected spans and factual fidelity remain active at every intensity. If a ban conflicts with exact content or meaning, preserve the source and report the conflict; do not mark the passage compliant. Protected quotations can carry a documented exemption. Chicago guidance cannot silently re-enable a house-banned construction.
 
-Illustrative configuration, not a shipped schema:
+The [version 1 configuration contract](CONTRACTS.md) now implements in-memory validation and resolution; file discovery and the CLI remain open. This example validates against the [configuration schema](../schemas/config.schema.json):
 
 ```json
 {
@@ -132,7 +132,7 @@ flowchart LR
 
 The local checker validates exact spans, configured bans, and mechanical invariants. The model reviews meaning and organization. Neither is a substitute for independent evaluation: matching entity lists cannot prove semantic equivalence, and a model's self-score is not a verified quality measure.
 
-JSON offsets must be unambiguous: zero-based, half-open UTF-16 offsets for a proposed Node core, plus one-based line/column locations and an input hash. Columns count Unicode scalar values; document CRLF handling. Adapters must translate their native offsets and test astral characters and combining sequences. Findings always refer to the original input; rescan after applying an edit batch.
+The implemented source contract uses zero-based, half-open UTF-16 offsets, one-based line/column locations, and an input hash. Columns count Unicode scalar values; CRLF is one line break. Adapters must translate native or decoded offsets and test astral characters and combining sequences. Findings refer to the original input; rescan after applying an edit batch. See [CONTRACTS.md](CONTRACTS.md) for invalid-encoding handling and report coverage semantics.
 
 ## Statistical-watermark research track
 
@@ -168,6 +168,6 @@ The [baseline](BASELINE.md) adopts the following reversible defaults. The [parse
 | First genres | General nonfiction, business writing, and technical documentation |
 | Personal voice | Start from supplied text; sample-derived profiles in the next increment |
 | Statistical watermark work | Separate experimental milestone; elevate into initial scope only if it is essential to launch |
-| Engine dependency | Decide after a small textlint-versus-focused-core spike |
+| Engine dependency | remark/unified with GFM, front matter, and math; compromise supplies grammar candidates |
 
 Research basis and implementation alternatives: [RESEARCH.md](RESEARCH.md).

@@ -1,0 +1,86 @@
+{
+   "version": 1,
+   "name": "house",
+   "description": "Mark’s house style for clear English nonfiction.",
+   "settings": {
+      "activation": "auto",
+      "intensity": "normal",
+      "locale": "en-US",
+      "audience": "General readers",
+      "register": "Plain, direct nonfiction",
+      "styleGuide": {
+         "name": "chicago",
+         "edition": 18
+      },
+      "readability": {
+         "metric": "flesch-kincaid",
+         "targetMaxGrade": 8,
+         "minWords": 100
+      },
+      "rules": {
+         "LEX-01": "error",
+         "LEX-02": "warning",
+         "LEX-03": "warning",
+         "LEX-04": "suggestion",
+         "LEX-05": "warning",
+         "LEX-06": "warning",
+         "STR-01": "error",
+         "STR-02": "suggestion",
+         "STR-03": "suggestion",
+         "STR-04": "warning",
+         "STR-05": "warning",
+         "STR-06": "warning",
+         "GRAM-01": "error",
+         "CLR-01": "error",
+         "CLR-02": "warning",
+         "CLR-03": "suggestion",
+         "CLR-04": "suggestion",
+         "CLR-05": "error",
+         "READ-01": "warning",
+         "FMT-01": "suggestion",
+         "FMT-02": "suggestion",
+         "CMO-01": "warning",
+         "CMO-02": "warning",
+         "CMO-03": "warning",
+         "CMO-04": "warning",
+         "CMO-05": "warning",
+         "CMO-06": "warning",
+         "FID-01": "error",
+         "FID-02": "error",
+         "FID-03": "error",
+         "FID-04": "error",
+         "FID-05": "error",
+         "FID-06": "error",
+         "UNI-01": "warning",
+         "UNI-02": "warning",
+         "UNI-03": "warning",
+         "UNI-04": "suggestion",
+         "UNI-05": "warning",
+         "UNI-06": "suggestion",
+         "ART-01": "warning"
+      },
+      "forbiddenPhrases": [
+         "delve into",
+         "in today's fast-paced world"
+      ],
+      "allowedTerms": [
+         "robust regression",
+         "test harness"
+      ],
+      "requiredTerminology": [],
+      "matching": {
+         "caseSensitive": false,
+         "whitespace": "horizontal"
+      },
+      "unicode": {
+         "policy": "conservative"
+      },
+      "exclude": [
+         "vendor/**",
+         "generated/**",
+         "node_modules/**",
+         ".git/**"
+      ],
+      "suppressions": []
+   }
+}

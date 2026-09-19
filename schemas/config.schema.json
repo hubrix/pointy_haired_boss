@@ -1,0 +1,609 @@
+{
+   "type": "object",
+   "properties": {
+      "version": {
+         "const": 1
+      },
+      "activation": {
+         "enum": [
+            "auto",
+            "manual",
+            "off"
+         ]
+      },
+      "intensity": {
+         "enum": [
+            "light",
+            "normal",
+            "strict"
+         ]
+      },
+      "locale": {
+         "const": "en-US"
+      },
+      "audience": {
+         "type": "string",
+         "minLength": 1,
+         "pattern": "\\S"
+      },
+      "register": {
+         "type": "string",
+         "minLength": 1,
+         "pattern": "\\S"
+      },
+      "styleGuide": {
+         "type": "object",
+         "properties": {
+            "name": {
+               "const": "chicago"
+            },
+            "edition": {
+               "const": 18
+            }
+         },
+         "required": [
+            "name",
+            "edition"
+         ],
+         "additionalProperties": false
+      },
+      "readability": {
+         "type": "object",
+         "properties": {
+            "metric": {
+               "const": "flesch-kincaid"
+            },
+            "targetMaxGrade": {
+               "type": "number",
+               "minimum": 0,
+               "maximum": 30
+            },
+            "minWords": {
+               "type": "integer",
+               "minimum": 1
+            }
+         },
+         "required": [],
+         "additionalProperties": false
+      },
+      "rules": {
+         "type": "object",
+         "propertyNames": {
+            "enum": [
+               "LEX-01",
+               "LEX-02",
+               "LEX-03",
+               "LEX-04",
+               "LEX-05",
+               "LEX-06",
+               "STR-01",
+               "STR-02",
+               "STR-03",
+               "STR-04",
+               "STR-05",
+               "STR-06",
+               "GRAM-01",
+               "CLR-01",
+               "CLR-02",
+               "CLR-03",
+               "CLR-04",
+               "CLR-05",
+               "READ-01",
+               "FMT-01",
+               "FMT-02",
+               "CMO-01",
+               "CMO-02",
+               "CMO-03",
+               "CMO-04",
+               "CMO-05",
+               "CMO-06",
+               "FID-01",
+               "FID-02",
+               "FID-03",
+               "FID-04",
+               "FID-05",
+               "FID-06",
+               "UNI-01",
+               "UNI-02",
+               "UNI-03",
+               "UNI-04",
+               "UNI-05",
+               "UNI-06",
+               "ART-01"
+            ]
+         },
+         "additionalProperties": {
+            "enum": [
+               "error",
+               "warning",
+               "suggestion",
+               "off"
+            ]
+         }
+      },
+      "forbiddenPhrases": {
+         "type": "array",
+         "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+         },
+         "uniqueItems": true
+      },
+      "allowedTerms": {
+         "type": "array",
+         "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+         },
+         "uniqueItems": true
+      },
+      "requiredTerminology": {
+         "type": "array",
+         "items": {
+            "type": "object",
+            "properties": {
+               "preferred": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "avoid": {
+                  "type": "array",
+                  "items": {
+                     "type": "string",
+                     "minLength": 1,
+                     "pattern": "\\S"
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1
+               }
+            },
+            "required": [
+               "preferred",
+               "avoid"
+            ],
+            "additionalProperties": false
+         },
+         "uniqueItems": true
+      },
+      "matching": {
+         "type": "object",
+         "properties": {
+            "caseSensitive": {
+               "type": "boolean"
+            },
+            "whitespace": {
+               "enum": [
+                  "horizontal",
+                  "literal"
+               ]
+            }
+         },
+         "required": [],
+         "additionalProperties": false
+      },
+      "unicode": {
+         "type": "object",
+         "properties": {
+            "policy": {
+               "const": "conservative"
+            }
+         },
+         "required": [
+            "policy"
+         ],
+         "additionalProperties": false
+      },
+      "exclude": {
+         "type": "array",
+         "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+         },
+         "uniqueItems": true
+      },
+      "suppressions": {
+         "type": "array",
+         "items": {
+            "type": "object",
+            "properties": {
+               "ruleIds": {
+                  "type": "array",
+                  "items": {
+                     "enum": [
+                        "LEX-01",
+                        "LEX-02",
+                        "LEX-03",
+                        "LEX-04",
+                        "LEX-05",
+                        "LEX-06",
+                        "STR-01",
+                        "STR-02",
+                        "STR-03",
+                        "STR-04",
+                        "STR-05",
+                        "STR-06",
+                        "GRAM-01",
+                        "CLR-01",
+                        "CLR-02",
+                        "CLR-03",
+                        "CLR-04",
+                        "CLR-05",
+                        "READ-01",
+                        "FMT-01",
+                        "FMT-02",
+                        "CMO-01",
+                        "CMO-02",
+                        "CMO-03",
+                        "CMO-04",
+                        "CMO-05",
+                        "CMO-06",
+                        "FID-01",
+                        "FID-02",
+                        "FID-03",
+                        "FID-04",
+                        "FID-05",
+                        "FID-06",
+                        "UNI-01",
+                        "UNI-02",
+                        "UNI-03",
+                        "UNI-04",
+                        "UNI-05",
+                        "UNI-06",
+                        "ART-01"
+                     ]
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1
+               },
+               "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "paths": {
+                  "type": "array",
+                  "items": {
+                     "type": "string",
+                     "minLength": 1,
+                     "pattern": "\\S"
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1
+               }
+            },
+            "required": [
+               "ruleIds",
+               "reason"
+            ],
+            "additionalProperties": false
+         }
+      },
+      "profile": {
+         "type": "string",
+         "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "overrides": {
+         "type": "array",
+         "items": {
+            "type": "object",
+            "properties": {
+               "files": {
+                  "type": "array",
+                  "items": {
+                     "type": "string",
+                     "minLength": 1,
+                     "pattern": "\\S"
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1
+               },
+               "settings": {
+                  "type": "object",
+                  "properties": {
+                     "activation": {
+                        "enum": [
+                           "auto",
+                           "manual",
+                           "off"
+                        ]
+                     },
+                     "intensity": {
+                        "enum": [
+                           "light",
+                           "normal",
+                           "strict"
+                        ]
+                     },
+                     "locale": {
+                        "const": "en-US"
+                     },
+                     "audience": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                     },
+                     "register": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                     },
+                     "styleGuide": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "const": "chicago"
+                           },
+                           "edition": {
+                              "const": 18
+                           }
+                        },
+                        "required": [
+                           "name",
+                           "edition"
+                        ],
+                        "additionalProperties": false
+                     },
+                     "readability": {
+                        "type": "object",
+                        "properties": {
+                           "metric": {
+                              "const": "flesch-kincaid"
+                           },
+                           "targetMaxGrade": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 30
+                           },
+                           "minWords": {
+                              "type": "integer",
+                              "minimum": 1
+                           }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                     },
+                     "rules": {
+                        "type": "object",
+                        "propertyNames": {
+                           "enum": [
+                              "LEX-01",
+                              "LEX-02",
+                              "LEX-03",
+                              "LEX-04",
+                              "LEX-05",
+                              "LEX-06",
+                              "STR-01",
+                              "STR-02",
+                              "STR-03",
+                              "STR-04",
+                              "STR-05",
+                              "STR-06",
+                              "GRAM-01",
+                              "CLR-01",
+                              "CLR-02",
+                              "CLR-03",
+                              "CLR-04",
+                              "CLR-05",
+                              "READ-01",
+                              "FMT-01",
+                              "FMT-02",
+                              "CMO-01",
+                              "CMO-02",
+                              "CMO-03",
+                              "CMO-04",
+                              "CMO-05",
+                              "CMO-06",
+                              "FID-01",
+                              "FID-02",
+                              "FID-03",
+                              "FID-04",
+                              "FID-05",
+                              "FID-06",
+                              "UNI-01",
+                              "UNI-02",
+                              "UNI-03",
+                              "UNI-04",
+                              "UNI-05",
+                              "UNI-06",
+                              "ART-01"
+                           ]
+                        },
+                        "additionalProperties": {
+                           "enum": [
+                              "error",
+                              "warning",
+                              "suggestion",
+                              "off"
+                           ]
+                        }
+                     },
+                     "forbiddenPhrases": {
+                        "type": "array",
+                        "items": {
+                           "type": "string",
+                           "minLength": 1,
+                           "pattern": "\\S"
+                        },
+                        "uniqueItems": true
+                     },
+                     "allowedTerms": {
+                        "type": "array",
+                        "items": {
+                           "type": "string",
+                           "minLength": 1,
+                           "pattern": "\\S"
+                        },
+                        "uniqueItems": true
+                     },
+                     "requiredTerminology": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                              "preferred": {
+                                 "type": "string",
+                                 "minLength": 1,
+                                 "pattern": "\\S"
+                              },
+                              "avoid": {
+                                 "type": "array",
+                                 "items": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "pattern": "\\S"
+                                 },
+                                 "uniqueItems": true,
+                                 "minItems": 1
+                              }
+                           },
+                           "required": [
+                              "preferred",
+                              "avoid"
+                           ],
+                           "additionalProperties": false
+                        },
+                        "uniqueItems": true
+                     },
+                     "matching": {
+                        "type": "object",
+                        "properties": {
+                           "caseSensitive": {
+                              "type": "boolean"
+                           },
+                           "whitespace": {
+                              "enum": [
+                                 "horizontal",
+                                 "literal"
+                              ]
+                           }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                     },
+                     "unicode": {
+                        "type": "object",
+                        "properties": {
+                           "policy": {
+                              "const": "conservative"
+                           }
+                        },
+                        "required": [
+                           "policy"
+                        ],
+                        "additionalProperties": false
+                     },
+                     "exclude": {
+                        "type": "array",
+                        "items": {
+                           "type": "string",
+                           "minLength": 1,
+                           "pattern": "\\S"
+                        },
+                        "uniqueItems": true
+                     },
+                     "suppressions": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                              "ruleIds": {
+                                 "type": "array",
+                                 "items": {
+                                    "enum": [
+                                       "LEX-01",
+                                       "LEX-02",
+                                       "LEX-03",
+                                       "LEX-04",
+                                       "LEX-05",
+                                       "LEX-06",
+                                       "STR-01",
+                                       "STR-02",
+                                       "STR-03",
+                                       "STR-04",
+                                       "STR-05",
+                                       "STR-06",
+                                       "GRAM-01",
+                                       "CLR-01",
+                                       "CLR-02",
+                                       "CLR-03",
+                                       "CLR-04",
+                                       "CLR-05",
+                                       "READ-01",
+                                       "FMT-01",
+                                       "FMT-02",
+                                       "CMO-01",
+                                       "CMO-02",
+                                       "CMO-03",
+                                       "CMO-04",
+                                       "CMO-05",
+                                       "CMO-06",
+                                       "FID-01",
+                                       "FID-02",
+                                       "FID-03",
+                                       "FID-04",
+                                       "FID-05",
+                                       "FID-06",
+                                       "UNI-01",
+                                       "UNI-02",
+                                       "UNI-03",
+                                       "UNI-04",
+                                       "UNI-05",
+                                       "UNI-06",
+                                       "ART-01"
+                                    ]
+                                 },
+                                 "uniqueItems": true,
+                                 "minItems": 1
+                              },
+                              "reason": {
+                                 "type": "string",
+                                 "minLength": 1,
+                                 "pattern": "\\S"
+                              },
+                              "paths": {
+                                 "type": "array",
+                                 "items": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "pattern": "\\S"
+                                 },
+                                 "uniqueItems": true,
+                                 "minItems": 1
+                              }
+                           },
+                           "required": [
+                              "ruleIds",
+                              "reason"
+                           ],
+                           "additionalProperties": false
+                        }
+                     },
+                     "profile": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9-]*$"
+                     }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+               }
+            },
+            "required": [
+               "files",
+               "settings"
+            ],
+            "additionalProperties": false
+         }
+      }
+   },
+   "required": [
+      "version"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:config:v1",
+   "title": "PHB config v1"
+}

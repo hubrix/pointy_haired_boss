@@ -1,0 +1,218 @@
+{
+   "type": "object",
+   "properties": {
+      "id": {
+         "enum": [
+            "LEX-01",
+            "LEX-02",
+            "LEX-03",
+            "LEX-04",
+            "LEX-05",
+            "LEX-06",
+            "STR-01",
+            "STR-02",
+            "STR-03",
+            "STR-04",
+            "STR-05",
+            "STR-06",
+            "GRAM-01",
+            "CLR-01",
+            "CLR-02",
+            "CLR-03",
+            "CLR-04",
+            "CLR-05",
+            "READ-01",
+            "FMT-01",
+            "FMT-02",
+            "CMO-01",
+            "CMO-02",
+            "CMO-03",
+            "CMO-04",
+            "CMO-05",
+            "CMO-06",
+            "FID-01",
+            "FID-02",
+            "FID-03",
+            "FID-04",
+            "FID-05",
+            "FID-06",
+            "UNI-01",
+            "UNI-02",
+            "UNI-03",
+            "UNI-04",
+            "UNI-05",
+            "UNI-06",
+            "ART-01"
+         ]
+      },
+      "version": {
+         "type": "string",
+         "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      },
+      "category": {
+         "enum": [
+            "wording",
+            "structure",
+            "grammar",
+            "clarity",
+            "readability",
+            "formatting",
+            "chicago",
+            "fidelity",
+            "unicode",
+            "artifacts"
+         ]
+      },
+      "title": {
+         "type": "string",
+         "minLength": 1,
+         "pattern": "\\S"
+      },
+      "rationale": {
+         "type": "string",
+         "minLength": 1,
+         "pattern": "\\S"
+      },
+      "sources": {
+         "type": "array",
+         "minItems": 1,
+         "items": {
+            "type": "object",
+            "properties": {
+               "reference": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "kind": {
+                  "enum": [
+                     "project-policy",
+                     "external-reference"
+                  ]
+               }
+            },
+            "required": [
+               "reference",
+               "kind"
+            ],
+            "additionalProperties": false
+         }
+      },
+      "defaultSeverity": {
+         "enum": [
+            "error",
+            "warning",
+            "suggestion"
+         ]
+      },
+      "detector": {
+         "type": "object",
+         "properties": {
+            "type": {
+               "enum": [
+                  "exact",
+                  "heuristic",
+                  "semantic"
+               ]
+            },
+            "requiresContext": {
+               "type": "boolean"
+            },
+            "subtype": {
+               "enum": [
+                  "grammar",
+                  "metric"
+               ]
+            }
+         },
+         "required": [
+            "type",
+            "requiresContext"
+         ],
+         "additionalProperties": false
+      },
+      "scopes": {
+         "type": "array",
+         "minItems": 1,
+         "uniqueItems": true,
+         "items": {
+            "enum": [
+               "prose",
+               "source",
+               "edit"
+            ]
+         }
+      },
+      "criteria": {
+         "type": "string",
+         "minLength": 1,
+         "pattern": "\\S"
+      },
+      "exceptions": {
+         "type": "array",
+         "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+         },
+         "uniqueItems": true
+      },
+      "fixPolicy": {
+         "enum": [
+            "safe-local",
+            "editorial-review",
+            "report-only"
+         ]
+      },
+      "examples": {
+         "type": "array",
+         "minItems": 2,
+         "items": {
+            "type": "object",
+            "properties": {
+               "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "outcome": {
+                  "enum": [
+                     "review",
+                     "preserve"
+                  ]
+               },
+               "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               }
+            },
+            "required": [
+               "text",
+               "outcome",
+               "reason"
+            ],
+            "additionalProperties": false
+         }
+      }
+   },
+   "required": [
+      "id",
+      "version",
+      "category",
+      "title",
+      "rationale",
+      "sources",
+      "defaultSeverity",
+      "detector",
+      "scopes",
+      "criteria",
+      "exceptions",
+      "fixPolicy",
+      "examples"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:rule:v1",
+   "title": "PHB rule v1"
+}

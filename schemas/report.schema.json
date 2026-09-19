@@ -1,0 +1,162 @@
+{
+   "type": "object",
+   "properties": {
+      "version": {
+         "const": 1
+      },
+      "scope": {
+         "enum": [
+            "local",
+            "editorial"
+         ]
+      },
+      "input": {
+         "type": "object",
+         "properties": {
+            "hash": {
+               "type": "string",
+               "pattern": "^[a-f0-9]{64}$"
+            },
+            "utf16Length": {
+               "type": "integer",
+               "minimum": 0
+            },
+            "byteLength": {
+               "type": "integer",
+               "minimum": 0
+            }
+         },
+         "required": [
+            "hash",
+            "utf16Length",
+            "byteLength"
+         ],
+         "additionalProperties": false
+      },
+      "coverage": {
+         "enum": [
+            "complete",
+            "partial",
+            "failed"
+         ]
+      },
+      "requestedCoverage": {
+         "enum": [
+            "complete",
+            "partial",
+            "failed"
+         ]
+      },
+      "checks": {
+         "type": "array",
+         "minItems": 1,
+         "items": {
+            "type": "object",
+            "properties": {
+               "id": {
+                  "enum": [
+                     "boundaries",
+                     "LEX-01",
+                     "LEX-02",
+                     "LEX-03",
+                     "LEX-04",
+                     "LEX-05",
+                     "LEX-06",
+                     "STR-01",
+                     "STR-02",
+                     "STR-03",
+                     "STR-04",
+                     "STR-05",
+                     "STR-06",
+                     "GRAM-01",
+                     "CLR-01",
+                     "CLR-02",
+                     "CLR-03",
+                     "CLR-04",
+                     "CLR-05",
+                     "READ-01",
+                     "FMT-01",
+                     "FMT-02",
+                     "CMO-01",
+                     "CMO-02",
+                     "CMO-03",
+                     "CMO-04",
+                     "CMO-05",
+                     "CMO-06",
+                     "FID-01",
+                     "FID-02",
+                     "FID-03",
+                     "FID-04",
+                     "FID-05",
+                     "FID-06",
+                     "UNI-01",
+                     "UNI-02",
+                     "UNI-03",
+                     "UNI-04",
+                     "UNI-05",
+                     "UNI-06",
+                     "ART-01"
+                  ]
+               },
+               "required": {
+                  "type": "boolean"
+               },
+               "status": {
+                  "enum": [
+                     "complete",
+                     "partial",
+                     "skipped",
+                     "failed"
+                  ]
+               },
+               "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               }
+            },
+            "required": [
+               "id",
+               "required",
+               "status"
+            ],
+            "additionalProperties": false
+         }
+      },
+      "findings": {
+         "type": "array",
+         "items": {
+            "$ref": "urn:phb:finding:v1"
+         }
+      },
+      "threshold": {
+         "enum": [
+            "error",
+            "warning",
+            "suggestion"
+         ]
+      },
+      "exitCode": {
+         "enum": [
+            0,
+            1,
+            2
+         ]
+      }
+   },
+   "required": [
+      "version",
+      "scope",
+      "input",
+      "coverage",
+      "requestedCoverage",
+      "checks",
+      "findings",
+      "threshold",
+      "exitCode"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:report:v1",
+   "title": "PHB report v1"
+}

@@ -1,0 +1,90 @@
+{
+   "type": "object",
+   "properties": {
+      "version": {
+         "const": 1
+      },
+      "ruleIds": {
+         "type": "array",
+         "items": {
+            "enum": [
+               "LEX-01",
+               "LEX-02",
+               "LEX-03",
+               "LEX-04",
+               "LEX-05",
+               "LEX-06",
+               "STR-01",
+               "STR-02",
+               "STR-03",
+               "STR-04",
+               "STR-05",
+               "STR-06",
+               "GRAM-01",
+               "CLR-01",
+               "CLR-02",
+               "CLR-03",
+               "CLR-04",
+               "CLR-05",
+               "READ-01",
+               "FMT-01",
+               "FMT-02",
+               "CMO-01",
+               "CMO-02",
+               "CMO-03",
+               "CMO-04",
+               "CMO-05",
+               "CMO-06",
+               "FID-01",
+               "FID-02",
+               "FID-03",
+               "FID-04",
+               "FID-05",
+               "FID-06",
+               "UNI-01",
+               "UNI-02",
+               "UNI-03",
+               "UNI-04",
+               "UNI-05",
+               "UNI-06",
+               "ART-01"
+            ]
+         },
+         "uniqueItems": true,
+         "minItems": 1
+      },
+      "range": {
+         "type": "object",
+         "properties": {
+            "start": {
+               "type": "integer",
+               "minimum": 0
+            },
+            "end": {
+               "type": "integer",
+               "minimum": 0
+            }
+         },
+         "required": [
+            "start",
+            "end"
+         ],
+         "additionalProperties": false
+      },
+      "reason": {
+         "type": "string",
+         "minLength": 1,
+         "pattern": "\\S"
+      }
+   },
+   "required": [
+      "version",
+      "ruleIds",
+      "range",
+      "reason"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:suppression:v1",
+   "title": "PHB suppression v1"
+}

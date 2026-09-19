@@ -1,6 +1,6 @@
 # Initial rule catalog
 
-Draft policy design, not implemented rules. Examples are original. The catalog draws on the implementation comparison in [RESEARCH.md](RESEARCH.md); it intentionally distinguishes explicit preferences from contextual editorial judgments.
+Policy design with an implemented [versioned metadata catalog](../rules/catalog.json) and [shared contracts](CONTRACTS.md). Detector implementation remains separate work. Examples are original. The catalog draws on [RESEARCH.md](RESEARCH.md) and distinguishes explicit preferences from contextual editorial judgments.
 
 Default levels: `error` blocks a checked artifact at the configured threshold; `warning` requests review; `suggestion` is optional. A match outside editable prose is suppressed or reported as a protected-content conflict. No rule establishes AI authorship.
 

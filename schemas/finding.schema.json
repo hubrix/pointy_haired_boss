@@ -1,0 +1,240 @@
+{
+   "type": "object",
+   "properties": {
+      "version": {
+         "const": 1
+      },
+      "ruleId": {
+         "enum": [
+            "LEX-01",
+            "LEX-02",
+            "LEX-03",
+            "LEX-04",
+            "LEX-05",
+            "LEX-06",
+            "STR-01",
+            "STR-02",
+            "STR-03",
+            "STR-04",
+            "STR-05",
+            "STR-06",
+            "GRAM-01",
+            "CLR-01",
+            "CLR-02",
+            "CLR-03",
+            "CLR-04",
+            "CLR-05",
+            "READ-01",
+            "FMT-01",
+            "FMT-02",
+            "CMO-01",
+            "CMO-02",
+            "CMO-03",
+            "CMO-04",
+            "CMO-05",
+            "CMO-06",
+            "FID-01",
+            "FID-02",
+            "FID-03",
+            "FID-04",
+            "FID-05",
+            "FID-06",
+            "UNI-01",
+            "UNI-02",
+            "UNI-03",
+            "UNI-04",
+            "UNI-05",
+            "UNI-06",
+            "ART-01"
+         ]
+      },
+      "ruleVersion": {
+         "type": "string",
+         "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      },
+      "inputHash": {
+         "type": "string",
+         "pattern": "^[a-f0-9]{64}$"
+      },
+      "severity": {
+         "enum": [
+            "error",
+            "warning",
+            "suggestion"
+         ]
+      },
+      "ruleSeverity": {
+         "enum": [
+            "error",
+            "warning",
+            "suggestion"
+         ]
+      },
+      "status": {
+         "enum": [
+            "confirmed",
+            "candidate",
+            "conflict",
+            "suppressed"
+         ]
+      },
+      "evidence": {
+         "enum": [
+            "exact",
+            "heuristic",
+            "semantic"
+         ]
+      },
+      "reason": {
+         "type": "string",
+         "minLength": 1,
+         "pattern": "\\S"
+      },
+      "span": {
+         "type": "object",
+         "properties": {
+            "start": {
+               "type": "integer",
+               "minimum": 0
+            },
+            "end": {
+               "type": "integer",
+               "minimum": 0
+            },
+            "text": {
+               "type": "string"
+            },
+            "startLocation": {
+               "type": "object",
+               "properties": {
+                  "line": {
+                     "type": "integer",
+                     "minimum": 1
+                  },
+                  "column": {
+                     "type": "integer",
+                     "minimum": 1
+                  }
+               },
+               "required": [
+                  "line",
+                  "column"
+               ],
+               "additionalProperties": false
+            },
+            "endLocation": {
+               "type": "object",
+               "properties": {
+                  "line": {
+                     "type": "integer",
+                     "minimum": 1
+                  },
+                  "column": {
+                     "type": "integer",
+                     "minimum": 1
+                  }
+               },
+               "required": [
+                  "line",
+                  "column"
+               ],
+               "additionalProperties": false
+            }
+         },
+         "required": [
+            "start",
+            "end",
+            "text",
+            "startLocation",
+            "endLocation"
+         ],
+         "additionalProperties": false
+      },
+      "fix": {
+         "type": "object",
+         "properties": {
+            "inputHash": {
+               "type": "string",
+               "pattern": "^[a-f0-9]{64}$"
+            },
+            "range": {
+               "type": "object",
+               "properties": {
+                  "start": {
+                     "type": "integer",
+                     "minimum": 0
+                  },
+                  "end": {
+                     "type": "integer",
+                     "minimum": 0
+                  }
+               },
+               "required": [
+                  "start",
+                  "end"
+               ],
+               "additionalProperties": false
+            },
+            "original": {
+               "type": "string"
+            },
+            "replacement": {
+               "type": "string"
+            },
+            "policy": {
+               "enum": [
+                  "safe-local",
+                  "editorial-review"
+               ]
+            }
+         },
+         "required": [
+            "inputHash",
+            "range",
+            "original",
+            "replacement",
+            "policy"
+         ],
+         "additionalProperties": false
+      },
+      "exemption": {
+         "type": "object",
+         "properties": {
+            "kind": {
+               "enum": [
+                  "allowlist",
+                  "configuration",
+                  "inline",
+                  "protected"
+               ]
+            },
+            "reason": {
+               "type": "string",
+               "minLength": 1,
+               "pattern": "\\S"
+            }
+         },
+         "required": [
+            "kind",
+            "reason"
+         ],
+         "additionalProperties": false
+      }
+   },
+   "required": [
+      "version",
+      "ruleId",
+      "ruleVersion",
+      "inputHash",
+      "severity",
+      "ruleSeverity",
+      "status",
+      "evidence",
+      "reason",
+      "span"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:finding:v1",
+   "title": "PHB finding v1"
+}

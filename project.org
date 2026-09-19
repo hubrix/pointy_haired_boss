@@ -27,6 +27,7 @@ Supporting documents:
 - [[file:docs/BASELINE.md][First-release implementation baseline]]
 - [[file:docs/PARSER-SPIKE.md][Parser decision and measured evidence]]
 - [[file:docs/HOST-SPIKE.md][Host contracts and partial smoke-test evidence]]
+- [[file:docs/CONTRACTS.md][Implemented shared contracts and API behavior]]
 
 Status vocabulary: TODO = queued; NEXT = ready; DOING = in progress;
 WAITING = blocked with a recorded cause; DONE = complete with evidence;
@@ -41,15 +42,15 @@ conditions describe required outcomes, not outcomes already achieved.
 :CUSTOM_ID: focus
 :END:
 
-Stage: baseline pushed; parser decision verified; host investigation partial.
-Current checkpoint: PHB-011 complete, with 25 tests and measured parser results.
-The DSH probe passes eight service/event checks. Full host sessions remain untested.
-Blockers: none. The installable plugin and product checker remain unimplemented.
+Stage: shared contracts implemented; parser choice verified; host investigation partial.
+Current checkpoint: PHB-020 complete. All 63 tests pass on Node 26.8.2 and 22.23.2.
+The prior DSH probe passed eight service/event checks. Full host sessions remain untested.
+Blockers: none. The command-line checker and installable plugin remain unimplemented.
 
 Next actions, in order:
-1. [[#PHB-020][Implement shared rule, profile, and diagnostic contracts]].
+1. [[#PHB-021][Build the parser boundary policy and first local checks]].
 2. [[#PHB-012][Complete live host invocation and lifecycle smoke tests]].
-3. [[#PHB-021][Build the parser boundary policy and first local checks]].
+3. [[#PHB-022][Implement Unicode inventory and conservative cleanup]].
 
 Do not begin implementation merely because it appears here. Continue within
 the user's current request and preserve later work in this file.
@@ -73,6 +74,7 @@ the user's current request and preserve later work in this file.
 - [2026-09-19 Sat] Keep =project.org= as the canonical planning bible. Put
   update instructions in =CLAUDE.md= and capture future plans here.
 - [2026-09-19 Sat] Push the current state and continue the project work.
+- [2026-09-19 Sat] Continue implementation after the parser/host checkpoint.
 
 ** Working implementation baseline
 
@@ -93,6 +95,12 @@ user-confirmed constraints above. [[file:docs/PARSER-SPIKE.md][The parser decisi
 | Host scope | All three adapters in the first release | PHB-012 |
 | Voice samples | Preserve source voice; sample-derived profiles in a later increment | PHB-040 |
 | Watermark work | Unicode cleanup in MVP; statistical work in a separate experiment | PHB-050 |
+
+[[file:docs/CONTRACTS.md][Version 1 contracts]] fix configuration precedence, matching boundaries,
+severity/evidence semantics, source offsets, and coverage reporting. The house
+profile starts with the two illustrative phrase bans and technical-term allowlist
+from the requirements. Vocabulary expansion remains in PHB-021. These details are
+agent implementation choices under the request to continue.
 
 The DSH wrapper pinned =0.1.6-alpha.1= and Cordis =4.0.2= at initial inspection.
 Recheck those pins during the host spike. A separate local DSH checkout and the
@@ -217,7 +225,8 @@ defect in the user's effective wrapper configuration.
 
 * Milestone 2: build the first usable release
 
-** NEXT Define shared rule, profile, and diagnostic contracts
+** DONE Define shared rule, profile, and diagnostic contracts
+CLOSED: [2026-09-19 Sat]
 :PROPERTIES:
 :CUSTOM_ID: PHB-020
 :DEPENDS_ON: PHB-011
@@ -229,8 +238,21 @@ boundary/semantic coverage, scalar columns, CRLF, and invalid UTF-8 handling.
 Completion: validated schemas and focused fixtures for invalid configuration,
 Unicode positions, exact phrase boundaries, and protected-content conflicts.
 Requirements: RULE-01–03, VOICE-01, OUT-01, OUT-03.
+Implementation: publish strict versioned JSON schemas, catalog records, profile/config
+resolution, exact phrase and suppression contracts, original-source positions,
+and diagnostic/coverage validation. Reject ambiguous or unsupported configuration.
+Keep the first rule checks and full Markdown boundary policy under PHB-021.
+Evidence: [[file:src/contracts/][contract modules]], [[file:schemas/][six generated JSON Schemas]],
+[[file:rules/catalog.json][40 rule records]], [[file:profiles/house.json][house profile]], and [[file:docs/CONTRACTS.md][API contract]].
+Verification: 38 contract tests plus the 25 parser-spike tests pass on Node 26.8.2
+and 22.23.2; generated contracts match their definitions; documentation examples
+validate. Coverage tests distinguish candidates, confirmed violations, suppression,
+protected conflicts, and missing checks. Metadata does not imply detector availability.
+Decoded Markdown source mapping and file/profile discovery remain in PHB-021;
+patch application remains in PHB-025. No plugin or host lifecycle claim follows
+from this task's completion.
 
-** TODO Implement parsing, local checks, and the four house bans
+** NEXT Implement parsing, local checks, and the four house bans
 :PROPERTIES:
 :CUSTOM_ID: PHB-021
 :DEPENDS_ON: PHB-020
@@ -242,6 +264,12 @@ Spike follow-ups: inline quotations, author-date citations, defined lock syntax,
 inline HTML, unknown AST nodes, sentences crossing formatting, negation adverbs,
 passive infinitives, and reduced passives. Keep meaning conflicts unresolved
 instead of deleting negation or inventing an actor.
+Next implementation: load explicit inputs and configuration/profiles; honor input
+exclusions; parse with remark; define trusted lock/suppression syntax; map eligible
+prose back to source; expand the initial phrase pack; produce local findings through
+the completed contracts. Report unsupported boundaries/checks and map config errors
+to exit 2. Required terminology matching uses the same literal case/whitespace
+policy as bans. Host invocation and the editing workflow remain separate tasks.
 Completion: =check= works on supported inputs with correct exclusions, findings,
 coverage, and exit behavior; fixtures include grammar lookalikes and missing owners.
 Requirements: IN-01–02, RULE-04, OUT-03, SAFE-01.
@@ -355,8 +383,9 @@ open a tracker task for every unresolved release issue.
 :END:
 Run the end-to-end acceptance scenarios and local-network-disabled checks.
 Measure checker runtime and policy overhead on a documented reference machine.
-Test the declared Node 22.18 minimum and pinned host versions. Current spikes
-ran on Node 26.8.2 only. Measure rich Markdown and the complete rule pipeline;
+Test the declared Node 22.18 minimum and pinned host versions. The 63-test contract
+and parser suite passes on Node 26.8.2 and 22.23.2; the exact 22.18 minimum remains
+unverified. Measure rich Markdown and the complete rule pipeline;
 the repeated-paragraph parser timings do not establish the PERF-01 release gate.
 Completion: record measured results against [[file:docs/EVALUATION.md][release gates]], with no false claims
 about universal enforcement, watermark removal, or untested host versions.
@@ -510,3 +539,19 @@ Verification: clean =npm ci --include=dev --ignore-scripts= succeeded; all 25
 parser/patch tests passed. Emacs Org lint passed. The 34 IDs and 28 tasks have
 valid links and acyclic dependencies; local document links and JSON examples
 passed validation. The checkpoint is ready for commit and push to origin/main.
+
+** [2026-09-19 Sat] Shared contracts implemented
+
+Completed PHB-020 after Mark asked to keep working. Added strict versioned schemas,
+all 40 catalog records, a house profile, traced configuration/profile precedence,
+literal Unicode phrase matching, source hashes/positions, suppression validation,
+fix preconditions, and coverage/exit semantics. All four bans persist across intensity
+modes. Explicit style settings can override them; fidelity safeguards remain active.
+
+All 63 tests pass on Node 26.8.2 and Node 22.23.2. Generated contracts match their
+definitions, and both documented configuration examples pass the runtime resolver.
+Recorded complete API behavior in docs/CONTRACTS.md. The pipeline still needs
+file discovery, Markdown boundaries, actual rule execution, and host adapters.
+PHB-021 is NEXT; PHB-012 retains its live-test steps. No user host settings changed.
+Emacs Org lint, local links, JSON examples, and the checks for 34 unique IDs,
+28 task dependencies, and dependency cycles all pass.

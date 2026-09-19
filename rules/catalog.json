@@ -1,0 +1,1550 @@
+{
+   "version": 1,
+   "rules": [
+      {
+         "id": "LEX-01",
+         "version": "1.0.0",
+         "category": "wording",
+         "title": "Forbidden terms and phrases",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Match configured phrases at defined Unicode word boundaries, respecting allowlists.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "We delve into the report.",
+               "outcome": "review",
+               "reason": "Match configured phrases at defined Unicode word boundaries, respecting allowlists."
+            },
+            {
+               "text": "We review the report.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "LEX-02",
+         "version": "1.0.0",
+         "category": "wording",
+         "title": "Empty introductory wording",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review introductory wording that adds no information.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "It is worth noting that the build failed.",
+               "outcome": "review",
+               "reason": "Review introductory wording that adds no information."
+            },
+            {
+               "text": "The build failed.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "LEX-03",
+         "version": "1.0.0",
+         "category": "wording",
+         "title": "Unsupported benefit language",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Request evidence for vague or inflated benefits; preserve supported claims.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "This revolutionary workflow unlocks limitless potential.",
+               "outcome": "review",
+               "reason": "Request evidence for vague or inflated benefits; preserve supported claims."
+            },
+            {
+               "text": "The supplied trial measured a two-hour reduction.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "LEX-04",
+         "version": "1.0.0",
+         "category": "wording",
+         "title": "Wordy verb phrases",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Prefer a direct verb when a nominalization adds no meaning.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "We made a decision to postpone.",
+               "outcome": "review",
+               "reason": "Prefer a direct verb when a nominalization adds no meaning."
+            },
+            {
+               "text": "We decided to postpone.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "LEX-05",
+         "version": "1.0.0",
+         "category": "wording",
+         "title": "Chat residue",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Identify conversational wrappers inside standalone documents.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Certainly! Here is your revised memo:",
+               "outcome": "review",
+               "reason": "Identify conversational wrappers inside standalone documents."
+            },
+            {
+               "text": "The team approved the launch.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "LEX-06",
+         "version": "1.0.0",
+         "category": "wording",
+         "title": "Repeated stock transitions",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review repeated transition templates for a useful logical connection.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Furthermore, sales rose. Furthermore, costs fell.",
+               "outcome": "review",
+               "reason": "Review repeated transition templates for a useful logical connection."
+            },
+            {
+               "text": "Sales rose. Costs fell.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "STR-01",
+         "version": "1.0.0",
+         "category": "structure",
+         "title": "Rhetorical contrast framing",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Identify staged this-not-that contrasts, including contrasts split across sentences.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "This is not a feature. It is a revolution.",
+               "outcome": "review",
+               "reason": "Identify staged this-not-that contrasts, including contrasts split across sentences."
+            },
+            {
+               "text": "The feature reduces upload time.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "STR-02",
+         "version": "1.0.0",
+         "category": "structure",
+         "title": "Parallel padding",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Remove redundant parallel items while preserving distinct steps and claims.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "It is useful, helpful, and beneficial.",
+               "outcome": "review",
+               "reason": "Remove redundant parallel items while preserving distinct steps and claims."
+            },
+            {
+               "text": "The export supports CSV, JSON, and XML.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "STR-03",
+         "version": "1.0.0",
+         "category": "structure",
+         "title": "Repeated sentence templates",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review repeated openings and paragraph shapes in document context.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "It is clear that sales rose. It is clear that costs fell.",
+               "outcome": "review",
+               "reason": "Review repeated openings and paragraph shapes in document context."
+            },
+            {
+               "text": "Sales rose while costs fell.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "STR-04",
+         "version": "1.0.0",
+         "category": "structure",
+         "title": "Redundant closing",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review closers that restate a point without adding a requested summary or conclusion.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "And that is why all of this matters.",
+               "outcome": "review",
+               "reason": "Review closers that restate a point without adding a requested summary or conclusion."
+            },
+            {
+               "text": "Approve the revised budget by Friday.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "STR-05",
+         "version": "1.0.0",
+         "category": "structure",
+         "title": "Repeated claims",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Merge repeated claims while preserving qualifications and distinct evidence.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Costs fell. The costs went down.",
+               "outcome": "review",
+               "reason": "Merge repeated claims while preserving qualifications and distinct evidence."
+            },
+            {
+               "text": "Costs fell. Revenue stayed flat.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "STR-06",
+         "version": "1.0.0",
+         "category": "structure",
+         "title": "Missing substantiation",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Flag unsourced authority or empty emphasis; never supply an invented source.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Experts agree this changes everything.",
+               "outcome": "review",
+               "reason": "Flag unsourced authority or empty emphasis; never supply an invented source."
+            },
+            {
+               "text": "The supplied audit reports three failed checks.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "GRAM-01",
+         "version": "1.0.0",
+         "category": "grammar",
+         "title": "Adverbs",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true,
+            "subtype": "grammar"
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review grammatical adverbs, including negation and forms without an -ly suffix; recast or report meaning conflicts.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Maya quickly finished.",
+               "outcome": "review",
+               "reason": "Review grammatical adverbs, including negation and forms without an -ly suffix; recast or report meaning conflicts."
+            },
+            {
+               "text": "A friendly reviewer finished.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CLR-01",
+         "version": "1.0.0",
+         "category": "clarity",
+         "title": "Passive voice",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true,
+            "subtype": "grammar"
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review passive constructions, auxiliary chains, get-passives, and reduced passives without inventing actors.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "The report was approved by Maya.",
+               "outcome": "review",
+               "reason": "Review passive constructions, auxiliary chains, get-passives, and reduced passives without inventing actors."
+            },
+            {
+               "text": "Maya approved the report.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CLR-02",
+         "version": "1.0.0",
+         "category": "clarity",
+         "title": "Buried main point",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review point placement against the audience, purpose, and document structure.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "After several unrelated background paragraphs, we finally state the decision.",
+               "outcome": "review",
+               "reason": "Review point placement against the audience, purpose, and document structure."
+            },
+            {
+               "text": "The decision leads the memo.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CLR-03",
+         "version": "1.0.0",
+         "category": "clarity",
+         "title": "Jargon and ambiguous reference",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Explain unfamiliar terms and unclear references using supplied context.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "This optimizes the thing through synergies.",
+               "outcome": "review",
+               "reason": "Explain unfamiliar terms and unclear references using supplied context."
+            },
+            {
+               "text": "The cache reduces repeat database reads.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CLR-04",
+         "version": "1.0.0",
+         "category": "clarity",
+         "title": "Dense prose",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review sentence and paragraph burden without splitting essential logical relationships.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "The sentence buries its subject inside several nested qualifications before reaching its main verb.",
+               "outcome": "review",
+               "reason": "Review sentence and paragraph burden without splitting essential logical relationships."
+            },
+            {
+               "text": "The team approved the budget.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CLR-05",
+         "version": "1.0.0",
+         "category": "clarity",
+         "title": "Agentless obligation",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Identify duties without a supported actor or unambiguous addressee; preserve modality and report missing owners.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Approval is required before launch.",
+               "outcome": "review",
+               "reason": "Identify duties without a supported actor or unambiguous addressee; preserve modality and report missing owners."
+            },
+            {
+               "text": "The release manager must approve the launch.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "READ-01",
+         "version": "1.0.0",
+         "category": "readability",
+         "title": "Reading burden",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true,
+            "subtype": "metric"
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Measure eligible English prose and review burden above the eighth-grade target; disclose short samples.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Implementation of the aforementioned methodology necessitates consideration of interdependencies.",
+               "outcome": "review",
+               "reason": "Measure eligible English prose and review burden above the eighth-grade target; disclose short samples."
+            },
+            {
+               "text": "The team must check how the steps depend on each other.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FMT-01",
+         "version": "1.0.0",
+         "category": "formatting",
+         "title": "Punctuation and decoration overuse",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review clusters of punctuation, bold labels, or decoration while preserving useful formatting.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "**Amazing!** **Powerful!** **Essential!**",
+               "outcome": "review",
+               "reason": "Review clusters of punctuation, bold labels, or decoration while preserving useful formatting."
+            },
+            {
+               "text": "The report contains three sections.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FMT-02",
+         "version": "1.0.0",
+         "category": "formatting",
+         "title": "Unnecessary fragmentation",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review headings or lists that fragment prose without aiding navigation.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "# The point\nThe point.",
+               "outcome": "review",
+               "reason": "Review headings or lists that fragment prose without aiding navigation."
+            },
+            {
+               "text": "# Installation\nFollow these steps.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CMO-01",
+         "version": "1.0.0",
+         "category": "chicago",
+         "title": "Chicago punctuation family",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review punctuation under a declared, source-checked Chicago subset; this family defines no implemented subrules.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Quotation punctuation needs a source-specific review.",
+               "outcome": "review",
+               "reason": "Review punctuation under a declared, source-checked Chicago subset; this family defines no implemented subrules."
+            },
+            {
+               "text": "A checked punctuation convention has documented evidence.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CMO-02",
+         "version": "1.0.0",
+         "category": "chicago",
+         "title": "Chicago capitalization family",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review names, titles, and heading conventions; preserve proper names.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Title capitalization varies without a stated convention.",
+               "outcome": "review",
+               "reason": "Review names, titles, and heading conventions; preserve proper names."
+            },
+            {
+               "text": "The document uses its declared heading convention.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CMO-03",
+         "version": "1.0.0",
+         "category": "chicago",
+         "title": "Chicago spelling and compounds family",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review US spelling and compound consistency while preserving domain terminology.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "The document uses conflicting spellings for the same term.",
+               "outcome": "review",
+               "reason": "Review US spelling and compound consistency while preserving domain terminology."
+            },
+            {
+               "text": "The glossary defines the domain term.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CMO-04",
+         "version": "1.0.0",
+         "category": "chicago",
+         "title": "Chicago numbers family",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review number presentation under checked guidance without changing values or units.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "Equivalent quantities use inconsistent forms.",
+               "outcome": "review",
+               "reason": "Review number presentation under checked guidance without changing values or units."
+            },
+            {
+               "text": "A quantity retains its value and unit.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CMO-05",
+         "version": "1.0.0",
+         "category": "chicago",
+         "title": "Chicago abbreviations family",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review abbreviation consistency and expansion using supplied definitions.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "The text gives two conflicting expansions for one abbreviation.",
+               "outcome": "review",
+               "reason": "Review abbreviation consistency and expansion using supplied definitions."
+            },
+            {
+               "text": "The supplied glossary defines the abbreviation.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "CMO-06",
+         "version": "1.0.0",
+         "category": "chicago",
+         "title": "Chicago quotation and citation family",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review consistency within the chosen citation system while preserving source text and bibliographic facts.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "The document mixes citation conventions without a reason.",
+               "outcome": "review",
+               "reason": "Review consistency within the chosen citation system while preserving source text and bibliographic facts."
+            },
+            {
+               "text": "The source quotation remains exact.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FID-01",
+         "version": "1.0.0",
+         "category": "fidelity",
+         "title": "Facts and attribution",
+         "rationale": "Edits must preserve source meaning and protected content.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "edit"
+         ],
+         "criteria": "Compare the candidate to the source; reject changed facts, values, or attribution.",
+         "exceptions": [],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "An edit changes 12 participants to 20.",
+               "outcome": "review",
+               "reason": "Compare the candidate to the source; reject changed facts, values, or attribution."
+            },
+            {
+               "text": "The edit retains 12 participants.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FID-02",
+         "version": "1.0.0",
+         "category": "fidelity",
+         "title": "Uncertainty and scope",
+         "rationale": "Edits must preserve source meaning and protected content.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "edit"
+         ],
+         "criteria": "Preserve uncertainty, scope, negation, modality, and comparisons.",
+         "exceptions": [],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "An edit changes may reduce to reduces.",
+               "outcome": "review",
+               "reason": "Preserve uncertainty, scope, negation, modality, and comparisons."
+            },
+            {
+               "text": "The edit preserves the uncertainty.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FID-03",
+         "version": "1.0.0",
+         "category": "fidelity",
+         "title": "Unsupported additions",
+         "rationale": "Edits must preserve source meaning and protected content.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "edit"
+         ],
+         "criteria": "Reject unsupported additions when editing a supplied nonfiction draft.",
+         "exceptions": [],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "The rewrite invents a personal anecdote.",
+               "outcome": "review",
+               "reason": "Reject unsupported additions when editing a supplied nonfiction draft."
+            },
+            {
+               "text": "The rewrite adds no unsupported facts.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FID-04",
+         "version": "1.0.0",
+         "category": "fidelity",
+         "title": "Protected-content fidelity",
+         "rationale": "Edits must preserve source meaning and protected content.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "edit"
+         ],
+         "criteria": "Reject a proposed edit that changes a protected source span.",
+         "exceptions": [],
+         "fixPolicy": "report-only",
+         "examples": [
+            {
+               "text": "A patch changes a quoted number.",
+               "outcome": "review",
+               "reason": "Reject a proposed edit that changes a protected source span."
+            },
+            {
+               "text": "A patch leaves the exact quotation untouched.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FID-05",
+         "version": "1.0.0",
+         "category": "fidelity",
+         "title": "Lost distinctions",
+         "rationale": "Edits must preserve source meaning and protected content.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "edit"
+         ],
+         "criteria": "Reject edits that merge distinct groups, events, or claims.",
+         "exceptions": [],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "The edit merges two separate trial groups.",
+               "outcome": "review",
+               "reason": "Reject edits that merge distinct groups, events, or claims."
+            },
+            {
+               "text": "The edit preserves both trial groups.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "FID-06",
+         "version": "1.0.0",
+         "category": "fidelity",
+         "title": "Voice and register fidelity",
+         "rationale": "Edits must preserve source meaning and protected content.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "error",
+         "detector": {
+            "type": "semantic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "edit"
+         ],
+         "criteria": "Review changes to voice or register and preserve the supplied stance.",
+         "exceptions": [],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "A neutral report becomes an invented personal story.",
+               "outcome": "review",
+               "reason": "Review changes to voice or register and preserve the supplied stance."
+            },
+            {
+               "text": "The revision retains the neutral register.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "UNI-01",
+         "version": "1.0.0",
+         "category": "unicode",
+         "title": "Invisible separators and soft hyphens",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "source"
+         ],
+         "criteria": "Inventory BOM, zero-width spaces, word joiners, and soft hyphens before considering cleanup.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "report-only",
+         "examples": [
+            {
+               "text": "re​port",
+               "outcome": "review",
+               "reason": "Inventory BOM, zero-width spaces, word joiners, and soft hyphens before considering cleanup."
+            },
+            {
+               "text": "report",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "UNI-02",
+         "version": "1.0.0",
+         "category": "unicode",
+         "title": "Joiners and variation selectors",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "source"
+         ],
+         "criteria": "Inventory joiners and selectors; preserve valid emoji and script shaping.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "report-only",
+         "examples": [
+            {
+               "text": "A joiner outside a recognized sequence needs inspection.",
+               "outcome": "review",
+               "reason": "Inventory joiners and selectors; preserve valid emoji and script shaping."
+            },
+            {
+               "text": "A family emoji retains its joiners.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "UNI-03",
+         "version": "1.0.0",
+         "category": "unicode",
+         "title": "Bidirectional controls",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "source"
+         ],
+         "criteria": "Inventory directional controls and disclose context; avoid blanket stripping.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "report-only",
+         "examples": [
+            {
+               "text": "An unexplained directional override needs inspection.",
+               "outcome": "review",
+               "reason": "Inventory directional controls and disclose context; avoid blanket stripping."
+            },
+            {
+               "text": "Mixed-direction text keeps its legitimate controls.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "UNI-04",
+         "version": "1.0.0",
+         "category": "unicode",
+         "title": "Special spaces",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "source"
+         ],
+         "criteria": "Inventory special spaces; preserve intentional nonbreaking expressions.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "report-only",
+         "examples": [
+            {
+               "text": "An unexpected space character needs inspection.",
+               "outcome": "review",
+               "reason": "Inventory special spaces; preserve intentional nonbreaking expressions."
+            },
+            {
+               "text": "A unit retains its intentional nonbreaking space.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "UNI-05",
+         "version": "1.0.0",
+         "category": "unicode",
+         "title": "Tag characters",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "source"
+         ],
+         "criteria": "Inspect tag sequences while preserving valid emoji sequences and literal examples.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "report-only",
+         "examples": [
+            {
+               "text": "An unexplained tag sequence needs inspection.",
+               "outcome": "review",
+               "reason": "Inspect tag sequences while preserving valid emoji sequences and literal examples."
+            },
+            {
+               "text": "A valid emoji tag sequence remains intact.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "UNI-06",
+         "version": "1.0.0",
+         "category": "unicode",
+         "title": "Combining and compatibility characters",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "suggestion",
+         "detector": {
+            "type": "exact",
+            "requiresContext": false
+         },
+         "scopes": [
+            "source"
+         ],
+         "criteria": "Report relevant character context without global normalization or homoglyph substitution.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "report-only",
+         "examples": [
+            {
+               "text": "An unexplained compatibility character needs inspection.",
+               "outcome": "review",
+               "reason": "Report relevant character context without global normalization or homoglyph substitution."
+            },
+            {
+               "text": "A name retains its combining accent.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      },
+      {
+         "id": "ART-01",
+         "version": "1.0.0",
+         "category": "artifacts",
+         "title": "Citation and transport artifacts",
+         "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
+         "sources": [
+            {
+               "reference": "docs/RULES.md",
+               "kind": "project-policy"
+            }
+         ],
+         "defaultSeverity": "warning",
+         "detector": {
+            "type": "heuristic",
+            "requiresContext": true
+         },
+         "scopes": [
+            "prose"
+         ],
+         "criteria": "Review model transport placeholders; preserve or resolve citations from supplied sources.",
+         "exceptions": [
+            "Preserve protected content and report conflicts.",
+            "Honor a valid explicit suppression without concealing it."
+         ],
+         "fixPolicy": "editorial-review",
+         "examples": [
+            {
+               "text": "An unresolved model citation marker appears in a memo.",
+               "outcome": "review",
+               "reason": "Review model transport placeholders; preserve or resolve citations from supplied sources."
+            },
+            {
+               "text": "The memo cites the supplied source.",
+               "outcome": "preserve",
+               "reason": "Preserve this content or distinction in context."
+            }
+         ]
+      }
+   ]
+}
