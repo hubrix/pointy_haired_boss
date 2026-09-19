@@ -1,6 +1,6 @@
 # Initial rule catalog
 
-Policy design with an implemented [versioned metadata catalog](../rules/catalog.json) and [shared contracts](CONTRACTS.md). The [local checker](CHECKER.md) implements LEX-01, UNI-01–06 inventory, and candidates for the four house bans; other detectors remain pending. Examples are original. The catalog draws on [RESEARCH.md](RESEARCH.md) and distinguishes explicit preferences from contextual editorial judgments.
+Policy design with an implemented [versioned metadata catalog](../rules/catalog.json) and [shared contracts](CONTRACTS.md). The [local checker](CHECKER.md) implements LEX-01, UNI-01–06 inventory, READ-01 measurement, and candidates for the four house bans and six narrow Chicago checks; other detectors remain pending. Examples are original. The catalog draws on [RESEARCH.md](RESEARCH.md) and distinguishes explicit preferences from contextual editorial judgments.
 
 Default levels: `error` blocks a checked artifact at the configured threshold; `warning` requests review; `suggestion` is optional. A match outside editable prose is suppressed or reported as a protected-content conflict. No rule establishes AI authorship.
 
@@ -34,7 +34,7 @@ Confidence is a qualitative evidence label, not a fabricated probability. Exact 
 | CLR-03 | Unexplained jargon or ambiguous reference | Suggestion / semantic | Clarify what “this” refers to using existing context | Term is appropriate for the named specialist audience |
 | CLR-04 | Dense sentence or paragraph | Suggestion / heuristic + semantic | Length triggers inspection; split only if the logical relationship survives | Clear complex argument; meaningful longer sentence |
 | CLR-05 | Agentless obligation | Error / semantic | “Approval is required before launch.” → “The release manager must approve the launch,” only when the source identifies that owner | A direct instruction has an unambiguous addressee; otherwise name the owner or flag the gap |
-| READ-01 | Reading burden above eighth-grade target | Warning / metric + semantic | Compute Flesch–Kincaid on eligible body prose; simplify sentence structure and explain jargon | Protect essential facts and terms; report insufficient sample below the configured minimum |
+| READ-01 | Estimated reading grade above target | Warning / heuristic metric | Compute Flesch–Kincaid on eligible body sentences; report counts, scope, and unavailable samples; no automatic fix | Preserve essential facts and terms; the estimate does not establish comprehension |
 | FMT-01 | Overused punctuation or decorative formatting | Suggestion / heuristic | Clustered dashes, bold labels, or emoji prompt review | Author profile, useful emphasis, scanning/navigation |
 | FMT-02 | Unnecessary headings and list fragmentation | Suggestion / semantic | A heading adds no navigation or repeats the following sentence | Procedures, comparisons, accessibility, requested format |
 
@@ -55,7 +55,7 @@ The `grammatical` label above is a subtype of a heuristic detector until context
 
 ## Chicago coverage
 
-The first release must implement and document a source-checked subset of Chicago's 18th edition. These are rule families to refine into testable subrules during implementation, not claims that all Chicago guidance has been encoded.
+The general reference is Chicago 18. [The implemented subset](STYLE.md#declared-chicago-subset) now screens six sourced patterns, one per family, with explicit source editions and exceptions. Four use public 18th-edition guidance; two identify their 17th-edition Q&A sources. Family coverage stays partial. The broader table below describes intended coverage, not completed detectors.
 
 | ID | Family | Intended checks |
 | --- | --- | --- |

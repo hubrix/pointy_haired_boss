@@ -44,6 +44,26 @@ export const schemas = {
       examples: { type: 'array', minItems: 2, items: object({ text, outcome: choices('review', 'preserve'), reason: text }) },
    }),
    suppression: object({ version: { const: 1 }, ruleIds: idList, range, reason: text }),
+   readability: object({
+      version: { const: 1 }, inputHash: hash, metric: { const: 'flesch-kincaid' }, method: { const: 'phb-english-1' },
+      sentenceParser: { const: 'parse-english@7.0.0' }, syllableEstimator: { const: 'syllable@5.0.1' },
+      status: choices('disabled', 'incomplete-boundaries', 'no-eligible-prose', 'unsupported-tokens', 'insufficient-sample', 'measured'), reason: text,
+      targetMaxGrade: { type: 'number', minimum: 0, maximum: 30 }, minWords: { type: 'integer', minimum: 1 },
+      words: integer, sentences: integer, syllables: { anyOf: [integer, { type: 'null' }] },
+      grade: { type: ['number', 'null'] }, aboveTarget: { type: ['boolean', 'null'] },
+      units: { type: 'array', items: object({ range, anchor: range, words: { type: 'integer', minimum: 1 }, syllables: { anyOf: [integer, { type: 'null' }] } }) },
+      excluded: object({ structure: integer, protected: integer, selection: integer, fragment: integer, suppression: integer, empty: integer }),
+      unsupportedTokens: { type: 'array', items: object({
+         span: object({ ...range.properties, text: { type: 'string' }, startLocation: location, endLocation: location }), reason: text,
+      }) },
+   }),
+   chicago: object({ version: { const: 1 }, inputHash: hash, targetEdition: { const: 18 },
+      rules: { type: 'array', items: object({
+         id: text, ruleId: { enum: ruleIds.filter((id) => id.startsWith('CMO-')) }, title: text,
+         sourceEdition: choices(17, 18), reference: text, guidance: text, exceptions: text,
+         status: choices('disabled', 'candidates-only'),
+      }) },
+   }),
    unicode: object({
       version: { const: 1 }, unicodeVersion: { const: '17.0.0' }, inputHash: hash,
       items: { type: 'array', items: object({

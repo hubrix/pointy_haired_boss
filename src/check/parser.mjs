@@ -144,7 +144,7 @@ export function parseProse(source, { format = 'markdown', trustedDirectives = fa
       // Plain text has no Markdown decoding, but quotations and citations retain
       // protection. Blank lines bound prose context just as paragraphs do.
       for (const match of source.text.matchAll(/[^]*?(?:\r?\n[\t ]*\r?\n|$)/g)) {
-         if (match[0]) projected.push(project(match[0], match.index, false));
+         if (match[0]) projected.push({ ...project(match[0], match.index, false), kind: 'paragraph' });
       }
    } else {
       // Ignore signature bytes for syntax recognition, retaining every original
@@ -205,7 +205,7 @@ export function parseProse(source, { format = 'markdown', trustedDirectives = fa
             } else { unknown(child); barrier(); }
          }
          node.children.forEach(inline);
-         projected.push({ text, map });
+         projected.push({ text, map, kind: node.type });
       }
       function walk(node) {
          if (protectedTypes.has(node.type)) protect(nodeRange(node), `Markdown ${node.type}.`);
@@ -234,7 +234,7 @@ export function parseProse(source, { format = 'markdown', trustedDirectives = fa
          const mapped = block.map[i];
          const eligible = mapped && !protectedSpans.some((range) => overlaps(range, mapped));
          if (!eligible) {
-            if (i > start) segments.push({ text: block.text.slice(start, i), map: block.map.slice(start, i) });
+            if (i > start) segments.push({ text: block.text.slice(start, i), map: block.map.slice(start, i), kind: block.kind });
             start = i + 1;
          }
       }
@@ -243,6 +243,6 @@ export function parseProse(source, { format = 'markdown', trustedDirectives = fa
    // filters findings to the selection after matching against that context.
    const selectedSegments = selection ? segments.filter((segment) =>
       overlaps(sourceRange(segment, { start: 0, end: segment.text.length }), selection)) : segments;
-   return { segments: selectedSegments, protectedSpans, inlineSuppressions, issues: [...new Set(issues)],
+   return { segments: selectedSegments, proseBlocks: projected, protectedSpans, inlineSuppressions, issues: [...new Set(issues)],
       check: issues.length ? { id: 'boundaries', status: 'partial', reason: [...new Set(issues)].join(' ') } : { id: 'boundaries', status: 'complete' } };
 }

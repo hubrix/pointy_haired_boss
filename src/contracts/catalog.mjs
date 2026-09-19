@@ -1,3 +1,5 @@
+import { chicagoRules } from '../style/chicago-rules.mjs';
+
 // Catalog metadata describes policy. Availability belongs to each check run;
 // registering a rule never implies its detector has been implemented.
 const entries = [
@@ -55,8 +57,8 @@ const entries = [
    ['CLR-05', 'Agentless obligation', 'error', 'semantic', true,
       'Identify duties without a supported actor or unambiguous addressee; preserve modality and report missing owners.',
       'Approval is required before launch.', 'The release manager must approve the launch.'],
-   ['READ-01', 'Reading burden', 'warning', 'heuristic', true,
-      'Measure eligible English prose and review burden above the eighth-grade target; disclose short samples.',
+   ['READ-01', 'Estimated reading grade', 'warning', 'heuristic', false,
+      'Estimate Flesch–Kincaid for eligible English body sentences; report counts, exclusions, undefined pronunciations, and short samples. The metric cannot establish comprehension.',
       'Implementation of the aforementioned methodology necessitates consideration of interdependencies.', 'The team must check how the steps depend on each other.'],
    ['FMT-01', 'Punctuation and decoration overuse', 'suggestion', 'heuristic', true,
       'Review clusters of punctuation, bold labels, or decoration while preserving useful formatting.',
@@ -65,7 +67,7 @@ const entries = [
       'Review headings or lists that fragment prose without aiding navigation.',
       '# The point\nThe point.', '# Installation\nFollow these steps.'],
    ['CMO-01', 'Chicago punctuation family', 'warning', 'semantic', true,
-      'Review punctuation under a declared, source-checked Chicago subset; this family defines no implemented subrules.',
+      'Screen interior em-dash spacing using the documented Chicago subset; wider punctuation and exceptions require context.',
       'Quotation punctuation needs a source-specific review.', 'A checked punctuation convention has documented evidence.'],
    ['CMO-02', 'Chicago capitalization family', 'warning', 'semantic', true,
       'Review names, titles, and heading conventions; preserve proper names.',
@@ -134,10 +136,12 @@ export function deepFreeze(value) {
 
 export const houseBanIds = Object.freeze(['GRAM-01', 'CLR-01', 'CLR-05', 'STR-01']);
 export const rules = deepFreeze(entries.map(([id, title, defaultSeverity, type, requiresContext, criteria, finding, clear]) => ({
-   id, version: id.startsWith('UNI-') ? '1.1.0' : '1.0.0', category: categories[id.split('-')[0]], title,
+   id, version: /^(UNI-|CMO-|READ-)/.test(id) ? '1.1.0' : '1.0.0', category: categories[id.split('-')[0]], title,
    rationale: id.startsWith('FID-') ? 'Edits must preserve source meaning and protected content.' : 'Apply the declared prose policy with evidence and preserve meaning.',
    sources: [{ reference: 'docs/RULES.md', kind: 'project-policy' },
-      ...(id.startsWith('UNI-') ? [{ reference: 'https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/', kind: 'external-reference' }] : [])],
+      ...(id.startsWith('UNI-') ? [{ reference: 'https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/', kind: 'external-reference' }] : []),
+      ...(id === 'READ-01' ? [{ reference: 'https://support.microsoft.com/en-us/outlook/get-your-email-s-readability-and-level-statistics', kind: 'external-reference' }] : []),
+      ...chicagoRules.filter((rule) => rule.ruleId === id).map((rule) => ({ reference: rule.reference, kind: 'external-reference' }))],
    defaultSeverity, detector: {
       type, requiresContext,
       ...(['GRAM-01', 'CLR-01'].includes(id) ? { subtype: 'grammar' } : {}),
@@ -146,7 +150,7 @@ export const rules = deepFreeze(entries.map(([id, title, defaultSeverity, type, 
    scopes: [id.startsWith('FID-') ? 'edit' : id.startsWith('UNI-') ? 'source' : 'prose'],
    criteria,
    exceptions: id.startsWith('FID-') ? [] : ['Preserve protected content and report conflicts.', 'Honor a valid explicit suppression without concealing it.'],
-   fixPolicy: id === 'UNI-01' ? 'safe-local' : id === 'FID-04' || id.startsWith('UNI-') ? 'report-only' : 'editorial-review',
+   fixPolicy: id === 'UNI-01' ? 'safe-local' : id === 'READ-01' || id === 'FID-04' || id.startsWith('UNI-') ? 'report-only' : 'editorial-review',
    examples: [{ text: finding, outcome: 'review', reason: criteria }, { text: clear, outcome: 'preserve', reason: 'Preserve this content or distinction in context.' }],
 })));
 export const ruleIds = Object.freeze(rules.map((rule) => rule.id));

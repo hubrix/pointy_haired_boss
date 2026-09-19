@@ -1,6 +1,6 @@
 # Local checker
 
-`phb check` reads English UTF-8 text and Markdown, reports phrase/terminology violations, inventories Unicode characters, and produces candidates for all four house bans. It never edits files, calls a model, or makes network requests. [Unicode cleanup](UNICODE.md) has its own `clean` command. Contextual review, readability measurement, checked Chicago rules, and host adapters remain pending in [project.org](../project.org).
+`phb check` reads English UTF-8 text and Markdown, reports phrase/terminology violations, inventories Unicode characters, estimates reading grade, and produces house-ban and Chicago review candidates. It never edits files, calls a model, or makes network requests. [Unicode cleanup](UNICODE.md) has its own `clean` command. [Readability and Chicago](STYLE.md) have explicit sample and coverage limits. Contextual editing and host adapters remain pending in [project.org](../project.org).
 
 ## Run it
 
@@ -68,6 +68,8 @@ Use one balanced pair at a time; pairs cannot nest. Opening directives need a no
 LEX-01 uses literal Unicode-aware matching on eligible projected prose. The grammar pipeline uses compromise and targeted patterns for negation, passive infinitives/reduced clauses, staged contrasts, and missing-owner duties. Context must confirm grammatical role, rhetorical purpose, and responsibility. All four house-ban checks remain partial even when no candidates appear. Candidates retain the house rule's error level but display as warnings pending review. Negation findings require preserving the negative claim; duty findings require a supported actor. No replacement invents one.
 
 Text output includes positions, rule IDs, status, reasons, excerpts, required/omitted checks, and coverage. JSON returns a versioned batch envelope with `documents`, `skipped`, `errors`, `options`, and `exitCode`. Each document includes a validated [report](../schemas/report.schema.json), profile/override names, selection, and boundary data. The envelope is a development CLI format; each report has the published version 1 schema.
+
+Each checked document also includes validated `readability` and `chicago` objects. READ-01 measures eligible body sentences with a default 100-word minimum and grade-eight target. Unavailable samples expose a reason and no grade. `--require READ-01 --threshold warning` demands measurement and fails an above-target warning. Chicago screens six declared patterns; each family stays partial because context and wider guidance remain unchecked. Its findings carry no fixes. See [counting policy, source editions, and exceptions](STYLE.md).
 
 | Exit | Meaning |
 | --- | --- |

@@ -5,6 +5,8 @@ import { houseBanIds } from '../contracts/catalog.mjs';
 import { parseProse, sourceRange } from './parser.mjs';
 import { grammarCandidates } from './candidates.mjs';
 import { inventoryUnicode } from '../unicode/inventory.mjs';
+import { measureReadability } from '../style/readability.mjs';
+import { checkChicago } from '../style/chicago.mjs';
 
 export function checkProse(input, config, { path, requestedChecks, threshold = 'error', ...parserOptions } = {}) {
    const source = createSource(input);
@@ -13,8 +15,10 @@ export function checkProse(input, config, { path, requestedChecks, threshold = '
       findPhraseMatches(segment, term, config.matching).map((range) => ({ term, ...sourceRange(segment, range) }))));
    const context = { source, config, path, protectedSpans: parsed.protectedSpans, inlineSuppressions: parsed.inlineSuppressions, allowlistMatches };
    const unicode = inventoryUnicode(source, config, parsed, { path, selection: parserOptions.selection });
-   const checks = [parsed.check, ...unicode.checks];
-   const findings = [...unicode.findings];
+   const readability = measureReadability(source, config, parsed, { path, selection: parserOptions.selection });
+   const chicago = checkChicago(source, config, parsed, { path, selection: parserOptions.selection });
+   const checks = [parsed.check, ...unicode.checks, ...readability.checks, ...chicago.checks];
+   const findings = [...unicode.findings, ...readability.findings, ...chicago.findings];
    const selected = (range) => !parserOptions.selection ||
       range.start >= parserOptions.selection.start && range.end <= parserOptions.selection.end;
    const activeBans = houseBanIds.filter((id) => config.rules[id] !== 'off');
@@ -47,6 +51,7 @@ export function checkProse(input, config, { path, requestedChecks, threshold = '
       other.ruleId === item.ruleId && other.span.start === item.span.start && other.span.end === item.span.end && other.reason === item.reason));
    return { report: buildReport({ ...context, findings: unique, checks, threshold, requestedChecks }),
    unicode: unicode.inventory,
+   readability: readability.readability, chicago: chicago.chicago,
    boundaries: { protectedSpans: parsed.protectedSpans, issues: parsed.issues },
    selection: parserOptions.selection ?? null };
 }

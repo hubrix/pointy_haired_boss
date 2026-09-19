@@ -86,6 +86,8 @@ Do not ask a second approval question when the user has already asked to edit th
 
 The confirmed house bans block a clean result in the completed editorial workflow at every intensity. Strict mode may promote other selected patterns. The plugin must not promise interception of every streamed chat token. Automatic guidance is a prompt-level capability; hard enforcement requires an actual supported pre-delivery or artifact-checking path. On hosts without that path, report the limitation accurately. An offline checker reports its coverage and unresolved grammar candidates; it cannot certify that semantic rules passed without a contextual review.
 
+PHB-023 implements [metric reporting and a narrow sourced Chicago subset](STYLE.md), with unsupported pronunciation/sample states and partial CMO family coverage. Broader contextual readability, citation consistency, and Chicago guidance remain release work. Requirements READ-01/READ-02 are distinct from catalog rule READ-01, which supplies the local metric only.
+
 ## Configuration contract
 
 Project file: `.phb.json`; the current checker accepts user settings through `--user-config FILE`. Automatic user/profile discovery remains for host packaging. Precedence for style choices: explicit invocation > project/path override > user profile > bundled house rules > Chicago defaults. Protected spans and factual fidelity remain active at every intensity. If a ban conflicts with exact content or meaning, preserve the source and report the conflict; do not mark the passage compliant. Protected quotations can carry a documented exemption. Chicago guidance cannot silently re-enable a house-banned construction.

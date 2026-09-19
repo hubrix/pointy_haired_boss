@@ -16,8 +16,9 @@ const help = `Usage: phb check|clean [options] FILE|DIRECTORY|-
 
 Local prose checks and Unicode cleanup previews. '-' reads UTF-8 stdin.
 check requires boundaries, LEX-01, and UNI-01–06. clean requires boundaries and
-UNI-01–06. House-ban candidates need editorial review. Readability, Chicago, and
-host adapters remain pending. clean writes files only with --apply.
+UNI-01–06. check also reports reading grade and a limited Chicago review subset.
+House-ban and Chicago candidates need editorial review. Host adapters remain
+pending. clean writes files only with --apply.
 
   --root DIR                 Project root (default: current directory)
   --format text|json         Output format (default: text)
@@ -80,6 +81,15 @@ export function textOutput(batch) {
       for (const check of partial) lines.push(`  ${check.id}: ${safeLine(check.reason)}`);
       lines.push(`  Skipped checks: ${report.checks.filter((check) => check.status === 'skipped').map((check) => check.id).join(', ') || 'none'}`);
       lines.push(`  Protected ranges: ${item.boundaries.protectedSpans.length}. No editorial compliance claim.`);
+      if (item.readability) {
+         const metric = item.readability;
+         lines.push(`  Readability: ${metric.status}; ${metric.words} words, ${metric.sentences} sentences; ` +
+            (metric.grade === null ? 'grade unavailable.' : `estimated grade ${metric.grade.toFixed(2)}; target at most ${metric.targetMaxGrade}.`));
+         lines.push(`    ${safeLine(metric.reason)}`);
+         lines.push(`    Excluded: ${Object.entries(metric.excluded).map(([reason, count]) => `${reason}=${count}`).join(', ')}.`);
+         for (const token of metric.unsupportedTokens) lines.push(`    Undefined pronunciation at ${token.span.startLocation.line}:${token.span.startLocation.column}: ${safeLine(token.span.text)}`);
+      }
+      if (item.chicago) lines.push(`  Chicago: ${item.chicago.rules.filter((rule) => rule.status !== 'disabled').length} narrow candidate checks; source editions recorded in docs/STYLE.md and JSON. Wider guidance requires review.`);
       if (item.unicode) {
          lines.push(`  Unicode ${item.unicode.unicodeVersion}: ${item.unicode.items.length} inventoried characters. No statistical-watermark test.`);
          for (const entry of item.unicode.items) {

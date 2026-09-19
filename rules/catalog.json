@@ -707,36 +707,40 @@
       },
       {
          "id": "READ-01",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "readability",
-         "title": "Reading burden",
+         "title": "Estimated reading grade",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
          "sources": [
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://support.microsoft.com/en-us/outlook/get-your-email-s-readability-and-level-statistics",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
          "detector": {
             "type": "heuristic",
-            "requiresContext": true,
+            "requiresContext": false,
             "subtype": "metric"
          },
          "scopes": [
             "prose"
          ],
-         "criteria": "Measure eligible English prose and review burden above the eighth-grade target; disclose short samples.",
+         "criteria": "Estimate Flesch–Kincaid for eligible English body sentences; report counts, exclusions, undefined pronunciations, and short samples. The metric cannot establish comprehension.",
          "exceptions": [
             "Preserve protected content and report conflicts.",
             "Honor a valid explicit suppression without concealing it."
          ],
-         "fixPolicy": "editorial-review",
+         "fixPolicy": "report-only",
          "examples": [
             {
                "text": "Implementation of the aforementioned methodology necessitates consideration of interdependencies.",
                "outcome": "review",
-               "reason": "Measure eligible English prose and review burden above the eighth-grade target; disclose short samples."
+               "reason": "Estimate Flesch–Kincaid for eligible English body sentences; report counts, exclusions, undefined pronunciations, and short samples. The metric cannot establish comprehension."
             },
             {
                "text": "The team must check how the steps depend on each other.",
@@ -825,7 +829,7 @@
       },
       {
          "id": "CMO-01",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "chicago",
          "title": "Chicago punctuation family",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -833,6 +837,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.chicagomanualofstyle.org/qanda/data/faq/topics/HyphensEnDashesEmDashes/faq0114.html",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -843,7 +851,7 @@
          "scopes": [
             "prose"
          ],
-         "criteria": "Review punctuation under a declared, source-checked Chicago subset; this family defines no implemented subrules.",
+         "criteria": "Screen interior em-dash spacing using the documented Chicago subset; wider punctuation and exceptions require context.",
          "exceptions": [
             "Preserve protected content and report conflicts.",
             "Honor a valid explicit suppression without concealing it."
@@ -853,7 +861,7 @@
             {
                "text": "Quotation punctuation needs a source-specific review.",
                "outcome": "review",
-               "reason": "Review punctuation under a declared, source-checked Chicago subset; this family defines no implemented subrules."
+               "reason": "Screen interior em-dash spacing using the documented Chicago subset; wider punctuation and exceptions require context."
             },
             {
                "text": "A checked punctuation convention has documented evidence.",
@@ -864,7 +872,7 @@
       },
       {
          "id": "CMO-02",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "chicago",
          "title": "Chicago capitalization family",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -872,6 +880,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.chicagomanualofstyle.org/help-tools/what-s-new.html",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -903,7 +915,7 @@
       },
       {
          "id": "CMO-03",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "chicago",
          "title": "Chicago spelling and compounds family",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -911,6 +923,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.chicagomanualofstyle.org/help-tools/what-s-new.html",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -942,7 +958,7 @@
       },
       {
          "id": "CMO-04",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "chicago",
          "title": "Chicago numbers family",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -950,6 +966,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Numbers/faq0083.html",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -981,7 +1001,7 @@
       },
       {
          "id": "CMO-05",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "chicago",
          "title": "Chicago abbreviations family",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -989,6 +1009,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Abbreviations/faq0047.html",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",
@@ -1020,7 +1044,7 @@
       },
       {
          "id": "CMO-06",
-         "version": "1.0.0",
+         "version": "1.1.0",
          "category": "chicago",
          "title": "Chicago quotation and citation family",
          "rationale": "Apply the declared prose policy with evidence and preserve meaning.",
@@ -1028,6 +1052,10 @@
             {
                "reference": "docs/RULES.md",
                "kind": "project-policy"
+            },
+            {
+               "reference": "https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Punctuation/faq0135.html",
+               "kind": "external-reference"
             }
          ],
          "defaultSeverity": "warning",

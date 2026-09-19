@@ -1,0 +1,91 @@
+{
+   "type": "object",
+   "properties": {
+      "version": {
+         "const": 1
+      },
+      "inputHash": {
+         "type": "string",
+         "pattern": "^[a-f0-9]{64}$"
+      },
+      "targetEdition": {
+         "const": 18
+      },
+      "rules": {
+         "type": "array",
+         "items": {
+            "type": "object",
+            "properties": {
+               "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "ruleId": {
+                  "enum": [
+                     "CMO-01",
+                     "CMO-02",
+                     "CMO-03",
+                     "CMO-04",
+                     "CMO-05",
+                     "CMO-06"
+                  ]
+               },
+               "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "sourceEdition": {
+                  "enum": [
+                     17,
+                     18
+                  ]
+               },
+               "reference": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "guidance": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "exceptions": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+               },
+               "status": {
+                  "enum": [
+                     "disabled",
+                     "candidates-only"
+                  ]
+               }
+            },
+            "required": [
+               "id",
+               "ruleId",
+               "title",
+               "sourceEdition",
+               "reference",
+               "guidance",
+               "exceptions",
+               "status"
+            ],
+            "additionalProperties": false
+         }
+      }
+   },
+   "required": [
+      "version",
+      "inputHash",
+      "targetEdition",
+      "rules"
+   ],
+   "additionalProperties": false,
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "urn:phb:chicago:v1",
+   "title": "PHB chicago v1"
+}

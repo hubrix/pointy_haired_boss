@@ -30,6 +30,7 @@ Supporting documents:
 - [[file:docs/CONTRACTS.md][Implemented shared contracts and API behavior]]
 - [[file:docs/CHECKER.md][Local checker usage, coverage, and known limits]]
 - [[file:docs/UNICODE.md][Unicode inventory, cleanup policy, and application guarantees]]
+- [[file:docs/STYLE.md][Readability measurement and the sourced Chicago review subset]]
 
 Status vocabulary: TODO = queued; NEXT = ready; DOING = in progress;
 WAITING = blocked with a recorded cause; DONE = complete with evidence;
@@ -44,16 +45,17 @@ conditions describe required outcomes, not outcomes already achieved.
 :CUSTOM_ID: focus
 :END:
 
-Stage: local checker and Unicode cleanup implemented; host investigation remains partial.
-Current checkpoint: PHB-022 complete. All 140 tests pass on Node 26.9.0 and 22.23.2.
+Stage: local checks, Unicode cleanup, reading-grade measurement, and a narrow
+Chicago review subset implemented; host investigation remains partial.
+Current checkpoint: PHB-023 complete. All 175 tests pass on Node 26.9.0 and 22.23.2.
 The prior DSH probe passed eight service/event checks. Full host sessions remain untested.
-Blockers: none. Contextual editing, readability/Chicago checks, and installable
-host plugins remain unimplemented. Cleanup file application is verified on macOS.
+Blockers: none. Contextual editing and installable host plugins remain unimplemented.
+Chicago families retain partial coverage. Cleanup application is verified on macOS.
 
 Next actions, in order:
-1. [[#PHB-023][Implement readability and a sourced Chicago subset]].
-2. [[#PHB-012][Complete live host invocation and lifecycle smoke tests]].
-3. [[#PHB-024][Build contextual review and the bounded editing workflow]].
+1. [[#PHB-012][Complete live host invocation and lifecycle smoke tests]].
+2. [[#PHB-024][Build contextual review and the bounded editing workflow]].
+3. [[#PHB-025][Extend reviewed patches after the editorial workflow exists]].
 
 Do not begin implementation merely because it appears here. Continue within
 the user's current request and preserve later work in this file.
@@ -104,7 +106,10 @@ severity/evidence semantics, source offsets, and coverage reporting. The house
 profile now includes nine configurable phrase bans and the technical-term allowlist.
 The checker defaults to exact phrase, boundary, and Unicode inventory coverage;
 all four contextual house bans remain visible as partial candidate checks. Explicit
-required checks can demand broader coverage. [[file:docs/UNICODE.md][Cleanup]] removes an initial BOM run
+required checks can demand broader coverage. [[file:docs/STYLE.md][READ-01]] now reports a pinned
+English metric with a 100-word minimum and explicit unavailable states; it does
+not certify comprehension. Six sourced Chicago candidates retain partial family
+coverage, with the consulted edition visible for each rule. [[file:docs/UNICODE.md][Cleanup]] removes an initial BOM run
 by default, with a preserve option; interior artifact deletion requires an explicit
 ASCII-word policy. These are agent implementation choices under the request to
 continue, documented with the [[file:docs/CHECKER.md][checker behavior]].
@@ -326,23 +331,38 @@ controls, and execution with Node networking APIs disabled.
 Limits: no confusables audit, universal sequence validation, or statistical-watermark
 test. Linux native-copy behavior and other OS writers remain release follow-ups.
 
-** NEXT Implement eighth-grade readability and a checked Chicago subset
+** DONE Implement eighth-grade readability and a checked Chicago subset
+CLOSED: [2026-09-19 Sat]
 :PROPERTIES:
 :CUSTOM_ID: PHB-023
 :DEPENDS_ON: PHB-020 PHB-021
 :END:
-- [ ] Define segmentation, syllable estimation, exclusions, and short-sample behavior.
-- [ ] Implement Flesch–Kincaid measurement and the grade-eight target warning.
-- [ ] Refine CMO-01–06 into sourced, testable rules with edition and exceptions.
-- [ ] Preserve citation facts and document house-style precedence.
-Next: define readable prose units from the mapped parser, select a pinned syllable
-estimator, implement metric/short-sample fixtures, and source each proposed Chicago
-subrule from public official guidance before claiming support.
+- [X] Define segmentation, syllable estimation, exclusions, and short-sample behavior.
+- [X] Implement Flesch–Kincaid measurement and the grade-eight target warning.
+- [X] Refine CMO-01–06 into sourced, testable rules with edition and exceptions.
+- [X] Preserve citation facts and document house-style precedence.
+Implementation choices: parse-english 7.0.0 sentence/word units and syllable 5.0.1
+estimates; whole eligible body sentences only; report original ranges, counts,
+exclusions, and unavailable grades. Undefined number/initialism pronunciations
+do not gain fabricated syllable counts. Short samples retain an insufficient status.
+Chicago screens em-dash spacing, colon capitalization, ebook spelling, month-first
+ordinal days, Latin-abbreviation commas, and outside quotation punctuation.
+All six families remain partial. Four checks cite explicit 18th-edition guidance;
+two identify 17th-edition Q&As without claiming their 18th-edition text was checked.
 Completion: metric fixtures and declared Chicago checks pass; unsupported guidance
 stays visible and essential facts survive efforts to lower reading burden.
 Requirements: READ-01–02, STYLE-01–02.
+Evidence: [[file:src/style/][style modules]], [[file:docs/STYLE.md][counting policy and sourced subset]],
+[[file:test/style/][35 new tests]], and [[file:schemas/readability.schema.json][metric]] / [[file:schemas/chicago.schema.json][Chicago]] schemas.
+Verification: all 175 tests pass on Node 26.9.0 and 22.23.2; generated assets match.
+A production-only install passes Node 22 metric/Chicago and Unicode-preview smoke
+checks. Fixtures cover known counts, protected text, dates, quotations, selections,
+partial suppressions, thresholds, and read-only CLI behavior. No prose is rewritten.
+Limits: the metric implements requirement READ-02; contextual requirement READ-01
+remains PHB-024. Wider Chicago/citation review remains PHB-024/031. Pronunciation
+coverage expansion remains PHB-041; exact minimum-version/performance checks PHB-032.
 
-** TODO Implement the shared editorial skill and fidelity review
+** NEXT Implement the shared editorial skill and fidelity review
 :PROPERTIES:
 :CUSTOM_ID: PHB-024
 :DEPENDS_ON: PHB-020 PHB-021
@@ -350,6 +370,9 @@ Requirements: READ-01–02, STYLE-01–02.
 Provide =review=, =rewrite=, and =write= using the host-selected model. Keep the
 short active policy separate from full reference catalogs. Preserve voice,
 claims, modality, negation, attribution, and supported responsibility.
+Use the sourced Chicago definitions and metric availability without treating
+candidate detection or a grade as semantic confirmation. Review wider title,
+compound, number, abbreviation, and citation conventions only with checked sources.
 Completion: the bounded edit/verify loop handles clean prose, missing substance,
 all four bans, and unfixable conflicts without fabricating facts or cycling.
 Requirements: EDIT-01–04, VOICE-01, READ-01, SAFE-01, PRIV-01.
@@ -431,8 +454,8 @@ open a tracker task for every unresolved release issue.
 :END:
 Run the end-to-end acceptance scenarios and local-network-disabled checks.
 Measure checker runtime and policy overhead on a documented reference machine.
-Test the declared Node 22.18 minimum and pinned host versions. The 140-test checker,
-Unicode, contract, and parser suite passes on Node 26.9.0 and 22.23.2; the exact 22.18 minimum
+Test the declared Node 22.18 minimum and pinned host versions. The 175-test checker,
+style, Unicode, contract, and parser suite passes on Node 26.9.0 and 22.23.2; the exact 22.18 minimum
 remains unverified. Measure rich Markdown, large inputs/protected-range sets, and
 the complete rule pipeline;
 the repeated-paragraph parser timings do not establish the PERF-01 release gate.
@@ -479,6 +502,10 @@ scope, privacy behavior, and evidence of voice retention. Requirement: VOICE-02.
 Evaluate one extension at a time: domain-specific prose, non-English editorial
 rules, HTML/MDX, or rich documents. Require language/format-specific preservation
 fixtures before claiming support. Scope each candidate here before implementation.
+For English metrics, define sourced number/initialism pronunciations or explicit
+user syllable overrides before expanding availability. Test ambiguous numbers,
+years, abbreviations, all-caps prose, names, and dialect variation; never remove
+meaning-bearing tokens merely to obtain a grade.
 
 ** TODO Evaluate interoperability and CI integrations
 :PROPERTIES:
@@ -656,4 +683,29 @@ developing this increment; application tests use temporary fixtures.
 Final checks: a production-only dependency install passes the Node 22 cleanup
 application and idempotence smoke test. Emacs Org lint, 34 unique IDs, 28 task
 dependencies, local links, three runtime-validated configuration examples, and
+=git diff --check= pass. This checkpoint is ready for commit and push to origin/main.
+
+** [2026-09-19 Sat] Reading-grade measurement and sourced Chicago candidates
+
+Completed PHB-023 after Mark asked to keep going. Added body-prose metric units,
+pinned sentence/word and syllable analysis, a grade-eight warning, explicit short
+sample/unsupported-pronunciation states, and six narrow Chicago candidate checks.
+Each Chicago rule records its consulted edition, source, scope, and exceptions.
+All CMO families remain partial; exact quotations and citation fields stay intact.
+The four house bans retain their defaults and contextual-review requirements.
+
+Added two schemas and 35 tests. All 175 tests pass on Node 26.9.0 and 22.23.2.
+Tests caught and now cover prototype-property words in the abbreviation lookup;
+metric findings also avoid letting a single-word exemption suppress a document
+warning. A production-only install passes Node 22 metric/Chicago and Unicode
+preview smoke checks. The existing networking-API-disabled check/clean tests pass.
+
+PHB-012 is next for live host invocation and lifecycle evidence. PHB-024 is ready
+for contextual editing; wider Chicago judgment and citation consistency belong
+there and in PHB-031 evaluation. Pronunciation expansion is recorded in PHB-041;
+the exact Node minimum, wider corpus, and performance remain release checks.
+No user prose or host settings changed during this increment.
+
+Final checks: Emacs Org lint, 34 unique IDs, 28 task dependencies and cycle checks,
+local document links, three runtime-validated configuration examples, and
 =git diff --check= pass. This checkpoint is ready for commit and push to origin/main.

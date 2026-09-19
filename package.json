@@ -11,7 +11,7 @@
       "node": ">=22.18.0"
    },
    "scripts": {
-      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs test/check/*.test.mjs test/unicode/*.test.mjs spikes/parser/*.test.mjs",
+      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs test/check/*.test.mjs test/unicode/*.test.mjs test/style/*.test.mjs spikes/parser/*.test.mjs",
       "phb": "node bin/phb.mjs",
       "schemas": "node scripts/export-schemas.mjs",
       "spike:parser": "node spikes/parser/compare.mjs",
@@ -26,11 +26,13 @@
       "compromise": "14.17.0",
       "ignore": "7.0.9",
       "micromark-util-decode-string": "2.0.1",
+      "parse-english": "7.0.0",
       "picomatch": "4.0.7",
       "remark-frontmatter": "5.0.0",
       "remark-gfm": "4.0.1",
       "remark-math": "6.0.0",
       "remark-parse": "11.0.0",
+      "syllable": "5.0.1",
       "unified": "11.0.5"
    }
 }
