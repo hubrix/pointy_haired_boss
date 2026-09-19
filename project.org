@@ -1,0 +1,437 @@
+#+TITLE: Pointy Haired Boss — project tracker
+#+AUTHOR: Mark Friedgan
+#+TODO: TODO(t) NEXT(n) DOING(i) WAITING(w@) | DONE(d!) CANCELED(c@)
+#+STARTUP: overview
+#+OPTIONS: toc:2
+#+LAST_UPDATED: [2026-09-19 Sat]
+
+* Project charter
+:PROPERTIES:
+:CUSTOM_ID: charter
+:END:
+
+This file is the planning bible: the source of truth for work, priorities,
+decisions, dependencies, and next steps. Agents must follow [[file:CLAUDE.md][the working rules]].
+The specifications below support this tracker; they do not replace its live plan.
+User instructions take precedence over recorded plans.
+
+Build a prose-quality plugin for Codex, Claude Code, and DeepSeek Harness.
+Use [[https://github.com/DietrichGebert/ponytail][Ponytail]] as the behavior reference. Improve readability, enforce house
+style, remove unwanted text artifacts, and preserve the author's meaning.
+
+Supporting documents:
+- [[file:docs/RESEARCH.md][Research and implementation comparison]]
+- [[file:docs/REQUIREMENTS.md][Product requirements]]
+- [[file:docs/RULES.md][Rule catalog and examples]]
+- [[file:docs/EVALUATION.md][Evaluation and release criteria]]
+
+Status vocabulary: TODO = queued; NEXT = ready; DOING = in progress;
+WAITING = blocked with a recorded cause; DONE = complete with evidence;
+CANCELED = abandoned with a recorded reason.
+
+Tasks use stable CUSTOM_ID values. DEPENDS_ON lists prerequisite task IDs;
+agents must check them because Org does not enforce this property. Completion
+conditions describe required outcomes, not outcomes already achieved.
+
+* Current focus and next actions
+:PROPERTIES:
+:CUSTOM_ID: focus
+:END:
+
+Stage: initial research and requirements drafted; implementation has not begun.
+Current work: PHB-005, commit and push the planning baseline; then PHB-010.
+Blockers: none for the planning work. No implementation benchmarks have run.
+
+Next actions, in order:
+1. [[#PHB-010][Resolve the remaining first-release choices and record the baseline]].
+2. [[#PHB-011][Compare parser/checker options with a small implementation spike]].
+3. [[#PHB-012][Verify integration surfaces on the actual host versions]].
+
+Do not begin implementation merely because it appears here. Continue within
+the user's current request and preserve later work in this file.
+
+* Decisions and constraints
+:PROPERTIES:
+:CUSTOM_ID: decisions
+:END:
+
+** Confirmed by Mark
+
+- [2026-09-19 Sat] Support Codex, Claude, and DeepSeek Harness. The working
+  requirements interpret Claude as Claude Code.
+- [2026-09-19 Sat] Use DietrichGebert/ponytail as the reference project.
+- [2026-09-19 Sat] Target the DSH setup in
+  =/Users/mark/code/scratch/homebrew-qwen-dsh=.
+- [2026-09-19 Sat] Ban adverbs, passive voice, “this, not that” framing, and
+  agentless obligations in the default house style.
+- [2026-09-19 Sat] Prefer eighth-grade readability and follow Chicago for
+  general style. Explicit house rules override that general guidance.
+- [2026-09-19 Sat] Keep =project.org= as the canonical planning bible. Put
+  update instructions in =CLAUDE.md= and capture future plans here.
+- [2026-09-19 Sat] Push the current state and continue the project work.
+
+** Proposed baseline and unresolved choices
+
+These are recommendations, not recorded user approvals. Resolve their status
+under [[#PHB-010][PHB-010]] before treating them as a settled release commitment.
+
+| Topic | Current proposal | Follow-up |
+|-------+------------------+-----------|
+| Name and command | Pointy Haired Boss; pointy-haired-boss; phb | PHB-010 |
+| First release | English text/Markdown; general nonfiction, business prose, docs | PHB-010 |
+| Activation | Normal prose guidance while enabled; manual-only option and off switch | PHB-010 |
+| Punctuation | Review overuse; no global em-dash ban unless requested | PHB-010 |
+| Style reference | Chicago 18th edition; publish supported subset | PHB-023 |
+| Readability metric | Flesch–Kincaid target at most 8.0; warn rather than lose meaning | PHB-023 |
+| Core | Shared skills/rules plus local checker; TypeScript/Node candidate | PHB-011 |
+| Host scope | All three adapters in the first release | PHB-012 |
+| Voice samples | Preserve source voice; sample-derived profiles in a later increment | PHB-040 |
+| Watermark work | Unicode cleanup in MVP; statistical work in a separate experiment | PHB-050 |
+
+The DSH wrapper pinned =0.1.6-alpha.1= and Cordis =4.0.2= at initial inspection.
+Recheck those pins during the host spike. A separate local DSH checkout and the
+global =dsh= binary used older versions; neither establishes wrapper compatibility.
+
+* Milestone 0: discovery and planning foundation
+
+** DONE Research existing approaches
+CLOSED: [2026-09-19 Sat]
+:PROPERTIES:
+:CUSTOM_ID: PHB-001
+:END:
+Evidence: [[file:docs/RESEARCH.md][research report]] compares Ponytail, prose skills, linters, readability
+guidance, Unicode cleaners, watermark research, and host integration surfaces.
+Verification: reviewed primary documentation/source; no independent tool-quality
+or performance benchmarks. Later research must keep those limits explicit.
+
+** DONE Draft requirements and record the confirmed house style
+CLOSED: [2026-09-19 Sat]
+:PROPERTIES:
+:CUSTOM_ID: PHB-002
+:END:
+Evidence: [[file:docs/REQUIREMENTS.md][requirements]] and [[file:docs/RULES.md][rules]] include all four bans, eighth-grade
+readability, Chicago guidance, fidelity checks, and adapter requirements.
+Verification: checked document links and the JSON configuration example.
+Scope: drafting is complete; open product choices and implementation remain open.
+
+** DONE Define evaluation and release criteria
+CLOSED: [2026-09-19 Sat]
+:PROPERTIES:
+:CUSTOM_ID: PHB-003
+:END:
+Evidence: [[file:docs/EVALUATION.md][evaluation plan]] defines fixtures, baselines, metrics, and end-to-end
+scenarios. Verification: reviewed coverage against the draft requirements.
+No corpus, benchmark run, or passing release result exists yet.
+
+** DONE Establish the canonical Org tracker and shared agent instructions
+CLOSED: [2026-09-19 Sat]
+:PROPERTIES:
+:CUSTOM_ID: PHB-004
+:END:
+Completion: seed completed and remaining work; link all specifications; require
+tracker updates in =CLAUDE.md=; make Codex/DSH discover the same rules; validate
+Org structure, task links, dependencies, and local document links.
+Evidence: [[file:project.org][this tracker]], [[file:CLAUDE.md][shared working instructions]], and [[file:AGENTS.md][Codex/DSH entry point]].
+Verification: Emacs Org lint passed; all 33 stable IDs are unique; links and
+dependencies across 27 tasks resolve without cycles. README and requirements
+point back to this tracker. No implementation task has started.
+
+** DOING Commit and push the planning baseline
+:PROPERTIES:
+:CUSTOM_ID: PHB-005
+:END:
+The local repository has no commits and an empty origin URL. The authenticated
+GitHub account is hubrix; no matching pointy_haired_boss repository exists.
+Action: create a private hubrix/pointy_haired_boss repository, commit the current
+planning files, and push main. Private visibility is a conservative agent choice.
+Completion: verify the remote main revision matches the local baseline commit.
+
+* Milestone 1: settle the baseline and prove the integration
+
+** NEXT [#A] Resolve the remaining first-release choices
+:PROPERTIES:
+:CUSTOM_ID: PHB-010
+:DEPENDS_ON: PHB-002
+:END:
+Outcome: a documented baseline for scope, activation, name, genres, punctuation,
+voice samples, and watermark timing. Preserve Mark's confirmed defaults.
+Use existing authorization and judgment for routine reversible choices; ask
+only when a material product choice cannot be inferred.
+Completion: record decisions above and align [[file:docs/REQUIREMENTS.md][requirements]] with them.
+
+** TODO [#A] Compare parser and checker options
+:PROPERTIES:
+:CUSTOM_ID: PHB-011
+:DEPENDS_ON: PHB-010
+:END:
+Compare textlint with a focused core built on a proven Markdown parser.
+- [ ] Check protected spans, Markdown structure, offsets, and patch generation.
+- [ ] Check grammar-analysis options for adverbs/passive voice and candidate reporting.
+- [ ] Measure dependency footprint, startup cost, and local execution behavior.
+- [ ] Record the chosen engine, tradeoffs, and supported input boundaries.
+Completion: a small runnable spike and a decision with evidence; no framework
+choice based on feature lists alone.
+
+** TODO [#A] Verify the three host integration surfaces
+:PROPERTIES:
+:CUSTOM_ID: PHB-012
+:DEPENDS_ON: PHB-010
+:END:
+- [ ] Record actual Codex and Claude Code versions and their plugin/hook contracts.
+- [ ] Verify the DSH wrapper's runtime pins, skill discovery paths, and Cordis APIs.
+- [ ] Prove manual invocation and bounded policy activation on each host.
+- [ ] Document hook trust, compaction/resume, off-switch, and enforcement limits.
+Completion: recorded smoke-test evidence for all three hosts and an adapter
+contract that does not assume identical hook schemas.
+Requirements: HOST-01–03, ACT-01–03, DIST-01.
+
+* Milestone 2: build the first usable release
+
+** TODO Define shared rule, profile, and diagnostic contracts
+:PROPERTIES:
+:CUSTOM_ID: PHB-020
+:DEPENDS_ON: PHB-011
+:END:
+Implement versioned rule records, severity, evidence types, allowlists,
+suppressions, configuration precedence, input hashes, offsets, and coverage status.
+Completion: validated schemas and focused fixtures for invalid configuration,
+Unicode positions, exact phrase boundaries, and protected-content conflicts.
+Requirements: RULE-01–03, VOICE-01, OUT-01, OUT-03.
+
+** TODO Implement parsing, local checks, and the four house bans
+:PROPERTIES:
+:CUSTOM_ID: PHB-021
+:DEPENDS_ON: PHB-020
+:END:
+Protect code, quotations, links, citations, math, front matter, HTML, and locked
+spans. Enforce phrase bans; detect adverbs, passive voice, contrastive framing,
+and agentless obligations. Separate candidates from contextual confirmations.
+Completion: =check= works on supported inputs with correct exclusions, findings,
+coverage, and exit behavior; fixtures include grammar lookalikes and missing owners.
+Requirements: IN-01–02, RULE-04, OUT-03, SAFE-01.
+
+** TODO Implement Unicode inspection and conservative cleanup
+:PROPERTIES:
+:CUSTOM_ID: PHB-022
+:DEPENDS_ON: PHB-020
+:END:
+Inventory original code points, explain each finding, and implement =clean=
+without stylistic paraphrasing. Preserve legitimate script/emoji/bidi/space uses.
+Completion: cleanup is idempotent, reports exact edits, and preserves the Unicode
+counterexamples and protected spans. Ambiguous artifacts remain findings.
+Requirements: UNI-01–03, PRIV-01, IN-02.
+
+** TODO Implement eighth-grade readability and a checked Chicago subset
+:PROPERTIES:
+:CUSTOM_ID: PHB-023
+:DEPENDS_ON: PHB-020
+:END:
+- [ ] Define segmentation, syllable estimation, exclusions, and short-sample behavior.
+- [ ] Implement Flesch–Kincaid measurement and the grade-eight target warning.
+- [ ] Refine CMO-01–06 into sourced, testable rules with edition and exceptions.
+- [ ] Preserve citation facts and document house-style precedence.
+Completion: metric fixtures and declared Chicago checks pass; unsupported guidance
+stays visible and essential facts survive efforts to lower reading burden.
+Requirements: READ-01–02, STYLE-01–02.
+
+** TODO Implement the shared editorial skill and fidelity review
+:PROPERTIES:
+:CUSTOM_ID: PHB-024
+:DEPENDS_ON: PHB-020 PHB-021
+:END:
+Provide =review=, =rewrite=, and =write= using the host-selected model. Keep the
+short active policy separate from full reference catalogs. Preserve voice,
+claims, modality, negation, attribution, and supported responsibility.
+Completion: the bounded edit/verify loop handles clean prose, missing substance,
+all four bans, and unfixable conflicts without fabricating facts or cycling.
+Requirements: EDIT-01–04, VOICE-01, READ-01, SAFE-01, PRIV-01.
+
+** TODO Implement reviewed patches and command behavior
+:PROPERTIES:
+:CUSTOM_ID: PHB-025
+:DEPENDS_ON: PHB-021 PHB-022 PHB-024
+:END:
+Provide text, JSON, and diff outputs; handle existing edit authorization;
+reject stale/overlapping fixes; apply per-file atomic writes; report batch failures.
+Completion: review stays read-only, failed validation preserves original content,
+and file-edit fixtures pass. No extra approval round for an authorized edit.
+Requirements: OUT-01–03, IN-01–02.
+
+** TODO Package the Codex adapter
+:PROPERTIES:
+:CUSTOM_ID: PHB-026
+:DEPENDS_ON: PHB-012 PHB-024 PHB-025
+:END:
+Completion: installable plugin with shared skills, lifecycle configuration,
+on/off/status, intensity selection, and a manual fallback; versioned smoke-test
+evidence covers trust/degraded mode, resume/compaction, and session isolation.
+Requirements: ACT-01–03, HOST-01, HOST-03, DIST-01.
+
+** TODO Package the Claude Code adapter
+:PROPERTIES:
+:CUSTOM_ID: PHB-027
+:DEPENDS_ON: PHB-012 PHB-024 PHB-025
+:END:
+Completion: installable plugin with shared skills and Claude-specific lifecycle
+handling; smoke tests cover activation, status, disabling, restoration, and
+bounded checks after writes/stops.
+Requirements: ACT-01–03, HOST-01, HOST-03, DIST-01.
+
+** TODO Package the native DSH adapter
+:PROPERTIES:
+:CUSTOM_ID: PHB-028
+:DEPENDS_ON: PHB-012 PHB-024 PHB-025
+:END:
+Completion: ESM/Cordis plugin works in the confirmed wrapper's runtime and local
+model configuration, registers shared skills, restores policy state, and requires
+no extra cloud key. Verify enable/disable and session isolation in the wrapper.
+Requirements: ACT-01–03, HOST-02–03, PRIV-01, DIST-01.
+
+* Milestone 3: verify and prepare release
+
+** TODO Build the annotated evaluation corpus
+:PROPERTIES:
+:CUSTOM_ID: PHB-030
+:DEPENDS_ON: PHB-003 PHB-010
+:END:
+Create the proposed 200-passage corpus with source/licensing metadata, development
+and frozen test splits, facts, expected findings, and unchanged controls.
+Completion: all slices in [[file:docs/EVALUATION.md][the evaluation plan]] have coverage and near-duplicate
+or author-sample leakage checks. Use fixtures during implementation, not just at release.
+
+** TODO Run cross-model editing and preservation evaluations
+:PROPERTIES:
+:CUSTOM_ID: PHB-031
+:DEPENDS_ON: PHB-023 PHB-026 PHB-027 PHB-028 PHB-030
+:END:
+Compare baselines and our tooling on recorded host/model versions. Measure
+house-ban compliance, fidelity, reader preference, clean-prose preservation,
+readability, and false positives. Include independent human review as specified.
+Completion: a report with sample counts, actual results, failures, and limits;
+open a tracker task for every unresolved release issue.
+
+** TODO Verify lifecycle, privacy, patch safety, and performance
+:PROPERTIES:
+:CUSTOM_ID: PHB-032
+:DEPENDS_ON: PHB-026 PHB-027 PHB-028
+:END:
+Run the end-to-end acceptance scenarios and local-network-disabled checks.
+Measure checker runtime and policy overhead on a documented reference machine.
+Completion: record measured results against [[file:docs/EVALUATION.md][release gates]], with no false claims
+about universal enforcement, watermark removal, or untested host versions.
+Requirements: ACT-01–03, OUT-01–03, PRIV-01, SAFE-01, PERF-01.
+
+** TODO Prepare release artifacts and installation documentation
+:PROPERTIES:
+:CUSTOM_ID: PHB-033
+:DEPENDS_ON: PHB-031 PHB-032
+:END:
+Pin dependencies; check actual licenses and attribution; validate manifests;
+document install, usage, configuration, capabilities, update, and uninstall.
+Completion: a reviewable release candidate with linked verification results.
+Publishing or changing external installations follows the user's authorization
+at that time; this task does not itself authorize those actions.
+Requirements: DIST-01, HOST-01–03.
+
+* Backlog: later capabilities
+:PROPERTIES:
+:CUSTOM_ID: backlog
+:END:
+
+These items preserve future plans. Their order and release assignment remain
+proposals. Add newly discovered follow-ups here or to the appropriate milestone.
+
+** TODO Add sample-derived voice profiles
+:PROPERTIES:
+:CUSTOM_ID: PHB-040
+:DEPENDS_ON: PHB-024
+:END:
+Outcome: reviewable profiles from user-provided samples with explicit storage
+scope, privacy behavior, and evidence of voice retention. Requirement: VOICE-02.
+
+** TODO Expand genres, languages, and document formats
+:PROPERTIES:
+:CUSTOM_ID: PHB-041
+:END:
+Evaluate one extension at a time: domain-specific prose, non-English editorial
+rules, HTML/MDX, or rich documents. Require language/format-specific preservation
+fixtures before claiming support. Scope each candidate here before implementation.
+
+** TODO Evaluate interoperability and CI integrations
+:PROPERTIES:
+:CUSTOM_ID: PHB-042
+:DEPENDS_ON: PHB-020 PHB-025
+:END:
+Consider Vale/textlint rule integration, SARIF/pre-commit/CI reporting, and MCP
+only where a real workflow needs them. Record scope, costs, and acceptance criteria
+before promoting any option into the active plan.
+
+** TODO Evaluate a Claude.ai/Desktop skill package
+:PROPERTIES:
+:CUSTOM_ID: PHB-043
+:DEPENDS_ON: PHB-024
+:END:
+Outcome: a separate support decision and packaging plan; do not confuse Claude
+Code plugin support with every Claude product surface.
+
+* Experimental track: statistical watermarks
+:PROPERTIES:
+:CUSTOM_ID: watermark-track
+:END:
+
+Unicode cleanup does not prove statistical-watermark removal. Keep the requested
+statistical topic visible even if the first release does not include it.
+
+** TODO Decide whether statistical mitigation is a launch requirement
+:PROPERTIES:
+:CUSTOM_ID: PHB-050
+:DEPENDS_ON: PHB-010
+:END:
+Current proposal: a separate experimental milestone. Completion: record its
+scope and timing decision; update the release plan if it becomes launch-critical.
+
+** TODO Build a controlled, named-scheme watermark experiment
+:PROPERTIES:
+:CUSTOM_ID: PHB-051
+:DEPENDS_ON: PHB-050 PHB-024
+:END:
+Use marked/unmarked samples, compatible tokenizer/configuration, named detectors,
+calibration, and held-out verification. Compare untouched text, Unicode cleanup,
+ordinary editing, and bounded experimental rewrites.
+Completion: reproducible results for the named configuration, including fidelity,
+voice, uncertainty, latency, and failure outcomes. Meet WM-01–06 before claiming
+a verified capability; preserve the original on failed quality checks.
+
+** TODO Assess file and media provenance as a separate extension
+:PROPERTIES:
+:CUSTOM_ID: PHB-052
+:END:
+Track possible PDF/DOCX metadata, C2PA/EXIF, and media processing work without
+folding it into the prose MVP. Completion: a scoped proposal or a cancellation
+decision with rationale; a text rewrite cannot establish container cleanup.
+
+* Progress log
+:PROPERTIES:
+:CUSTOM_ID: progress-log
+:END:
+
+** [2026-09-19 Sat] Research and requirements baseline
+
+Completed PHB-001 through PHB-003. Recorded Mark's four bans, eighth-grade
+preference, Chicago guidance, Ponytail reference, and the DSH wrapper path.
+Checked relative document links and the illustrative JSON configuration.
+Implementation, evaluation data collection, and runtime benchmarks remain open.
+
+** [2026-09-19 Sat] Canonical tracker established
+
+Completed PHB-004. Seeded 27 tasks spanning completed research, product choices,
+implementation, release verification, later capabilities, and watermark experiments.
+Added CLAUDE.md update rules and the AGENTS.md entry point. Emacs Org lint and
+the checks for IDs, local links, and dependency cycles passed. PHB-010 is the next
+ready task; all implementation work remains queued.
+
+** [2026-09-19 Sat] Publish the baseline and continue
+
+Mark requested a push and continued work. PHB-005 is active. The destination
+needs setup because origin has no URL; use a private repository under the
+authenticated account. Continue with baseline choices and parser/host spikes.
