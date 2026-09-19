@@ -14,10 +14,15 @@ export function validateSuppression(source, suppression) {
    return suppression;
 }
 
-export function resolveExemption({ source, ruleId, range, config, path, inlineSuppressions = [], protectedSpans = [] }) {
+export function resolveExemption({ source, ruleId, range, config, path, inlineSuppressions = [], protectedSpans = [], allowlistMatches = [] }) {
    source.span(range.start, range.end);
    for (const span of protectedSpans) source.span(span.start, span.end);
    for (const suppression of inlineSuppressions) validateSuppression(source, suppression);
+   for (const match of allowlistMatches) {
+      source.span(match.start, match.end);
+      if (match.end <= match.start || !config.allowedTerms.includes(match.term) ||
+          Object.keys(match).some((key) => !['term', 'start', 'end'].includes(key))) throw new ContractError('Invalid parser-supplied allowlist match');
+   }
    if (ruleId.startsWith('FID-')) return undefined;
    const inline = inlineSuppressions.find((item) => item.ruleIds.includes(ruleId) && contained(item.range, range));
    if (inline) return { kind: 'inline', reason: inline.reason };
@@ -26,6 +31,8 @@ export function resolveExemption({ source, ruleId, range, config, path, inlineSu
    const protectedMatch = protectedSpans.find((span) => overlaps(span, range));
    if (protectedMatch) return { kind: 'protected', reason: protectedMatch.reason ?? 'The finding intersects protected source content.' };
    if (ruleId.startsWith('LEX-')) {
+      const projected = allowlistMatches.find((match) => contained(match, range));
+      if (projected) return { kind: 'allowlist', reason: `Allowed term: ${projected.term}` };
       for (const term of config.allowedTerms) {
          if (findPhraseMatches(source, term, config.matching).some((span) => contained(span, range))) {
             return { kind: 'allowlist', reason: `Allowed term: ${term}` };

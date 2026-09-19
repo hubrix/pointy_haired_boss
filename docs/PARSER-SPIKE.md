@@ -2,7 +2,7 @@
 
 PHB-011, September 19, 2026. Choose **remark/unified with GFM, front matter, and math extensions** for the shared parser. Keep original-source patches separate from the AST. Use **compromise as a grammar candidate generator**, with contextual review required to clear the house bans.
 
-The runnable comparison lives in [spikes/parser](../spikes/parser/); [raw results](spikes/parser-results.json) contain every fixture, mismatch, timing sample, dependency root, and environment detail. This completes the engine-selection spike. The product checker remains unimplemented.
+The runnable comparison lives in [spikes/parser](../spikes/parser/); [raw results](spikes/parser-results.json) contain every fixture, mismatch, timing sample, dependency root, and environment detail. This records the engine-selection spike. PHB-021 has since added the [local checker](CHECKER.md), including boundary policies and candidate checks that address the measured gaps below. These historical spike results remain unchanged.
 
 ## What ran
 

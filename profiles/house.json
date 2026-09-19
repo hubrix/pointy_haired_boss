@@ -61,7 +61,14 @@
       },
       "forbiddenPhrases": [
          "delve into",
-         "in today's fast-paced world"
+         "in today's fast-paced world",
+         "it is worth noting",
+         "it's worth noting",
+         "ever-evolving landscape",
+         "a rich tapestry",
+         "unlock the full potential",
+         "a testament to",
+         "in the realm of"
       ],
       "allowedTerms": [
          "robust regression",

@@ -28,6 +28,7 @@ Supporting documents:
 - [[file:docs/PARSER-SPIKE.md][Parser decision and measured evidence]]
 - [[file:docs/HOST-SPIKE.md][Host contracts and partial smoke-test evidence]]
 - [[file:docs/CONTRACTS.md][Implemented shared contracts and API behavior]]
+- [[file:docs/CHECKER.md][Local checker usage, coverage, and known limits]]
 
 Status vocabulary: TODO = queued; NEXT = ready; DOING = in progress;
 WAITING = blocked with a recorded cause; DONE = complete with evidence;
@@ -42,15 +43,17 @@ conditions describe required outcomes, not outcomes already achieved.
 :CUSTOM_ID: focus
 :END:
 
-Stage: shared contracts implemented; parser choice verified; host investigation partial.
-Current checkpoint: PHB-020 complete. All 63 tests pass on Node 26.8.2 and 22.23.2.
+Stage: first local checker implemented; host investigation remains partial.
+Current checkpoint: PHB-021 complete. All 103 tests pass on Node 26.9.0 and 22.23.2.
 The prior DSH probe passed eight service/event checks. Full host sessions remain untested.
-Blockers: none. The command-line checker and installable plugin remain unimplemented.
+Blockers: none. Unicode cleanup, contextual editing, readability/Chicago checks,
+and installable host plugins remain unimplemented.
 
 Next actions, in order:
-1. [[#PHB-021][Build the parser boundary policy and first local checks]].
+1. [[#PHB-022][Add Unicode inventory and conservative cleanup to the checker]].
 2. [[#PHB-012][Complete live host invocation and lifecycle smoke tests]].
-3. [[#PHB-022][Implement Unicode inventory and conservative cleanup]].
+3. [[#PHB-023][Implement readability and a sourced Chicago subset]].
+4. [[#PHB-024][Build contextual review and the bounded editing workflow]].
 
 Do not begin implementation merely because it appears here. Continue within
 the user's current request and preserve later work in this file.
@@ -98,9 +101,11 @@ user-confirmed constraints above. [[file:docs/PARSER-SPIKE.md][The parser decisi
 
 [[file:docs/CONTRACTS.md][Version 1 contracts]] fix configuration precedence, matching boundaries,
 severity/evidence semantics, source offsets, and coverage reporting. The house
-profile starts with the two illustrative phrase bans and technical-term allowlist
-from the requirements. Vocabulary expansion remains in PHB-021. These details are
-agent implementation choices under the request to continue.
+profile now includes nine configurable phrase bans and the technical-term allowlist.
+The checker defaults to exact phrase/boundary coverage while Unicode remains pending;
+all four contextual house bans remain visible as partial candidate checks. Explicit
+required checks can demand broader coverage. These details are agent implementation
+choices under the request to continue, documented in [[file:docs/CHECKER.md][the checker guide]].
 
 The DSH wrapper pinned =0.1.6-alpha.1= and Cordis =4.0.2= at initial inspection.
 Recheck those pins during the host spike. A separate local DSH checkout and the
@@ -252,7 +257,8 @@ Decoded Markdown source mapping and file/profile discovery remain in PHB-021;
 patch application remains in PHB-025. No plugin or host lifecycle claim follows
 from this task's completion.
 
-** NEXT Implement parsing, local checks, and the four house bans
+** DONE Implement parsing, local checks, and the four house bans
+CLOSED: [2026-09-19 Sat]
 :PROPERTIES:
 :CUSTOM_ID: PHB-021
 :DEPENDS_ON: PHB-020
@@ -264,23 +270,36 @@ Spike follow-ups: inline quotations, author-date citations, defined lock syntax,
 inline HTML, unknown AST nodes, sentences crossing formatting, negation adverbs,
 passive infinitives, and reduced passives. Keep meaning conflicts unresolved
 instead of deleting negation or inventing an actor.
-Next implementation: load explicit inputs and configuration/profiles; honor input
-exclusions; parse with remark; define trusted lock/suppression syntax; map eligible
-prose back to source; expand the initial phrase pack; produce local findings through
-the completed contracts. Report unsupported boundaries/checks and map config errors
-to exit 2. Required terminology matching uses the same literal case/whitespace
-policy as bans. Host invocation and the editing workflow remain separate tasks.
+Implemented: read-only =phb check= for stdin, files, directories, and selections;
+explicit configuration/profiles, nested Git ignore rules, include/exclude filters,
+decoded source mapping, protected spans, trusted lock/suppression comments, nine
+phrase defaults, required terminology/allowlists, and all four house-ban candidates.
+JSON/text reports retain source positions, hashes, suppressed findings, skipped
+inputs, and every omitted rule. Default required coverage covers boundaries and
+LEX-01; requiring unfinished/contextual checks returns exit 2. No automatic edits.
 Completion: =check= works on supported inputs with correct exclusions, findings,
 coverage, and exit behavior; fixtures include grammar lookalikes and missing owners.
 Requirements: IN-01–02, RULE-04, OUT-03, SAFE-01.
+Evidence: [[file:src/check/][checker modules]], [[file:bin/phb.mjs][CLI entry point]], [[file:test/check/][40 checker tests]], and
+[[file:docs/CHECKER.md][usage and limits]]. All 103 tests pass on Node 26.9.0 and 22.23.2.
+The production parser preserves all 16 structural spike fixtures; candidate checks
+match all 20 small labeled grammar examples, including the four prior misses.
+This is fixture coverage, not real-world precision/recall or semantic confirmation.
+Known limits: raw HTML protects its enclosing block; unusual quote/citation forms
+need a lock; incomplete boundaries return 2. Global Git excludes and automatic
+user/profile discovery remain unsupported. Unicode joins the default check scope
+in PHB-022; contextual enforcement remains PHB-024; host packaging stays separate.
 
-** TODO Implement Unicode inspection and conservative cleanup
+** NEXT Implement Unicode inspection and conservative cleanup
 :PROPERTIES:
 :CUSTOM_ID: PHB-022
-:DEPENDS_ON: PHB-020
+:DEPENDS_ON: PHB-020 PHB-021
 :END:
 Inventory original code points, explain each finding, and implement =clean=
 without stylistic paraphrasing. Preserve legitimate script/emoji/bidi/space uses.
+Next: add UNI-01–06 inventory to =check= using original source and protected ranges;
+then implement conservative cleanup previews with exact source preconditions.
+Expand default required local coverage from LEX-01 to the implemented Unicode rules.
 Completion: cleanup is idempotent, reports exact edits, and preserves the Unicode
 counterexamples and protected spans. Ambiguous artifacts remain findings.
 Requirements: UNI-01–03, PRIV-01, IN-02.
@@ -319,6 +338,8 @@ Provide text, JSON, and diff outputs; handle existing edit authorization;
 reject stale/overlapping fixes; apply per-file atomic writes; report batch failures.
 Extend the source-patch spike with reversible decoded-text mappings, insertion
 semantics, grapheme boundaries, and selected-range checks.
+Define automatic user configuration/profile discovery for shared CLI/host use;
+the first checker loads project .phb.json and explicit user/profile files only.
 Completion: review stays read-only, failed validation preserves original content,
 and file-edit fixtures pass. No extra approval round for an authorized edit.
 Requirements: OUT-01–03, IN-01–02.
@@ -383,9 +404,10 @@ open a tracker task for every unresolved release issue.
 :END:
 Run the end-to-end acceptance scenarios and local-network-disabled checks.
 Measure checker runtime and policy overhead on a documented reference machine.
-Test the declared Node 22.18 minimum and pinned host versions. The 63-test contract
-and parser suite passes on Node 26.8.2 and 22.23.2; the exact 22.18 minimum remains
-unverified. Measure rich Markdown and the complete rule pipeline;
+Test the declared Node 22.18 minimum and pinned host versions. The 103-test checker,
+contract, and parser suite passes on Node 26.9.0 and 22.23.2; the exact 22.18 minimum
+remains unverified. Measure rich Markdown, large inputs/protected-range sets, and
+the complete rule pipeline;
 the repeated-paragraph parser timings do not establish the PERF-01 release gate.
 Completion: record measured results against [[file:docs/EVALUATION.md][release gates]], with no false claims
 about universal enforcement, watermark removal, or untested host versions.
@@ -555,3 +577,25 @@ file discovery, Markdown boundaries, actual rule execution, and host adapters.
 PHB-021 is NEXT; PHB-012 retains its live-test steps. No user host settings changed.
 Emacs Org lint, local links, JSON examples, and the checks for 34 unique IDs,
 28 task dependencies, and dependency cycles all pass.
+
+** [2026-09-19 Sat] First runnable local checker
+
+Completed PHB-021 after Mark asked to keep going. Added read-only checks for stdin,
+files, directories, and selections; configuration/profile loading; nested ignore
+handling; text/JSON reporting; original-source mappings; quotation/citation/HTML
+protection; trusted inline directives; vocabulary/terminology checks; and candidates
+for the four house bans. The nine-phrase house pack remains configurable.
+
+All 103 tests pass on Node 26.9.0 and 22.23.2, including 40 new checker tests.
+Regression fixtures cover the 16 structural parser examples and all 20 small
+grammar examples. Fixed continuation indentation and selection-created word
+boundaries during verification. Generated contracts match their definitions.
+Documented that local success covers requested checks only, with every semantic,
+Unicode, readability, and Chicago omission visible. No source files or host
+settings change during checks. PHB-022 is NEXT; the host spike retains its remaining
+live-test steps. Wider corpus, release performance, and minimum-version testing
+remain open.
+Final checks: production-only dependency installation and the Node 22 CLI smoke
+test pass. Emacs Org lint, all 34 IDs/28 task dependencies, local document links,
+JSON examples, and =git diff --check= pass. This checkpoint is ready for commit
+and push to origin/main.

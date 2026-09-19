@@ -3,28 +3,34 @@
    "version": "0.0.0",
    "private": true,
    "type": "module",
-   "description": "Shared prose contracts and development spikes for Pointy Haired Boss",
+   "description": "Local prose checker and shared contracts for Pointy Haired Boss",
+   "bin": {
+      "phb": "bin/phb.mjs"
+   },
    "engines": {
       "node": ">=22.18.0"
    },
    "scripts": {
-      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs spikes/parser/*.test.mjs",
+      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs test/check/*.test.mjs spikes/parser/*.test.mjs",
+      "phb": "node bin/phb.mjs",
       "schemas": "node scripts/export-schemas.mjs",
       "spike:parser": "node spikes/parser/compare.mjs",
       "spike:dsh": "node spikes/hosts/dsh.mjs"
    },
    "devDependencies": {
       "@textlint/kernel": "15.8.0",
-      "@textlint/textlint-plugin-markdown": "15.8.0",
+      "@textlint/textlint-plugin-markdown": "15.8.0"
+   },
+   "dependencies": {
+      "ajv": "8.20.0",
       "compromise": "14.17.0",
+      "ignore": "7.0.9",
+      "micromark-util-decode-string": "2.0.1",
+      "picomatch": "4.0.7",
       "remark-frontmatter": "5.0.0",
       "remark-gfm": "4.0.1",
       "remark-math": "6.0.0",
       "remark-parse": "11.0.0",
       "unified": "11.0.5"
-   },
-   "dependencies": {
-      "ajv": "8.20.0",
-      "picomatch": "4.0.7"
    }
 }

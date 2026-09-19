@@ -32,7 +32,7 @@ The prose decision ladder:
 
 ## Operations
 
-Names below describe the desired interface, not commands that exist yet. Hosts may namespace skills differently; their documentation must show actual installed invocations.
+The table defines the release interface. A [local `phb check` increment](CHECKER.md) now exists; its Unicode checks and the other operations remain pending. Hosts may namespace skills differently; their documentation must show actual installed invocations.
 
 | Operation | Behavior | File-write behavior |
 | --- | --- | --- |
@@ -88,9 +88,9 @@ The confirmed house bans block a clean result in the completed editorial workflo
 
 ## Configuration contract
 
-Proposed project file: `.phb.json`; user defaults in a documented user configuration location. Precedence for style choices: explicit invocation > project/path override > user profile > bundled house rules > Chicago defaults. Protected spans and factual fidelity remain active at every intensity. If a ban conflicts with exact content or meaning, preserve the source and report the conflict; do not mark the passage compliant. Protected quotations can carry a documented exemption. Chicago guidance cannot silently re-enable a house-banned construction.
+Project file: `.phb.json`; the current checker accepts user settings through `--user-config FILE`. Automatic user/profile discovery remains for host packaging. Precedence for style choices: explicit invocation > project/path override > user profile > bundled house rules > Chicago defaults. Protected spans and factual fidelity remain active at every intensity. If a ban conflicts with exact content or meaning, preserve the source and report the conflict; do not mark the passage compliant. Protected quotations can carry a documented exemption. Chicago guidance cannot silently re-enable a house-banned construction.
 
-The [version 1 configuration contract](CONTRACTS.md) now implements in-memory validation and resolution; file discovery and the CLI remain open. This example validates against the [configuration schema](../schemas/config.schema.json):
+The [version 1 configuration contract](CONTRACTS.md) implements validation and resolution; the [checker](CHECKER.md) loads explicit inputs/configuration and scans directories. This example validates against the [configuration schema](../schemas/config.schema.json):
 
 ```json
 {

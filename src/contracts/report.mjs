@@ -7,7 +7,7 @@ const levels = { suggestion: 1, warning: 2, error: 3 };
 const defaultLocalChecks = ['LEX-01', ...ruleIds.filter((id) => id.startsWith('UNI-'))];
 const displaySeverity = (severity, status) => status === 'candidate' && severity === 'error' ? 'warning' : severity;
 
-export function validateFinding(source, config, finding, { protectedSpans = [], path, inlineSuppressions = [] } = {}) {
+export function validateFinding(source, config, finding, { protectedSpans = [], path, inlineSuppressions = [], allowlistMatches = [] } = {}) {
    validate('finding', finding);
    const rule = ruleById[finding.ruleId];
    if (finding.ruleVersion !== rule.version) throw new ContractError('Finding rule version does not match the catalog');
@@ -21,7 +21,7 @@ export function validateFinding(source, config, finding, { protectedSpans = [], 
    if (finding.ruleId.startsWith('FID-') && finding.status === 'suppressed') throw new ContractError('Fidelity findings cannot be suppressed');
    for (const range of protectedSpans) source.span(range.start, range.end);
    if (finding.status === 'suppressed') {
-      const expected = resolveExemption({ source, config, ruleId: finding.ruleId, range: finding.span, path, inlineSuppressions, protectedSpans });
+      const expected = resolveExemption({ source, config, ruleId: finding.ruleId, range: finding.span, path, inlineSuppressions, protectedSpans, allowlistMatches });
       if (!isDeepStrictEqual(finding.exemption, expected)) throw new ContractError('Finding exemption is not supported by the effective policy');
    }
    if (finding.fix) {
@@ -37,7 +37,7 @@ export function validateFinding(source, config, finding, { protectedSpans = [], 
    return finding;
 }
 
-export function createFinding({ source, config, ruleId, range, reason, evidence, status, fix, path, inlineSuppressions = [], protectedSpans = [] }) {
+export function createFinding({ source, config, ruleId, range, reason, evidence, status, fix, path, inlineSuppressions = [], protectedSpans = [], allowlistMatches = [] }) {
    if (!Object.hasOwn(ruleById, ruleId)) throw new ContractError(`Unknown rule: ${ruleId}`);
    if (typeof reason !== 'string' || !reason.trim()) throw new ContractError('Finding must state a reason');
    const rule = ruleById[ruleId];
@@ -45,7 +45,7 @@ export function createFinding({ source, config, ruleId, range, reason, evidence,
    if (ruleSeverity === 'off') throw new ContractError(`Cannot report disabled rule: ${ruleId}`);
    let findingStatus = status ?? (rule.detector.requiresContext ? 'candidate' : 'confirmed');
    if (findingStatus === 'suppressed') throw new ContractError('Suppression must come from a documented exemption');
-   const exemption = resolveExemption({ source, config, ruleId, range, path, inlineSuppressions, protectedSpans });
+   const exemption = resolveExemption({ source, config, ruleId, range, path, inlineSuppressions, protectedSpans, allowlistMatches });
    if (exemption?.kind === 'protected') {
       findingStatus = 'conflict';
       reason = `${reason} ${exemption.reason}`;
@@ -60,7 +60,7 @@ export function createFinding({ source, config, ruleId, range, reason, evidence,
       const fixRange = fix.range ?? range;
       finding.fix = { inputHash: source.hash, range: { start: fixRange.start, end: fixRange.end }, original: source.span(fixRange.start, fixRange.end).text, replacement: fix.replacement, policy: fix.policy };
    }
-   return deepFreeze(validateFinding(source, config, finding, { protectedSpans, path, inlineSuppressions }));
+   return deepFreeze(validateFinding(source, config, finding, { protectedSpans, path, inlineSuppressions, allowlistMatches }));
 }
 
 function coverage(checks) {
@@ -68,7 +68,7 @@ function coverage(checks) {
    return checks.every((item) => item.status === 'complete') ? 'complete' : 'partial';
 }
 
-export function buildReport({ source, config, scope = 'local', requestedChecks, checks = [], findings = [], threshold = 'error', protectedSpans = [], path, inlineSuppressions = [] }) {
+export function buildReport({ source, config, scope = 'local', requestedChecks, checks = [], findings = [], threshold = 'error', protectedSpans = [], path, inlineSuppressions = [], allowlistMatches = [] }) {
    if (!['local', 'editorial'].includes(scope)) throw new ContractError(`Unknown report scope: ${scope}`);
    if (!Object.hasOwn(levels, threshold)) throw new ContractError(`Unknown threshold: ${threshold}`);
    const enabled = ruleIds.filter((id) => config.rules[id] !== 'off');
@@ -88,7 +88,7 @@ export function buildReport({ source, config, scope = 'local', requestedChecks, 
       supplied.set(check.id, check);
    }
    for (const finding of findings) {
-      validateFinding(source, config, finding, { protectedSpans, path, inlineSuppressions });
+      validateFinding(source, config, finding, { protectedSpans, path, inlineSuppressions, allowlistMatches });
       if (scope === 'local' && finding.evidence === 'semantic') throw new ContractError('Local scope cannot contain semantic-review findings');
       if (!supplied.has(finding.ruleId) || supplied.get(finding.ruleId).status === 'skipped') throw new ContractError('Finding needs a corresponding executed check');
    }
