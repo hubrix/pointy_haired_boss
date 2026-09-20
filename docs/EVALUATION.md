@@ -1,6 +1,8 @@
 # Evaluation and release criteria
 
-These are proposed gates, not measured results. They test the [requirements](REQUIREMENTS.md) and [rule catalog](RULES.md). Every release report must distinguish automated fixtures, human assessment, and untested capabilities.
+These release gates remain proposals. A first live prompt-only pilot now lives in
+[the compliance harness](../eval/compliance/README.md); its small development set
+and deterministic flags do not satisfy the release gates below. They test the [requirements](REQUIREMENTS.md) and [rule catalog](RULES.md). Every release report must distinguish automated fixtures, human assessment, and untested capabilities.
 
 ## Evaluation set
 

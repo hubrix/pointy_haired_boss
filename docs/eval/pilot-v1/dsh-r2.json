@@ -1,0 +1,499 @@
+{
+   "version": 1,
+   "startedAt": "2026-09-20T11:48:49.647Z",
+   "host": "dsh",
+   "node": "v26.9.0",
+   "corpus": {
+      "name": "pilot-development-v1",
+      "sha256": "7ade614dc7054469e8685a816822a20e040f27dbbad2ac797172d050d27ee118",
+      "cases": 17
+   },
+   "policyHashes": {
+      "generic": "7d08b02dd53da291bf1f022dff8d9b5a9f5868f87d4a89aa41c4ce8afd111684",
+      "phb": "e81420b7900c9c5d23a38b6cb20917791ca84a479d0e5873a0f004451ae58748"
+   },
+   "design": "Paired generic/PHB prompt-only pilot; fixed batches; three policy observations for a hard subset. No model judge or human scoring.",
+   "limits": [
+      "Development pilot, not the release corpus",
+      "Native CLI defaults can differ between hosts",
+      "DSH uses its configured local endpoint directly, not a booted adapter",
+      "Lexical checks can flag valid alternatives and miss semantic drift",
+      "Heuristic findings need review",
+      "No blind human review or reader-preference measure"
+   ],
+   "runs": [
+      {
+         "condition": "generic",
+         "repetition": 1,
+         "batch": 0,
+         "caseIds": [
+            "adverb-manner",
+            "adverb-scope",
+            "passive-known",
+            "passive-unknown",
+            "obligation-known",
+            "obligation-unknown",
+            "contrast-rhetoric",
+            "contrast-restriction",
+            "modality-negation"
+         ],
+         "promptSha256": "3f33b1e6c97a09f212386b5271e2ddf974727ef5d447bdef1efbc66bf0bed936",
+         "startedAt": "2026-09-20T11:40:10.360Z",
+         "raw": "{\n  \"results\": [\n    {\n      \"id\": \"adverb-manner\",\n      \"text\": \"Rina carefully checked each seal for cracks.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"adverb-scope\",\n      \"text\": \"Only the team lead may approve a refund.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"passive-known\",\n      \"text\": \"Maya approved the release notes.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"passive-unknown\",\n      \"text\": \"The samples were stored at 4 °C.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"obligation-known\",\n      \"text\": \"Nora must approve deployment before deployment.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"obligation-unknown\",\n      \"text\": \"The report needs a review before Friday.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"contrast-rhetoric\",\n      \"text\": \"This is not about speed. It is about trust. Our checks protect customer records.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"contrast-restriction\",\n      \"text\": \"Use staging credentials, not production credentials, in tests.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    },\n    {\n      \"id\": \"modality-negation\",\n      \"text\": \"The patch may reduce delays for some users. Do not retry a charge after a confirmed success.\",\n      \"status\": \"clean\",\n      \"issues\": []\n    }\n  ]\n}",
+         "resolvedModel": "qwen-orcarouter",
+         "usage": {
+            "completion_tokens": 3461,
+            "prompt_tokens": 631,
+            "total_tokens": 4092,
+            "prompt_tokens_details": {
+               "cached_tokens": 0
+            }
+         },
+         "finishReason": "stop",
+         "toolEventCount": 0,
+         "outputs": [
+            {
+               "id": "adverb-manner",
+               "text": "Rina carefully checked each seal for cracks.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "adverb-scope",
+               "text": "Only the team lead may approve a refund.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "passive-known",
+               "text": "Maya approved the release notes.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "passive-unknown",
+               "text": "The samples were stored at 4 °C.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "obligation-known",
+               "text": "Nora must approve deployment before deployment.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "obligation-unknown",
+               "text": "The report needs a review before Friday.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "contrast-rhetoric",
+               "text": "This is not about speed. It is about trust. Our checks protect customer records.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "contrast-restriction",
+               "text": "Use staging credentials, not production credentials, in tests.",
+               "status": "clean",
+               "issues": []
+            },
+            {
+               "id": "modality-negation",
+               "text": "The patch may reduce delays for some users. Do not retry a charge after a confirmed success.",
+               "status": "clean",
+               "issues": []
+            }
+         ],
+         "scores": [
+            {
+               "id": "adverb-manner",
+               "claimedStatus": "clean",
+               "flags": [
+                  {
+                     "kind": "known-pattern-remains",
+                     "detail": "carefully"
+                  }
+               ],
+               "mechanicalPass": false,
+               "candidates": [
+                  {
+                     "rule": "GRAM-01",
+                     "status": "candidate",
+                     "reason": "Possible grammatical adverb. Confirm its role and recast only if meaning survives.",
+                     "span": {
+                        "start": 5,
+                        "end": 14,
+                        "text": "carefully",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 6
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 15
+                        }
+                     }
+                  }
+               ],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 7,
+                  "sentences": 1,
+                  "syllables": 11
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "adverb-scope",
+               "claimedStatus": "clean",
+               "flags": [
+                  {
+                     "kind": "lexical-invariant",
+                     "detail": "\\b(sole|exclusive|exclusively|alone)\\b|no (other|one else)"
+                  },
+                  {
+                     "kind": "known-pattern-remains",
+                     "detail": "only"
+                  }
+               ],
+               "mechanicalPass": false,
+               "candidates": [
+                  {
+                     "rule": "GRAM-01",
+                     "status": "candidate",
+                     "reason": "Possible grammatical adverb. Confirm its role and recast only if meaning survives.",
+                     "span": {
+                        "start": 0,
+                        "end": 4,
+                        "text": "Only",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 1
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 5
+                        }
+                     }
+                  }
+               ],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 8,
+                  "sentences": 1,
+                  "syllables": 11
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "passive-known",
+               "claimedStatus": "clean",
+               "flags": [],
+               "mechanicalPass": true,
+               "candidates": [],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 5,
+                  "sentences": 1,
+                  "syllables": 8
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "passive-unknown",
+               "claimedStatus": "clean",
+               "flags": [
+                  {
+                     "kind": "expected-status",
+                     "detail": "needs-review"
+                  },
+                  {
+                     "kind": "expected-issue",
+                     "detail": "CLR-01"
+                  }
+               ],
+               "mechanicalPass": false,
+               "candidates": [
+                  {
+                     "rule": "CLR-01",
+                     "status": "candidate",
+                     "reason": "Possible passive voice. Confirm the construction and use an actor only when the source supports one.",
+                     "span": {
+                        "start": 12,
+                        "end": 23,
+                        "text": "were stored",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 13
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 24
+                        }
+                     }
+                  }
+               ],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 7,
+                  "sentences": 1,
+                  "syllables": null
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "obligation-known",
+               "claimedStatus": "clean",
+               "flags": [],
+               "mechanicalPass": true,
+               "candidates": [],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 6,
+                  "sentences": 1,
+                  "syllables": 13
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "obligation-unknown",
+               "claimedStatus": "clean",
+               "flags": [
+                  {
+                     "kind": "expected-status",
+                     "detail": "needs-review"
+                  },
+                  {
+                     "kind": "expected-issue",
+                     "detail": "CLR-05"
+                  }
+               ],
+               "mechanicalPass": false,
+               "candidates": [],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 7,
+                  "sentences": 1,
+                  "syllables": 11
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "contrast-rhetoric",
+               "claimedStatus": "clean",
+               "flags": [
+                  {
+                     "kind": "known-pattern-remains",
+                     "detail": "not about"
+                  },
+                  {
+                     "kind": "known-pattern-remains",
+                     "detail": "it is about"
+                  }
+               ],
+               "mechanicalPass": false,
+               "candidates": [
+                  {
+                     "rule": "STR-01",
+                     "status": "candidate",
+                     "reason": "Possible staged contrast. Review the framing while preserving factual distinctions and negation.",
+                     "span": {
+                        "start": 0,
+                        "end": 42,
+                        "text": "This is not about speed. It is about trust",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 1
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 43
+                        }
+                     }
+                  },
+                  {
+                     "rule": "GRAM-01",
+                     "status": "candidate",
+                     "reason": "Possible negation adverb. Preserve the negative claim; do not delete negation to satisfy the ban.",
+                     "span": {
+                        "start": 8,
+                        "end": 11,
+                        "text": "not",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 9
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 12
+                        }
+                     }
+                  }
+               ],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 14,
+                  "sentences": 3,
+                  "syllables": 20
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "contrast-restriction",
+               "claimedStatus": "clean",
+               "flags": [
+                  {
+                     "kind": "known-pattern-remains",
+                     "detail": ", not"
+                  }
+               ],
+               "mechanicalPass": false,
+               "candidates": [
+                  {
+                     "rule": "STR-01",
+                     "status": "candidate",
+                     "reason": "Possible staged contrast. Review the framing while preserving factual distinctions and negation.",
+                     "span": {
+                        "start": 0,
+                        "end": 61,
+                        "text": "Use staging credentials, not production credentials, in tests",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 1
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 62
+                        }
+                     }
+                  },
+                  {
+                     "rule": "GRAM-01",
+                     "status": "candidate",
+                     "reason": "Possible negation adverb. Preserve the negative claim; do not delete negation to satisfy the ban.",
+                     "span": {
+                        "start": 25,
+                        "end": 28,
+                        "text": "not",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 26
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 29
+                        }
+                     }
+                  }
+               ],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 8,
+                  "sentences": 1,
+                  "syllables": 15
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            },
+            {
+               "id": "modality-negation",
+               "claimedStatus": "clean",
+               "flags": [],
+               "mechanicalPass": true,
+               "candidates": [
+                  {
+                     "rule": "GRAM-01",
+                     "status": "candidate",
+                     "reason": "Possible negation adverb. Preserve the negative claim; do not delete negation to satisfy the ban.",
+                     "span": {
+                        "start": 47,
+                        "end": 50,
+                        "text": "not",
+                        "startLocation": {
+                           "line": 1,
+                           "column": 48
+                        },
+                        "endLocation": {
+                           "line": 1,
+                           "column": 51
+                        }
+                     }
+                  }
+               ],
+               "readability": {
+                  "status": "insufficient-sample",
+                  "grade": null,
+                  "words": 17,
+                  "sentences": 2,
+                  "syllables": 25
+               },
+               "semanticReview": "required; lexical checks and candidates do not establish fidelity"
+            }
+         ],
+         "status": "completed",
+         "latencyMs": 128295
+      },
+      {
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 0,
+         "caseIds": [
+            "adverb-manner",
+            "adverb-scope",
+            "passive-known",
+            "passive-unknown",
+            "obligation-known",
+            "obligation-unknown",
+            "contrast-rhetoric",
+            "contrast-restriction",
+            "modality-negation"
+         ],
+         "promptSha256": "8dc876a5e16f73845884c91c502d1c45b78bbc7fb4899e047050442c628f433b",
+         "startedAt": "2026-09-20T11:48:49.677Z",
+         "raw": "",
+         "resolvedModel": "qwen-orcarouter",
+         "usage": {
+            "completion_tokens": 8192,
+            "prompt_tokens": 1372,
+            "total_tokens": 9564,
+            "prompt_tokens_details": {
+               "cached_tokens": 0
+            }
+         },
+         "finishReason": "length",
+         "toolEventCount": 0,
+         "status": "error",
+         "error": {
+            "message": "Unexpected end of JSON input",
+            "category": "request-or-output",
+            "cause": null
+         },
+         "latencyMs": 275225
+      }
+   ],
+   "backend": {
+      "requestedModel": "qwen-orcarouter",
+      "displayName": "Qwen3.8 Flash Next — OrcaRouter (Local)",
+      "provider": "qwen-local",
+      "transport": "direct local chat/completions",
+      "temperature": 0.2,
+      "maxTokens": 8192,
+      "streaming": false
+   },
+   "resumedFrom": {
+      "filename": "docs/eval/pilot-v1/dsh.json",
+      "sha256": "057ee2caa7ad1bf0fc02b3c7d6f02a4bc685c5c7b1234185cac524021076f602",
+      "completedRequestsReused": 1
+   },
+   "finishedAt": "2026-09-20T11:53:24.904Z"
+}

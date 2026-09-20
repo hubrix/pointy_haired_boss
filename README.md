@@ -42,3 +42,10 @@ npm run spike:dsh-composition -- /path/to/homebrew-qwen-dsh/runtime /path/to/wra
 `check` is read-only. Its default required scope covers prose boundaries, exact phrase bans, and Unicode inventory. It also reports reading grade when the sample supports measurement, plus house-ban and Chicago candidates for contextual review. `clean` previews approved character deletions and writes files only with `--apply`. Ambiguous characters stay intact. Reports show incomplete and omitted checks; exit `0` does not certify full editorial compliance or watermark removal. See the [checker guide](docs/CHECKER.md), [metric and style limits](docs/STYLE.md), and [cleanup policy](docs/UNICODE.md).
 
 The spikes write evidence under `docs/spikes/`. Host probes require the versions recorded in [the host report](docs/HOST-SPIKE.md). Codex and Claude turn probes use local protocol stubs; the DSH probes load installed libraries without starting a model. No production plugin is installed. Remaining trust, state, and lifecycle checks stay in the tracker.
+
+
+A [live model compliance pilot](docs/MODEL-COMPLIANCE.md) compares generic editing
+with the PHB policy using synthetic passages. See [the harness instructions](eval/compliance/README.md)
+for opt-in commands that make real model calls. Its original outputs, mechanical
+flags, and separate inspection notes are available for review; it does not certify
+production adapter behavior or semantic correctness.

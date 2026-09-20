@@ -1,0 +1,73 @@
+{
+   "version": 1,
+   "startedAt": "2026-09-20T11:54:36.165Z",
+   "host": "dsh",
+   "node": "v26.9.0",
+   "corpus": {
+      "name": "pilot-development-v1",
+      "sha256": "7ade614dc7054469e8685a816822a20e040f27dbbad2ac797172d050d27ee118",
+      "cases": 17,
+      "selectedCaseIds": [
+         "adverb-scope",
+         "passive-unknown",
+         "contrast-restriction"
+      ]
+   },
+   "policyHashes": {
+      "generic": "7d08b02dd53da291bf1f022dff8d9b5a9f5868f87d4a89aa41c4ce8afd111684",
+      "phb": "e81420b7900c9c5d23a38b6cb20917791ca84a479d0e5873a0f004451ae58748"
+   },
+   "design": "Post-pilot smaller-batch follow-up: one generic and three PHB requests for the same three hard cases. Policy and token ceiling unchanged.",
+   "limits": [
+      "Development pilot, not the release corpus",
+      "Native CLI defaults can differ between hosts",
+      "DSH uses its configured local endpoint directly, not a booted adapter",
+      "Lexical checks can flag valid alternatives and miss semantic drift",
+      "Heuristic findings need review",
+      "No blind human review or reader-preference measure"
+   ],
+   "runs": [
+      {
+         "condition": "generic",
+         "repetition": 1,
+         "batch": 0,
+         "caseIds": [
+            "adverb-scope",
+            "passive-unknown",
+            "contrast-restriction"
+         ],
+         "promptSha256": "28baff476938935cea8745898f68f8f156c0df7d7b2f9628478d921104957f9f",
+         "startedAt": "2026-09-20T11:54:36.200Z",
+         "raw": "",
+         "resolvedModel": "qwen-orcarouter",
+         "usage": {
+            "completion_tokens": 8192,
+            "prompt_tokens": 422,
+            "total_tokens": 8614,
+            "prompt_tokens_details": {
+               "cached_tokens": 42
+            }
+         },
+         "finishReason": "length",
+         "toolEventCount": 0,
+         "status": "error",
+         "error": {
+            "message": "Unexpected end of JSON input",
+            "category": "request-or-output",
+            "cause": null
+         },
+         "latencyMs": 269762
+      }
+   ],
+   "subset": "hard",
+   "backend": {
+      "requestedModel": "qwen-orcarouter",
+      "displayName": "Qwen3.8 Flash Next — OrcaRouter (Local)",
+      "provider": "qwen-local",
+      "transport": "direct local chat/completions",
+      "temperature": 0.2,
+      "maxTokens": 8192,
+      "streaming": false
+   },
+   "finishedAt": "2026-09-20T11:59:05.965Z"
+}

@@ -31,6 +31,7 @@ Supporting documents:
 - [[file:docs/CHECKER.md][Local checker usage, coverage, and known limits]]
 - [[file:docs/UNICODE.md][Unicode inventory, cleanup policy, and application guarantees]]
 - [[file:docs/STYLE.md][Readability measurement and the sourced Chicago review subset]]
+- [[file:docs/MODEL-COMPLIANCE.md][Live model compliance pilot and observed limits]]
 
 Status vocabulary: TODO = queued; NEXT = ready; DOING = in progress;
 WAITING = blocked with a recorded cause; DONE = complete with evidence;
@@ -47,18 +48,22 @@ conditions describe required outcomes, not outcomes already achieved.
 
 Stage: local checks, Unicode cleanup, reading-grade measurement, and a narrow
 Chicago review subset implemented; host investigation remains partial.
-Latest work: PHB-012 now has native Codex/Claude probes and DSH profile composition evidence.
+Latest work: PHB-034 live model compliance pilot complete; model/output failures recorded.
+Prior checkpoint: PHB-012 native Codex/Claude probes and DSH profile composition evidence.
 Host checks: four Codex catalog checks, two Codex turn checks, eight Claude
 lifecycle checks, and eight DSH service checks pass. Model calls use local stubs.
-The local checker checkpoint remains 175 passing tests; production adapters and
-real model compliance remain untested.
+The suite now has 187 passing tests. Codex and Claude each completed 40 live
+pilot outputs; Qwen produced one nine-case baseline batch, then exhausted its
+output budget without final answers. Its policy compliance remains inconclusive.
+Production adapter/model behavior remains unverified.
 Blockers: none. Contextual editing and installable host plugins remain unimplemented.
 Chicago families retain partial coverage. Cleanup application is verified on macOS.
 
 Next actions, in order:
-1. [[#PHB-012][Finish Codex hook trust and DSH boot/invocation checks]].
-2. [[#PHB-024][Build contextual review and the bounded editing workflow]].
-3. [[#PHB-025][Extend reviewed patches after the editorial workflow exists]].
+1. [[#PHB-024][Build bounded editorial review with the pilot's fidelity safeguards]].
+2. [[#PHB-012][Finish Codex hook trust and DSH boot/invocation checks]].
+3. [[#PHB-030][Repair grading annotations and expand the corpus]].
+4. [[#PHB-025][Extend reviewed patches after the editorial workflow exists]].
 
 Do not begin implementation merely because it appears here. Continue within
 the user's current request and preserve later work in this file.
@@ -389,6 +394,12 @@ coverage expansion remains PHB-041; exact minimum-version/performance checks PHB
 Provide =review=, =rewrite=, and =write= using the host-selected model. Keep the
 short active policy separate from full reference catalogs. Preserve voice,
 claims, modality, negation, attribution, and supported responsibility.
+Pilot follow-ups from PHB-034: enforce exact protected-byte checks outside the
+model; never trust its clean label. Explicitly resolve meaning-bearing negation
+under the adverb ban, preserving the prohibition. Treat empty/truncated model
+output as a failed attempt; test smaller batches and bounded retries without
+weakening house rules or hiding original failures. Distinguish adjectival only and
+determiner all from adverbs; candidate POS tags cannot enforce a whole-word ban.
 Use the sourced Chicago definitions and metric availability without treating
 candidate detection or a grade as semantic confirmation. Review wider title,
 compound, number, abbreviation, and citation conventions only with checked sources.
@@ -403,6 +414,9 @@ Requirements: EDIT-01–04, VOICE-01, READ-01, SAFE-01, PRIV-01.
 :END:
 Provide text, JSON, and diff outputs; handle existing edit authorization;
 reject stale/overlapping fixes; apply per-file atomic writes; report batch failures.
+PHB-034 caught a model changing U+00A0 inside a protected quotation while claiming
+clean. Reject such candidates through byte checks before constructing or applying
+a patch; add the captured output as a regression fixture.
 Reuse the verified Unicode cleanup writer and plan-regeneration checks; expand
 them for editorial patches and diffs without weakening source or protected boundaries.
 Extend the source-patch spike with reversible decoded-text mappings, insertion
@@ -438,6 +452,10 @@ Requirements: ACT-01–03, HOST-01, HOST-03, DIST-01.
 :CUSTOM_ID: PHB-028
 :DEPENDS_ON: PHB-012 PHB-024 PHB-025
 :END:
+PHB-034 follow-up: investigate the configured local endpoint's reasoning/JSON-mode
+behavior and 8,192-token budget. Empty or truncated responses must fail closed;
+run any settings change as a separate controlled experiment before making a
+compliance claim. The pilot's local PHB result is inconclusive.
 Completion: ESM/Cordis plugin works in the confirmed wrapper's runtime and local
 model configuration, registers shared skills, restores policy state, and requires
 no extra cloud key. Verify enable/disable and session isolation in the wrapper.
@@ -450,10 +468,59 @@ Requirements: ACT-01–03, HOST-02–03, PRIV-01, DIST-01.
 :CUSTOM_ID: PHB-030
 :DEPENDS_ON: PHB-003 PHB-010
 :END:
+Pilot follow-ups from PHB-034: make capitalization assertions case-sensitive,
+accept faithful prohibition paraphrases such as refrain, and replace adverb-word
+bans with contextual annotations. Add above-grade-eight sources (the first pilot
+reading source measures 7.52), frequency adverbs, broader genres, and editable
+stock-phrase examples. Preserve the original pilot scores and separate adjudication.
 Create the proposed 200-passage corpus with source/licensing metadata, development
 and frozen test splits, facts, expected findings, and unchanged controls.
 Completion: all slices in [[file:docs/EVALUATION.md][the evaluation plan]] have coverage and near-duplicate
 or author-sample leakage checks. Use fixtures during implementation, not just at release.
+
+** DONE [#A] Run a live model compliance pilot
+CLOSED: [2026-09-20 Sun]
+:PROPERTIES:
+:CUSTOM_ID: PHB-034
+:DEPENDS_ON: PHB-023
+:END:
+Mark requested model compliance tests on [2026-09-20 Sun]. Build a small original
+annotated pilot corpus and a PHB policy candidate; compare generic editing with
+that policy through authenticated Codex/Claude and the wrapper's local endpoint.
+Record actual model identifiers, input/policy hashes, host versions, decoding
+settings, latency, usage, failures, and at least three runs of a hard subset.
+Use synthetic prose only; do not send project/private documents or install plugins.
+Score deterministic invariants and checker candidates; inspect output artifacts
+without claiming human review or complete semantic verification. Preserve failed
+outputs; do not tune the prompt after seeing results and report the rerun as an
+untouched test. A full corpus, blind human review, and release evaluation remain
+PHB-030/031. This pilot does not depend on completed adapters and does not prove
+their lifecycle behavior.
+Completion: execute available live backends, report sample counts and observed
+limits/failures, test the grading harness against deliberate faulty outputs, and
+record concrete remediation under the editorial/release tasks. Report unavailable
+backends as unavailable; never replace them with stubs or a different model.
+Evidence: [[file:docs/MODEL-COMPLIANCE.md][pilot report]], [[file:eval/compliance/README.md][reproducible harness]], and
+[[file:docs/eval/pilot-v1/][raw model outputs and inspection log]]. Seventeen original cases compare generic
+editing with a frozen PHB policy. Codex/gpt-6-astra and Claude/Opus 5 each complete
+40 outputs, including three observations of the hard subset. Claude changes a
+protected nonbreaking space and labels it clean; the strict negation policy also
+has unreported conflicts. Mechanical grading has documented false alarms.
+
+Qwen's nine-case generic batch completes, but its PHB batch exhausts the configured
+8,192-token output limit with empty final content. The three-case generic follow-up
+also exhausts that limit; its PHB repeats are not attempted. Local policy compliance
+is inconclusive. Preserve these failures and investigate reasoning/JSON-mode
+behavior before another local run. Do not rank incomplete Qwen results against
+complete cloud runs. Repaired test-environment auth and HTTP deadline issues without
+changing credentials, prompts, or the chosen model. Retained failed attempts.
+
+Verification: all 187 repository tests pass on Node 26.9.0; all 12 evaluation tests
+pass on Node 22.23.2. Regression tests bind frozen inputs/scores and catch the actual
+protected-space mutation. No independent human review or release compliance claim.
+Follow-ups belong to PHB-024/025 (guards and bounded model failures), PHB-030 (corpus
+and grading corrections), PHB-028 (local reasoning/JSON-mode integration), and
+PHB-031 (full evaluation with human review).
 
 ** TODO Run cross-model editing and preservation evaluations
 :PROPERTIES:
@@ -752,3 +819,26 @@ and DSH composition probes pass on Node 26.9.0 and 22.23.2. Codex plugin/skill
 validators and Claude native strict validation pass. Emacs Org lint, 34 unique
 IDs, task links/dependencies/cycles, local document links, and git diff checks
 pass. This checkpoint is ready for commit and push to origin/main.
+
+
+** [2026-09-20 Sun] Live model compliance pilot
+
+Completed PHB-034 at Mark's request with synthetic passages and live configured
+backends. Codex and Claude each completed 40 outputs; Qwen completed nine generic
+outputs but exhausted its budget on later requests, including a smaller baseline.
+No stubs or substitute models were used. Local policy compliance is inconclusive.
+
+The PHB policy improves missing-actor findings and preserves the tested cloud
+clean-prose/factual controls. Claude changed U+00A0 inside an exact quote while
+claiming clean. Preserved that output as a regression. Recorded negation conflicts,
+POS/capitalization/prohibition-regex false alarms, and an open rhetorical judgment
+without rewriting original prompts or scores. The reading sample started below
+grade eight, so above-target reduction remains a corpus gap. No blind human review.
+
+Added a resumable opt-in live runner, frozen corpus and policy, original output
+artifacts, a separate inspection log, and 12 evaluation tests. All 187 tests pass
+on Node 26.9.0; the evaluation tests also pass on Node 22.23.2. Recorded concrete
+follow-ups under the existing editorial, patch, local-adapter, corpus, and release
+tasks. Emacs Org lint, 35 unique IDs, dependency/cycle checks, local links, frozen
+input hashes, and inspection-evidence hashes pass. The checkpoint is ready for
+commit and push to origin/main.

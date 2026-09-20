@@ -11,7 +11,7 @@
       "node": ">=22.18.0"
    },
    "scripts": {
-      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs test/check/*.test.mjs test/unicode/*.test.mjs test/style/*.test.mjs spikes/parser/*.test.mjs",
+      "test": "node scripts/export-schemas.mjs --check && node --test test/contracts/*.test.mjs test/check/*.test.mjs test/unicode/*.test.mjs test/style/*.test.mjs test/eval/*.test.mjs spikes/parser/*.test.mjs",
       "phb": "node bin/phb.mjs",
       "schemas": "node scripts/export-schemas.mjs",
       "spike:parser": "node spikes/parser/compare.mjs",
@@ -19,7 +19,8 @@
       "spike:codex": "node spikes/hosts/codex.mjs",
       "spike:codex-turns": "node spikes/hosts/codex-turns.mjs",
       "spike:claude": "node spikes/hosts/claude.mjs",
-      "spike:dsh-composition": "node spikes/hosts/dsh-composition.mjs"
+      "spike:dsh-composition": "node spikes/hosts/dsh-composition.mjs",
+      "eval:compliance": "node eval/compliance/run.mjs"
    },
    "devDependencies": {
       "@textlint/kernel": "15.8.0",

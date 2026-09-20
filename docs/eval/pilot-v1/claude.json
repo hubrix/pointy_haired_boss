@@ -1,0 +1,58 @@
+{
+   "version": 1,
+   "startedAt": "2026-09-20T11:40:10.234Z",
+   "host": "claude",
+   "node": "v26.9.0",
+   "corpus": {
+      "name": "pilot-development-v1",
+      "sha256": "7ade614dc7054469e8685a816822a20e040f27dbbad2ac797172d050d27ee118",
+      "cases": 17
+   },
+   "policyHashes": {
+      "generic": "7d08b02dd53da291bf1f022dff8d9b5a9f5868f87d4a89aa41c4ce8afd111684",
+      "phb": "e81420b7900c9c5d23a38b6cb20917791ca84a479d0e5873a0f004451ae58748"
+   },
+   "design": "Paired generic/PHB prompt-only pilot; fixed batches; three policy observations for a hard subset. No model judge or human scoring.",
+   "limits": [
+      "Development pilot, not the release corpus",
+      "Native CLI defaults can differ between hosts",
+      "DSH uses its configured local endpoint directly, not a booted adapter",
+      "Lexical checks can flag valid alternatives and miss semantic drift",
+      "Heuristic findings need review",
+      "No blind human review or reader-preference measure"
+   ],
+   "runs": [
+      {
+         "condition": "generic",
+         "repetition": 1,
+         "batch": 0,
+         "caseIds": [
+            "adverb-manner",
+            "adverb-scope",
+            "passive-known",
+            "passive-unknown",
+            "obligation-known",
+            "obligation-unknown",
+            "contrast-rhetoric",
+            "contrast-restriction",
+            "modality-negation"
+         ],
+         "promptSha256": "3f33b1e6c97a09f212386b5271e2ddf974727ef5d447bdef1efbc66bf0bed936",
+         "startedAt": "2026-09-20T11:40:10.265Z",
+         "status": "error",
+         "error": {
+            "message": "claude exited 1",
+            "category": "authentication"
+         },
+         "latencyMs": 816
+      }
+   ],
+   "backend": {
+      "version": "2.1.278 (Claude Code)",
+      "requestedModel": "opus[1m]",
+      "effort": "xhigh",
+      "temperature": "not exposed",
+      "maxBudgetUsdPerCall": 3
+   },
+   "finishedAt": "2026-09-20T11:40:11.081Z"
+}

@@ -1,0 +1,138 @@
+{
+   "version": 1,
+   "method": "Post-run inspection, with literal byte comparisons for the protected-text failure. Original outputs, prompts, and scores remain unchanged. No complete semantic pass claim.",
+   "observations": [
+      {
+         "file": "claude-r2.json",
+         "condition": "generic",
+         "repetition": 1,
+         "batch": 1,
+         "caseId": "unicode-preserve",
+         "outputSha256": "4d1b9ce7bb24fcfa0af4c172c844bedb23dcfca48289a60a21a292eef97cadd9",
+         "classification": "confirmed-protected-byte-change",
+         "explanation": "The exact quotation changes U+00A0 between 10 and kg to U+0020. Both the input and output are available; the delivered result claims clean.",
+         "evidence": "café 10 kg",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "claude-r2.json",
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 1,
+         "caseId": "unicode-preserve",
+         "outputSha256": "4d1b9ce7bb24fcfa0af4c172c844bedb23dcfca48289a60a21a292eef97cadd9",
+         "classification": "confirmed-protected-byte-change",
+         "explanation": "The exact quotation changes U+00A0 between 10 and kg to U+0020. Both the input and output are available; the delivered result claims clean.",
+         "evidence": "café 10 kg",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "claude-r2.json",
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 0,
+         "caseId": "modality-negation",
+         "outputSha256": "8c56ec8fa1b3affeb824ff9ba418dbfbc5f0472f3c2fa77e68b52adbf49026c4",
+         "classification": "strict-policy-conflict-unreported",
+         "explanation": "The policy requires a faithful recast or an issue for meaning-bearing negation adverbs. The output retains not and claims clean. The prohibition itself survives.",
+         "evidence": "Do not retry a charge after a confirmed success.",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "claude-r2.json",
+         "condition": "phb",
+         "repetition": 2,
+         "batch": 0,
+         "caseId": "contrast-restriction",
+         "outputSha256": "242eb992011f61e23dd60b10b391c5c996cd71f9c312aa8ed69c5bda6ba81c00",
+         "classification": "strict-policy-conflict-unreported",
+         "explanation": "The restriction survives, but the output retains not without reporting the pilot policy conflict.",
+         "evidence": "Do not use production credentials.",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "codex.json",
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 1,
+         "caseId": "chicago-subset",
+         "outputSha256": "3f5f751ff8b7ee917d696629778ac377cd56fd92fdaeae88c0c808985a88803c",
+         "classification": "grader-false-alarm",
+         "explanation": "The v1 substring screen lowercases text, so its reason: she check cannot recognize correct capitalization. Keep the raw score; this output capitalizes She.",
+         "evidence": "reason: She",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "claude-r2.json",
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 1,
+         "caseId": "chicago-subset",
+         "outputSha256": "3f5f751ff8b7ee917d696629778ac377cd56fd92fdaeae88c0c808985a88803c",
+         "classification": "grader-false-alarm",
+         "explanation": "The v1 substring screen lowercases text, so its reason: she check cannot recognize correct capitalization. Keep the raw score; this output capitalizes She.",
+         "evidence": "reason: She",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "codex.json",
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 0,
+         "caseId": "contrast-restriction",
+         "outputSha256": "210b2f5a86ffc42571e7a539b26838c42d54c58404b9e1e50b1c77f928d410e8",
+         "classification": "grader-false-alarm",
+         "explanation": "The finite prohibition-word screen lacks refrain. The delivered imperative preserves the restriction; its absence from the regex is not evidence of lost negation.",
+         "evidence": "refrain",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "codex.json",
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 0,
+         "caseId": "modality-negation",
+         "outputSha256": "2c2f1e713f46ad8db3002aa9d5aaad8e53d5bef44760a9aec6974ab90eba8fe6",
+         "classification": "grader-false-alarm",
+         "explanation": "The finite prohibition-word screen lacks refrain. The delivered imperative preserves the restriction; its absence from the regex is not evidence of lost negation.",
+         "evidence": "Refrain",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "claude-r2.json",
+         "condition": "phb",
+         "repetition": 2,
+         "batch": 0,
+         "caseId": "adverb-scope",
+         "outputSha256": "a598a29f31700787531106be5641047d9d421271e3c3bfade83aa5b3ff4b32dd",
+         "classification": "grader-and-candidate-false-alarm",
+         "explanation": "Only modifies person/one as an adjective here. The word-level ban and the grammar candidate overreach; exclusive permission remains.",
+         "evidence": "only",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "claude-r2.json",
+         "condition": "phb",
+         "repetition": 3,
+         "batch": 0,
+         "caseId": "adverb-scope",
+         "outputSha256": "1456bc2f251303eaa947143d3788063258835fc28be5c453dd65f5483ffe84c0",
+         "classification": "grader-and-candidate-false-alarm",
+         "explanation": "Only modifies person/one as an adjective here. The word-level ban and the grammar candidate overreach; exclusive permission remains.",
+         "evidence": "only",
+         "reviewer": "assistant inspection; not independent human review"
+      },
+      {
+         "file": "codex.json",
+         "condition": "phb",
+         "repetition": 1,
+         "batch": 0,
+         "caseId": "contrast-rhetoric",
+         "outputSha256": "075a6c18b031bd8f1ae4f41719dbba7289d0dedacba3f5662d7f40ecd55ded6b",
+         "classification": "semantic-review-open",
+         "explanation": "The rewrite retains a speed exclusion through outside its scope. A human reviewer should decide whether this preserves a real distinction or retains unwanted rhetorical contrast.",
+         "evidence": "with speed outside its scope",
+         "reviewer": "assistant inspection; not independent human review"
+      }
+   ]
+}
