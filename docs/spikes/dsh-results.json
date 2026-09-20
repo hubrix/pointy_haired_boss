@@ -1,6 +1,6 @@
 {
-   "recordedAt": "2026-09-19T19:15:40.294Z",
-   "node": "v26.8.2",
+   "recordedAt": "2026-09-20T11:25:01.457Z",
+   "node": "v26.9.0",
    "versions": {
       "@deepseek-ai/cordis": "4.0.2",
       "@deepseek-ai/dsh-skill": "0.1.6-alpha.1",
@@ -45,7 +45,7 @@
    "scope": "Real installed Cordis and DSH service APIs; synthetic pre-step events. No model calls, live sessions, host configuration writes, or shell command invocation.",
    "unverified": [
       "manual invocation through the host UI",
-      "complete wrapper skill-root configuration",
+      "full wrapper boot and runtime skill discovery",
       "resume and compaction",
       "durable on/off/profile state",
       "cross-turn deduplication and cancellation",

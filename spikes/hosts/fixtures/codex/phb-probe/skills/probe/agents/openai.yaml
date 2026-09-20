@@ -1,0 +1,6 @@
+interface:
+   display_name: "PHB probe"
+   short_description: "Test PHB host integration"
+   default_prompt: "Run $probe."
+policy:
+   allow_implicit_invocation: false

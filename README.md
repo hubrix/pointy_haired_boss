@@ -33,8 +33,12 @@ node bin/phb.mjs clean draft.md
 npm test
 npm run spike:parser
 npm run spike:dsh -- /path/to/homebrew-qwen-dsh/runtime
+npm run spike:codex
+npm run spike:codex-turns
+npm run spike:claude
+npm run spike:dsh-composition -- /path/to/homebrew-qwen-dsh/runtime /path/to/wrapper-data/dsh
 ```
 
 `check` is read-only. Its default required scope covers prose boundaries, exact phrase bans, and Unicode inventory. It also reports reading grade when the sample supports measurement, plus house-ban and Chicago candidates for contextual review. `clean` previews approved character deletions and writes files only with `--apply`. Ambiguous characters stay intact. Reports show incomplete and omitted checks; exit `0` does not certify full editorial compliance or watermark removal. See the [checker guide](docs/CHECKER.md), [metric and style limits](docs/STYLE.md), and [cleanup policy](docs/UNICODE.md).
 
-The parser comparison writes measurements under `docs/spikes/`. The DSH probe uses the supplied runtime's installed packages and temporary fixtures; it does not start a model session or change host settings. Full lifecycle tests remain open in the tracker.
+The spikes write evidence under `docs/spikes/`. Host probes require the versions recorded in [the host report](docs/HOST-SPIKE.md). Codex and Claude turn probes use local protocol stubs; the DSH probes load installed libraries without starting a model. No production plugin is installed. Remaining trust, state, and lifecycle checks stay in the tracker.

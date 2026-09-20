@@ -1,0 +1,10 @@
+{
+   "hooks": {
+      "SessionStart": [
+         { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hook.mjs\"" }] }
+      ],
+      "UserPromptSubmit": [
+         { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hook.mjs\"" }] }
+      ]
+   }
+}

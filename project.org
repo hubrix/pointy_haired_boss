@@ -3,7 +3,7 @@
 #+TODO: TODO(t) NEXT(n) DOING(i) WAITING(w@) | DONE(d!) CANCELED(c@)
 #+STARTUP: overview
 #+OPTIONS: toc:2
-#+LAST_UPDATED: [2026-09-19 Sat]
+#+LAST_UPDATED: [2026-09-20 Sun]
 
 * Project charter
 :PROPERTIES:
@@ -47,13 +47,16 @@ conditions describe required outcomes, not outcomes already achieved.
 
 Stage: local checks, Unicode cleanup, reading-grade measurement, and a narrow
 Chicago review subset implemented; host investigation remains partial.
-Current checkpoint: PHB-023 complete. All 175 tests pass on Node 26.9.0 and 22.23.2.
-The prior DSH probe passed eight service/event checks. Full host sessions remain untested.
+Latest work: PHB-012 now has native Codex/Claude probes and DSH profile composition evidence.
+Host checks: four Codex catalog checks, two Codex turn checks, eight Claude
+lifecycle checks, and eight DSH service checks pass. Model calls use local stubs.
+The local checker checkpoint remains 175 passing tests; production adapters and
+real model compliance remain untested.
 Blockers: none. Contextual editing and installable host plugins remain unimplemented.
 Chicago families retain partial coverage. Cleanup application is verified on macOS.
 
 Next actions, in order:
-1. [[#PHB-012][Complete live host invocation and lifecycle smoke tests]].
+1. [[#PHB-012][Finish Codex hook trust and DSH boot/invocation checks]].
 2. [[#PHB-024][Build contextual review and the bounded editing workflow]].
 3. [[#PHB-025][Extend reviewed patches after the editorial workflow exists]].
 
@@ -220,20 +223,36 @@ grammar gaps, and production patch behavior. This completes a spike, not the che
 - [X] Record actual Codex and Claude Code versions and their plugin/hook contracts.
 - [X] Verify the DSH wrapper's installed runtime pins and Cordis service APIs.
 - [X] Compare default DSH discovery paths with the wrapper's seeded skill location.
-- [ ] Verify effective skill discovery in the complete wrapper composition.
-- [ ] Prove manual invocation and bounded policy activation on each host.
-- [ ] Document hook trust, compaction/resume, off-switch, and enforcement limits.
+- [X] Inspect both installed wrapper profiles through native composition and resolve filesystem roots.
+- [X] Validate separate Codex/Claude fixture metadata and native discovery.
+- [X] Observe manual-only skill omission and explicit expansion in native Codex/Claude turns.
+- [X] Verify Claude startup/prompt hooks, resume, compaction refresh, and sibling isolation.
+- [ ] Verify registry discovery and manual invocation in the booted DSH wrapper.
+- [ ] Prove bounded activation and on/off supersession on each host.
+- [ ] Verify Codex hook trust/execution and Codex/DSH resume and compaction.
 Completion: recorded smoke-test evidence for all three hosts and an adapter
 contract that does not assume identical hook schemas.
 Requirements: HOST-01–03, ACT-01–03, DIST-01.
-Partial evidence: [[file:docs/HOST-SPIKE.md][host contract report]] and [[file:docs/spikes/dsh-results.json][eight passing DSH checks]].
-The native probe tests skill loading, scope isolation, disposal, custom roots,
-and synthetic pre-step events. It does not prove live model or durable session behavior.
-Next: create temporary adapter packages, verify Codex/Claude discovery and native
-validation, then exercise invocation, off/re-enable, resume, and compaction on
-all three hosts. Verify the wrapper's explicit route to any .gsd skill root;
-prefer direct bundled registration for PHB. Do not treat the path gap as a proven
-defect in the user's effective wrapper configuration.
+Partial evidence: [[file:docs/HOST-SPIKE.md][host report]], [[file:docs/spikes/codex-results.json][four Codex catalog checks]],
+[[file:docs/spikes/codex-turns-results.json][two Codex turn checks]], [[file:docs/spikes/claude-results.json][eight Claude lifecycle checks]],
+[[file:docs/spikes/dsh-results.json][eight DSH service checks]], and [[file:docs/spikes/dsh-composition-results.json][both DSH profile compositions]].
+Native turn probes use localhost protocol stubs; they prove host transport and
+lifecycle behavior, not model compliance or editing quality. Codex turn tests use
+project skills; packaged namespaced turn invocation remains open. No production
+adapter is installed and no user host configuration changed.
+
+The composed DSH TUI disables filesystem skill discovery; headless enables it.
+Neither profile has an active filesystem root resolving to the .gsd seed directory.
+Individual skill symlinks and runtime registrations remain untested. Ponytail/Superpower registry providers remain present. The TUI
+also skips a patch for absent workflow-worker-thread; this does not target skills.
+Do not infer complete host failure from these observations or change the wrapper
+as part of PHB. Test direct bundled registration in a booted wrapper fixture.
+
+Next: exercise Codex trusted/untrusted hooks and installed-plugin invocation in
+an isolated development setup. Boot DSH with a test registry provider and a local
+model stub; check invocation, replay, and disposal. Then test off/re-enable and
+resume/compaction per host. Disabling future injection must supersede old guidance
+in existing conversations. Preserve these limits in the adapter capability reports.
 
 * Milestone 2: build the first usable release
 
@@ -709,3 +728,27 @@ No user prose or host settings changed during this increment.
 Final checks: Emacs Org lint, 34 unique IDs, 28 task dependencies and cycle checks,
 local document links, three runtime-validated configuration examples, and
 =git diff --check= pass. This checkpoint is ready for commit and push to origin/main.
+
+
+** [2026-09-20 Sun] Native host discovery and lifecycle probes
+
+Advanced PHB-012 with separate Codex/Claude fixtures and four runnable probes.
+Codex passes four native catalog/root checks and two native turn checks. Claude
+passes eight checks covering strict validation, discovery, namespaced manual
+expansion, hook context delivery, resume, compaction refresh, sibling isolation,
+and session-only plugin loading. A localhost protocol stub supplies responses;
+no real model instruction-following or prose-quality claim follows from these tests.
+The existing eight DSH service checks still pass.
+
+Read the installed wrapper's composed TUI/headless profiles without booting plugins
+or rewriting settings. Their filesystem discovery differs; neither has an active filesystem root
+resolving to the .gsd seed directory. PHB should register its bundled skill
+through DSH's registry. Full boot and other runtime providers remain untested.
+Codex and Claude require distinct manual-only metadata. Kept all remaining trust,
+state, installed-plugin, and lifecycle checks under PHB-012; it remains NEXT.
+
+Verification: all 175 local tests pass on Node 26.9.0. The new Codex, Claude,
+and DSH composition probes pass on Node 26.9.0 and 22.23.2. Codex plugin/skill
+validators and Claude native strict validation pass. Emacs Org lint, 34 unique
+IDs, task links/dependencies/cycles, local document links, and git diff checks
+pass. This checkpoint is ready for commit and push to origin/main.

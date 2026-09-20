@@ -1,0 +1,57 @@
+{
+   "recordedAt": "2026-09-20T11:27:44.286Z",
+   "node": "v22.23.2",
+   "host": {
+      "version": "2.1.278 (Claude Code)"
+   },
+   "model": "localhost protocol stub; no live language model",
+   "checks": [
+      {
+         "name": "Native strict plugin validation",
+         "pass": true,
+         "evidence": "No validation errors or warnings."
+      },
+      {
+         "name": "Session plugin discovery",
+         "pass": true,
+         "evidence": "The native plugin list includes the --plugin-dir fixture."
+      },
+      {
+         "name": "Manual namespaced skill expansion",
+         "pass": true,
+         "evidence": "The host sends the skill body to the local Messages endpoint."
+      },
+      {
+         "name": "Startup and prompt hooks execute and deliver context",
+         "pass": true,
+         "evidence": "Both event markers reach the local model request."
+      },
+      {
+         "name": "Native resume lifecycle",
+         "pass": true,
+         "evidence": "A resumed print session fires SessionStart with source=resume."
+      },
+      {
+         "name": "Native compaction and context refresh",
+         "pass": true,
+         "evidence": "The host fires PreCompact and SessionStart(compact); refreshed context reaches the next request."
+      },
+      {
+         "name": "Manual-only skill and sibling session isolation",
+         "pass": true,
+         "evidence": "A fresh session receives no skill body without explicit invocation."
+      },
+      {
+         "name": "Session-only plugin loading",
+         "pass": true,
+         "evidence": "A fresh invocation without --plugin-dir receives no fixture hook context and runs no fixture hooks."
+      }
+   ],
+   "unverified": [
+      "Real model compliance",
+      "On/off supersession within an existing conversation",
+      "Interactive UI",
+      "Production adapter",
+      "Pre-delivery enforcement"
+   ]
+}

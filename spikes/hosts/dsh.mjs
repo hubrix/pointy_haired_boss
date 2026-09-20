@@ -135,7 +135,7 @@ try {
 const results = {
    recordedAt: new Date().toISOString(), node: process.version, versions, checks,
    scope: 'Real installed Cordis and DSH service APIs; synthetic pre-step events. No model calls, live sessions, host configuration writes, or shell command invocation.',
-   unverified: ['manual invocation through the host UI', 'complete wrapper skill-root configuration', 'resume and compaction', 'durable on/off/profile state', 'cross-turn deduplication and cancellation', 'retraction of earlier prompt guidance', 'enforcement before model output delivery'],
+   unverified: ['manual invocation through the host UI', 'full wrapper boot and runtime skill discovery', 'resume and compaction', 'durable on/off/profile state', 'cross-turn deduplication and cancellation', 'retraction of earlier prompt guidance', 'enforcement before model output delivery'],
 };
 const destination = new URL('../../docs/spikes/dsh-results.json', import.meta.url);
 await mkdir(new URL('./', destination), { recursive: true });

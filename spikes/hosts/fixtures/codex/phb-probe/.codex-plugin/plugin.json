@@ -1,0 +1,18 @@
+{
+   "name": "phb-probe",
+   "version": "0.0.0",
+   "description": "Test fixture for PHB host discovery and lifecycle probes.",
+   "author": {
+      "name": "Mark Friedgan"
+   },
+   "skills": "./skills/",
+   "interface": {
+      "displayName": "PHB host probe",
+      "shortDescription": "Test PHB integration.",
+      "longDescription": "A fixture for host discovery and lifecycle checks.",
+      "developerName": "Mark Friedgan",
+      "category": "Productivity",
+      "capabilities": [],
+      "defaultPrompt": "Run the PHB integration probe."
+   }
+}

@@ -15,7 +15,11 @@
       "phb": "node bin/phb.mjs",
       "schemas": "node scripts/export-schemas.mjs",
       "spike:parser": "node spikes/parser/compare.mjs",
-      "spike:dsh": "node spikes/hosts/dsh.mjs"
+      "spike:dsh": "node spikes/hosts/dsh.mjs",
+      "spike:codex": "node spikes/hosts/codex.mjs",
+      "spike:codex-turns": "node spikes/hosts/codex-turns.mjs",
+      "spike:claude": "node spikes/hosts/claude.mjs",
+      "spike:dsh-composition": "node spikes/hosts/dsh-composition.mjs"
    },
    "devDependencies": {
       "@textlint/kernel": "15.8.0",

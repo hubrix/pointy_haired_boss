@@ -1,0 +1,41 @@
+{
+   "recordedAt": "2026-09-20T11:27:41.879Z",
+   "node": "v22.23.2",
+   "host": {
+      "version": "codex-cli 0.154.0"
+   },
+   "model": "No model calls",
+   "checks": [
+      {
+         "name": "Native plugin catalog read",
+         "pass": true,
+         "evidence": "The app-server reads the manifest and bundled skill from a disposable local catalog."
+      },
+      {
+         "name": "Plugin hook discovery",
+         "pass": true,
+         "evidence": "The native catalog exposes both fixture hook events; execution and trust remain unverified."
+      },
+      {
+         "name": "Connection-scoped skill discovery",
+         "pass": true,
+         "evidence": "skills/list reads the extra root and agents/openai.yaml interface metadata. The API does not expose invocation policy."
+      },
+      {
+         "name": "Remove connection-scoped skill roots",
+         "pass": true,
+         "evidence": "Clearing extraRoots removes the fixture from the refreshed catalog."
+      }
+   ],
+   "unverified": [
+      "Installed plugin activation",
+      "Manual invocation in a turn",
+      "Manual-only policy enforcement",
+      "Hook trust and execution",
+      "On/off supersession",
+      "Resume and compaction",
+      "Interactive UI",
+      "Production adapter",
+      "Pre-delivery enforcement"
+   ]
+}

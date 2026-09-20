@@ -1,0 +1,25 @@
+{
+   "recordedAt": "2026-09-20T11:27:44.477Z",
+   "node": "v22.23.2",
+   "host": {
+      "version": "codex-cli 0.154.0"
+   },
+   "model": "localhost Responses protocol stub; no live language model",
+   "checks": [
+      {
+         "name": "Manual-only skill body absent from an ordinary turn",
+         "pass": true
+      },
+      {
+         "name": "Manual skill body expanded into a native turn",
+         "pass": true
+      }
+   ],
+   "unverified": [
+      "Installed plugin activation and namespaced invocation",
+      "Hook execution and trust",
+      "On/off supersession",
+      "Resume and compaction",
+      "Real model compliance"
+   ]
+}

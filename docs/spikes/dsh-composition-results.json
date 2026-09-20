@@ -1,0 +1,63 @@
+{
+   "recordedAt": "2026-09-20T11:27:41.828Z",
+   "node": "v22.23.2",
+   "host": {
+      "appBootVersion": "0.1.6-alpha.1"
+   },
+   "method": "Read-only native composition of bundle, generated profile, and home patch layers; native filesystem-root resolution including symlinks.",
+   "profiles": [
+      {
+         "profile": "dsh-tui",
+         "compositionWarnings": [
+            "patch: entry \"workflow-worker-thread\" not found"
+         ],
+         "bundles": [
+            "@deepseek-ai/dsh-base",
+            "@deepseek-harness-tui/dsh-tui",
+            "dsh-ponytail",
+            "@wenaixi/dsh-superpower",
+            "dsh-hindsight",
+            "@deepseek-ai/dsh-subagent-claude-code",
+            "@deepseek-ai/dsh-subagent-codex"
+         ],
+         "filesystemProviderEnabled": false,
+         "explicitCustomRootCount": 0,
+         "rootCount": 4,
+         "wrapperSeedDirectoryExists": true,
+         "wrapperSeedDirectoryIsActiveFilesystemRoot": false,
+         "pluginProvidersPresent": [
+            "dsh-ponytail",
+            "@wenaixi/dsh-superpower"
+         ]
+      },
+      {
+         "profile": "headless",
+         "compositionWarnings": [],
+         "bundles": [
+            "@deepseek-ai/dsh-base",
+            "@deepseek-ai/dsh-headless",
+            "dsh-ponytail",
+            "@wenaixi/dsh-superpower",
+            "dsh-hindsight",
+            "@deepseek-ai/dsh-subagent-claude-code",
+            "@deepseek-ai/dsh-subagent-codex"
+         ],
+         "filesystemProviderEnabled": true,
+         "explicitCustomRootCount": 0,
+         "rootCount": 4,
+         "wrapperSeedDirectoryExists": true,
+         "wrapperSeedDirectoryIsActiveFilesystemRoot": false,
+         "pluginProvidersPresent": [
+            "dsh-ponytail",
+            "@wenaixi/dsh-superpower"
+         ]
+      }
+   ],
+   "unverified": [
+      "Full plugin boot",
+      "Other runtime skill registrations",
+      "UI invocation",
+      "Model behavior",
+      "Resume and compaction"
+   ]
+}

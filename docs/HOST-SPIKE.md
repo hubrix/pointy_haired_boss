@@ -1,12 +1,12 @@
 # Host integration evidence
 
-PHB-012, September 19, 2026. **Partial:** host contracts and DSH service behavior have evidence; full interactive invocation, resume, and compaction do not. No PHB plugin is installed in a user host yet.
+PHB-012, September 20, 2026. **Partial:** native Codex and Claude probes now cover discovery and manual skill expansion. Claude also passes resume and compaction hook checks. Model endpoints are local protocol stubs; these results establish host transport and lifecycle behavior, not model compliance. No production PHB plugin is installed in a user host.
 
 | Host | Observed version | Evidence obtained | Still required |
 | --- | --- | --- | --- |
-| Codex CLI | 0.154.0 | Installed version/help; official plugin and hook contracts; local scaffold-validator contract | Packaged skill discovery, trusted/untrusted hooks, live invocation, on/off, isolation, resume, compaction |
-| Claude Code | 2.1.278 | Installed version/help; native `plugin validate --json --strict` command available; official plugin/hook contracts | Run validator on the real adapter; live invocation, on/off, isolation, resume, compaction |
-| Confirmed DSH wrapper | DSH packages 0.1.6-alpha.1; Cordis 4.0.2 | Eight passing service/event checks using the wrapper's installed libraries | Host UI invocation, effective wrapper skill roots, durable state, resume/compaction, output enforcement |
+| Codex CLI | 0.154.0 | Four app-server catalog/root checks; two native turn checks; scaffold and skill validation | Installed plugin activation, namespaced turn invocation, hook trust/execution, on/off, resume, compaction |
+| Claude Code | 2.1.278 | Eight native checks: validation, discovery, manual expansion, hooks, resume, compaction, sibling isolation, session-only loading | Production adapter, real model compliance, on/off supersession, interactive UI, enforcement |
+| Confirmed DSH wrapper | DSH packages 0.1.6-alpha.1; Cordis 4.0.2 | Eight service/event checks; native composition of both installed profiles and filesystem roots | Full boot and registry discovery, UI invocation, durable state, resume/compaction, output enforcement |
 
 The DSH evidence comes from `/Users/mark/code/scratch/homebrew-qwen-dsh/runtime`. The global `dsh` executable and a separate source checkout have older versions and do not establish compatibility with this wrapper.
 
@@ -21,6 +21,59 @@ Claude Code uses `.claude-plugin/plugin.json`, `skills/`, and `hooks/hooks.json`
 For both hosts, investigate `SessionStart`, `UserPromptSubmit`, and compaction events to refresh the short policy. Their hook outputs can carry event-specific context, but each adapter must use its own supported event schema. Write/stop checks need a bounded recursion guard, a clear file scope, and status that distinguishes a delivered response from a checked artifact. [Codex hooks](https://learn.chatgpt.com/docs/hooks), [Claude Code hooks](https://code.claude.com/docs/en/hooks).
 
 Disabling future injection does not erase policy text already in the conversation. PHB's off switch must supersede earlier plugin guidance and verify the effect on the next turn. Restoring a mode must preserve user-selected intensity/profile without reviving another session's state. These are implementation requirements, not proven behavior.
+
+## Codex native probes
+
+```sh
+npm run spike:codex
+npm run spike:codex-turns
+```
+
+The [catalog probe](../spikes/hosts/codex.mjs) starts the installed app-server, reads a disposable local catalog through `plugin/read`, and verifies the namespaced skill and default hook file. It adds and removes a connection-scoped skill root through `skills/extraRoots/set`, then checks the refreshed `skills/list`. It calls no install or configuration-write methods. [Catalog results](spikes/codex-results.json) record four passing checks. This read-only app-server can load existing host configuration; it starts no thread or model call.
+
+The [turn probe](../spikes/hosts/codex-turns.mjs) runs `codex exec` in a temporary workspace with `--ignore-user-config`, `--ignore-rules`, `--ephemeral`, and a local Responses API stub. An ordinary turn receives neither the manual-only skill description nor its body. An explicit `$probe` expands the body into the outgoing request. [Turn results](spikes/codex-turns-results.json) record two passing checks. This uses project skill discovery; it does not establish installed-plugin activation or namespaced invocation in a turn.
+
+The [Codex fixture](../spikes/hosts/fixtures/codex/phb-probe/) passes the installed plugin-creator validator and Codex skill validator. Its manual-only setting belongs in `skills/probe/agents/openai.yaml` as `policy.allow_implicit_invocation: false`. The local plugin validator rejects Claude's `disable-model-invocation: true` front matter. The app-server catalog does not expose this policy, so the turn probe checks its observable effect. Keep host metadata separate even when policy content is shared.
+
+The installed `codex app-server generate-json-schema --experimental` output supplies the primary protocol contract for these tests. The fixtures use `.codex-plugin/plugin.json`; compatibility with newer universal `plugin.json` packaging has not been tested. Hook discovery does not prove hook trust or execution.
+
+## Claude native lifecycle probe
+
+```sh
+npm run spike:claude
+```
+
+The [Claude probe](../spikes/hosts/claude.mjs) uses a disposable `CLAUDE_CONFIG_DIR`, an empty settings-source list, disabled tools, strict MCP loading, and `--plugin-dir`. It sends Messages API calls to a localhost stub with a dummy key. Temporary session files permit actual host resume and compaction; the probe deletes them on completion. It does not install an account plugin or alter user settings. The [Claude fixture](../spikes/hosts/fixtures/claude/phb-probe/) uses `disable-model-invocation: true`.
+
+[Eight passing checks](spikes/claude-results.json) establish:
+
+1. Native strict plugin validation succeeds without warnings.
+2. The session plugin list includes the fixture.
+3. `/phb-probe:probe` expands its body into the outgoing model request.
+4. `SessionStart` and `UserPromptSubmit` execute and deliver event-specific context.
+5. A resumed print session fires `SessionStart` with `source=resume`.
+6. `/compact` fires `PreCompact` and `SessionStart` with `source=compact`; refreshed context reaches the next request.
+7. A fresh sibling session receives neither the manual-only skill description nor its body without invocation.
+8. A fresh invocation without `--plugin-dir` runs no fixture hooks and receives no fixture hook context.
+
+These checks exercise the installed host with a deterministic response stub. They do not evaluate editing quality, model instruction-following, summary fidelity, or a production off command. Removing future injection still leaves previous guidance in an existing conversation. The fixture's hook event log contains only event names, sources, and temporary session IDs; recorded results omit transcripts, requests, and credentials. [Claude plugin reference](https://code.claude.com/docs/en/plugins-reference), [Claude hook lifecycle](https://code.claude.com/docs/en/hooks).
+
+## DSH composed profile inspection
+
+```sh
+npm run spike:dsh-composition -- /path/to/homebrew-qwen-dsh/runtime /path/to/wrapper-data/dsh
+```
+
+The [composition probe](../spikes/hosts/dsh-composition.mjs) uses installed `loadProfileDirectory` and `composeEntries` to combine bundle, generated profile, and home patch layers. It resolves the filesystem provider's roots, including symlinks, without booting plugins or evaluating `!!js` expressions. It avoids both wrapper `configure()` and the native CLI dump path, which rewrites `cordis.yml`. It records only discovery metadata, not settings or secret values.
+
+[The inspected configuration](spikes/dsh-composition-results.json), under `~/.local/share/ninjaai/dsh`, differs by profile:
+
+| Profile | Filesystem provider | Explicit custom roots | Seed directory is an active filesystem root |
+| --- | --- | --- | --- |
+| `dsh-tui` | Disabled | 0 | No |
+| `headless` | Enabled | 0 | No |
+
+No active filesystem root resolves to the seed directory. Individual skill symlinks and other runtime registrations remain untested; this is not proof that the full host cannot access a seeded skill. Both profiles include the Ponytail and Superpower provider plugins. Register PHB's bundled skill through the registry and test that registration in the booted wrapper. The TUI composition also reports a skipped patch for absent `workflow-worker-thread`; it does not target skill discovery. The probe records that warning and rejects new, unreviewed warnings. No wrapper changes were made.
 
 ## DSH native probe
 
@@ -41,7 +94,7 @@ The eight passing checks cover:
 7. Stop new injections when the probe's enable flag is false.
 8. Remove registered skills and listeners when their owning scope is disposed.
 
-The wrapper's `lib/ninjaai.py` seeds skills into `~/.gsd/agent/skills`. The installed filesystem provider's default project/user roots use `.dsh` and `.agents`, with additional roots available through `customSkillDirs`. The fixture proves that this seed location needs an explicit discovery path; it does **not** prove the user's effective wrapper configuration is broken. The adapter should register its bundled skill through the registry or configure its own explicit root, then test the loaded wrapper composition.
+The wrapper's `lib/ninjaai.py` seeds skills into `~/.gsd/agent/skills`. The installed filesystem provider's default project/user roots use `.dsh` and `.agents`, with additional roots available through `customSkillDirs`. The service fixture proves that this seed location needs an explicit discovery path. The composition inspection above now verifies the installed filesystem-provider configuration; neither probe proves that the full wrapper is broken. The adapter should register its bundled skill through the registry or configure its own explicit root, then test the loaded wrapper composition.
 
 Installed declarations establish `agent/pre-step` as a waterfall that returns `{kind: "enter", messages}` or `{kind: "reject"}`. The probe uses `createUserMessage` with `source.form: "instructions"`. `agent/request` returns a frozen call configuration; its contract forbids using it to mutate model-visible messages. Use the logged instruction/message path and preserve scoped event routing.
 
